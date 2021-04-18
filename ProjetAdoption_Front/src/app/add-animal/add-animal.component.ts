@@ -7,6 +7,10 @@ import {ISpecies} from '../shared/interfaces/species.interface';
 import {IRace} from '../shared/interfaces/race.interface';
 import {ICharacter} from '../shared/interfaces/characte.interface';
 import {AnimalService} from '../shared/services/animal.service';
+import {ImageService} from "../shared/services/image.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {IImage} from "../shared/interfaces/image.interface";
+import {ValeurService} from "../shared/services/valeur.service";
 
 @Component({
   selector: 'app-add-animal',
@@ -22,11 +26,15 @@ export class AddAnimalComponent implements OnInit {
   races: IRace[];
   characters: ICharacter[];
   selectedSpecies: boolean;
+  image: any;
   constructor(private formBuilder: FormBuilder,
               private speciesService: SpeciesService,
               private raceService: RaceService,
               private characterService: CharacterService,
-              private animalService: AnimalService
+              private animalService: AnimalService,
+              private imageService: ImageService,
+              private sanitizer: DomSanitizer,
+              private valeurService: ValeurService
   ) {
     this.createAnimalForm = this.formBuilder.group({
       name: [],
@@ -68,7 +76,6 @@ export class AddAnimalComponent implements OnInit {
         reader.readAsDataURL(event.target.files[i]);
       }
     }
-    console.log(this.createAnimalForm);
   }
 
   get specifications() {
@@ -126,15 +133,79 @@ export class AddAnimalComponent implements OnInit {
   }
 
   create() {
-    this.animalService.toCreate({
+   this.animalService.toCreate({
+     nom: this.createAnimalForm.value.name,
+     age: this.createAnimalForm.value.age,
+     sexe: this.createAnimalForm.value.sex,
+     histoire: this.createAnimalForm.value.story,
+     couleur: this.createAnimalForm.value.color,
+     caractere: this.createAnimalForm.value.character,
+     idEspece: this.createAnimalForm.value.species,
+     idRace: this.createAnimalForm.value.race,
+      }).subscribe(
+          data => {
+            this.uploadImages(data);
+            this.saveSpecifications(data);
+          },
+          err => {
+            console.log(err);
+          }
+      );
+  }
 
-    }).subscribe(
+  transform(imageBase64: string){
+    this.imageService.getImageById(1).subscribe(
         data => {
+          console.log(data.image);
+          this.transform(data.image);
+        },
+        err => {
+          console.log(err);
+        }
+    );
+    return this.image = this.sanitizer.bypassSecurityTrustResourceUrl(imageBase64);
+  }
+
+  uploadImages(data: any) {
+    const images: IImage[] = [];
+    this.createAnimalForm.value.fileSource.forEach(element =>
+        images.push({
+          idAnimal: data.id_animal,
+          image: element
+        })
+    );
+    this.imageService.toCreate(images).subscribe(
+        image => {
           console.log(data);
         },
         err => {
           console.log(err);
         }
     );
+  }
+
+  saveSpecifications(data: any) {
+    const valeurs: ICharacter[] = [];
+    this.createAnimalForm.value.specifications.forEach(element => {
+          if (element.specificationName !== 'default' && element.specificationValue !== '') {
+            valeurs.push({
+              id_animal: data.id_animal,
+              id_caracteristique: element.specificationName,
+              valeur: element.specificationValue
+            });
+          }
+        }
+    );
+    console.log(valeurs);
+    if (valeurs.length > 0) {
+      this.valeurService.toCreate(valeurs).subscribe(
+          valeur => {
+            console.log(valeur);
+          },
+          err => {
+            console.log(err);
+          }
+      );
+  }
   }
 }
