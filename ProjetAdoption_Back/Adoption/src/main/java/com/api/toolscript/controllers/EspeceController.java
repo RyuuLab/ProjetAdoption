@@ -57,7 +57,7 @@ public class EspeceController {
 		}
 	}
 	
-	@PutMapping(path="/{id_espece}/modifierEspece")
+	@PutMapping(path="/modifierEspece")
 	public ResponseEntity<?> modifierEspece(@RequestBody Espece espece){
 		Espece res = especeRepository.findById(espece.getId_espece()).get();
 		res.setNom_espece(espece.getNom_espece());

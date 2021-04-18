@@ -52,7 +52,7 @@ public class CommentaireController {
 		}	
 	}
 	
-	@PutMapping(path="/{id_commentaire}/modifierCommentaire")
+	@PutMapping(path="/modifierCommentaire")
 	public ResponseEntity<?> modifierCommentaire(@RequestBody Commentaire commentaire){
 		commentaireRepository.deleteById(commentaire.getId_commentaire());
 		commentaireRepository.save(commentaire);
