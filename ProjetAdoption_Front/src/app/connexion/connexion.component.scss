@@ -1,0 +1,23 @@
+#buttonClose:focus {
+  outline: none;
+}
+
+.buttonClose {
+  color: gray;
+}
+
+#buttonClose:hover{
+  color: black;
+}
+
+.container {
+  margin-bottom: 5% !important;
+}
+
+.linkToSwitchModal{
+  cursor: pointer;
+}
+
+.linkToSwitchModal:hover {
+  color: red;
+}

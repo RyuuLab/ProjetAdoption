@@ -1,0 +1,114 @@
+<br>
+<h4 class="text-center">Ajouter un animal</h4>
+<hr>
+<div class="container">
+  <form [formGroup]="createAnimalForm">
+    <div class="row">
+
+     <div class="col-5">
+      <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nom">
+      </div>
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input type="text" class="form-control" id="age" formControlName="age" placeholder="Age">
+      </div>
+      <div class="form-group">
+        <label for="sex">Sexe</label>
+      <div class="row" id="sex">
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sex" formControlName="sex" id="m" value="m" checked>
+            <label class="form-check-label" for="m">
+              M
+            </label>
+          </div>
+        </div>
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="sex" formControlName="sex" id="f" value="f">
+            <label class="form-check-label" for="f">
+              F
+            </label>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="form-group">
+        <label for="story">Histoire</label>
+        <textarea class="form-control" id="story" rows="3" formControlName="story" placeholder="Histoire"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="color">Couleur</label>
+        <input type="text" class="form-control" id="color" formControlName="color" placeholder="Couleur">
+      </div>
+
+      <div class="form-group">
+        <label for="character">Caractère</label>
+        <input type="text" class="form-control" id="character" formControlName="character" placeholder="Caractère">
+      </div>
+      <div class="form-group">
+        <label>Espèce</label>
+        <select class="custom-select" formControlName="species" [(ngModel)]="inputSpecies">
+          <option value='default'>Choisissez une espèce...</option>
+          <option value="1">Matthias</option>
+          <option value="2">MATITI</option>
+          <option value="3">NEGRO</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Race</label>
+        <select class="custom-select" formControlName="race" [(ngModel)]="inputRace">
+          <option value='default'>Choisissez une race...</option>
+          <option value="1">Matthias</option>
+          <option value="2">MATITI</option>
+          <option value="3">NEGRO</option>
+        </select>
+      </div>
+      <div class="form-group">
+       <input
+         type="file"
+         id="file"
+         class="inputfile"
+         formControlName="file"
+         multiple=""
+         (change)="onFileChange($event)">
+      </div>
+      <div class="row">
+        <div *ngFor='let url of images; let index = index;' class="image-area col-3">
+          <img [src]="url" class="rounded" alt="...">
+          <a class="remove-image"  style="display: inline;" (click)="removeImg(index)">&#215;</a>
+        </div>
+      </div>
+     </div>
+
+      <div class="col-7">
+        <label>Spécifications  <span type="button"  (click)="addSpecifications()">+</span></label>
+        <div formArrayName="specifications"
+             *ngFor="let item of specifications.controls; let i = index">
+          <div [formGroupName]="i" class="row mb-2">
+            <select class="custom-select col-5 pr-1" formControlName='specificationName'>
+              <option value="1">cheveux long</option>
+              <option value="2">couleur de yeux</option>
+              <option value="3">poils long</option>
+            </select>
+
+            <div class="input-group col-6">
+              <input type="text" class="form-control" formControlName='specificationValue' placeholder="valeur">
+              <div class="input-group-append">
+                <button class="btn btn-outline-danger pb-0" type="button" (click)="deleteSpecifications(i)"><span class="material-icons text-red">cancel</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </form>
+</div>
+
+<hr>
+<br>
+

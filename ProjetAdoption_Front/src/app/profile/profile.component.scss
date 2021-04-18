@@ -1,0 +1,86 @@
+.row {
+  margin: 20px;
+  margin-bottom: 150px;
+}
+
+.jumbotron {
+  border-radius: 0;
+  color: white;
+  text-shadow: 2px 1px black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../../assets/images/1761201.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parralx-bottom {
+  margin: 0;
+}
+
+thead {
+  text-align: center;
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
+.red {
+  color: #6d081a;
+  font-weight: bolder;
+
+}
+
+
+.cardRight {
+  width: 100%;
+}
+
+.imageProfile>img {
+  border-radius: 50%;
+  width: 75%;
+  height: auto;
+  cursor: pointer;
+}
+
+.imageProfile {
+  position: relative;
+}
+
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  cursor: pointer;
+}
+
+.imageProfile>img:hover{
+  opacity: 0.5;
+}
+
+.middle:hover{
+  opacity: 1;
+}
+
+.imageProfile>img:hover ~ .middle {
+  opacity: 1;
+}
+
+.middle:hover ~ .imageProfile>img {
+  opacity: 0.5!important;
+}
+
+.btn-form {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+
+

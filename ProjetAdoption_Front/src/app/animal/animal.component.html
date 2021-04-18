@@ -1,0 +1,228 @@
+<div class="jumbotron">
+
+</div>
+<div class="container">
+  <hr>
+  <div class="row">
+  <div class="div-carousel col-6">
+    <ngb-carousel *ngIf="images">
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img src="../../assets/images/1.jpg" alt="Random first slide">
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img src="../../assets/images/3408.jpg" alt="Random second slide">
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img src="../../assets/images/4.jpg" alt="Random third slide">
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  <div class="col-6">
+    <div class="row">
+      <div class="col-6">
+        <p>Nom: </p>
+        <p>Age:</p>
+        <p>Sexe:</p>
+        <p>Couleur</p>
+        <p>Caractère:</p>
+        <p>espèce:</p>
+        <p>adopté:</p>
+        <p>Race:</p>
+      </div>
+      <div class="col-6">
+        <p>Nom: </p>
+        <p>Age:</p>
+        <p>Sexe:</p>
+        <p>Couleur</p>
+        <p>Caractère:</p>
+        <p>espèce:</p>
+        <p>adopté:</p>
+        <p>Race:</p>
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-info" (click)="openModalFormAdopt(modalAdopt)">L'adopter</button>
+      </div>
+    </div>
+
+  </div>
+    <div class="col-12">
+        <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dignissimos doloribus in ipsam quidem sapiente vitae voluptate. Aliquid, ea, voluptatibus! Facere neque perspiciatis placeat quidem tenetur! Cumque dignissimos est sequi.</span><span>Accusamus ad asperiores blanditiis deserunt dolor dolorum earum et eveniet hic iusto officia omnis pariatur provident quae quisquam repellat reprehenderit repudiandae, similique sit tenetur totam ut, vero vitae voluptas voluptatibus.</span><span>A animi at culpa doloremque eligendi maxime necessitatibus omnis pariatur ratione, recusandae suscipit, temporibus unde ut! Alias architecto assumenda commodi cum facere laudantium minus quia rem, saepe sed, tempora voluptatibus.</span><span>Aliquid deleniti facere nulla quaerat quam? A autem culpa inventore labore repellat similique soluta? Aliquam deleniti dolore molestias qui quos voluptatum? Amet asperiores distinctio excepturi natus non nulla perferendis porro!</span><span>Eaque, neque, nulla. Commodi, cum eaque eos eveniet fuga in libero molestiae, nam neque, nulla officiis possimus recusandae suscipit unde ut voluptas voluptatibus! Consectetur expedita fugit nobis placeat reprehenderit veritatis!</span>
+        </p>
+    <hr>
+    </div>
+
+    <div class="col-12">
+      <button *ngIf="!comment" type="submit" class="btn btn-primary" (click)="comment = true">Ecrire un commentaire</button>
+      <form *ngIf="comment">
+        <h4>ECRIRE UN COMMENTAIRE:</h4>
+        <div class="form-group">
+          <label for="username">Pseudo</label>
+          <input type="text" class="form-control" id="username" placeholder="Pseudo"  name="username" #username>
+        </div>
+        <div class="form-group">
+          <label for="comment">Commentaire</label>
+          <textarea class="form-control" id="comment" rows="2" placeholder="Ajouter un commentaire..." name="comment" #textarea></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary float-right ml-2" (click)="sendComment(username.value, textarea.value)">Envoyer</button>
+        <button type="submit" class="btn btn-danger float-right" (click)="comment = false">Annuler</button>
+      </form>
+    </div>
+
+    <div class="col-12">
+      <hr>
+      <h4>DERNIERS COMMENTAIRES :</h4>
+      <div class="comment">
+        <h5><strong>Hichem</strong> | 18/04/2021</h5>
+        <p><span>Bonjour, est-il toujours disponible ?</span></p>
+        <button *ngIf="!comments[0]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[0] = true">Répondre</button>
+        <hr>
+        <div class="reply ml-5 mb-2">
+          <h6><strong>Admin</strong> | 18/04/2021</h6>
+          <p><span>Bonjour, oui il est toujours disponilble, je vous invite à remplir le formulaire si vous êtes intéressé.</span></p>
+        </div>
+        <div class="reply ml-5 mb-2">
+          <h6><strong>Hichem</strong> | 18/04/2021</h6>
+          <p><span>D'accord merci pour votre réponse.</span></p>
+        </div>
+        <div *ngIf="comments[0]" class="reply ml-5 mb-2">
+          <form>
+            <div class="form-group">
+              <label for="username">Pseudo</label>
+              <input type="text" class="form-control" placeholder="Pseudo" name="username" [(ngModel)]="username[0]">
+            </div>
+            <div class="form-group">
+              <label for="comment">Commentaire</label>
+              <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[0]"></textarea>
+            </div>
+            <button type="submit" class="btn btn-danger mr-2" (click)="comments[0] = false">Annuler</button>
+            <button type="submit" class="btn btn-primary" (click)="sendComment(username[0], textarea[0])">Envoyer</button>
+          </form>
+        </div>
+      </div>
+      <div class="comment">
+        <h5><strong>Jonathan</strong> | 18/04/2021</h5>
+        <p><span>Bonjour, depuis combien de temps est-il castré ? </span></p>
+        <button *ngIf="!comments[1]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[1] = true">Répondre</button>
+        <hr>
+        <div class="reply ml-5 mb-2">
+          <h6><strong>Admin</strong> | 18/04/2021</h6>
+          <p><span>Bonjour, il est castré depuis le 12 janvier 2021.</span></p>
+        </div>
+        <div class="reply ml-5 mb-2">
+          <h6><strong>Jonathan</strong> | 18/04/2021</h6>
+          <p><span>Merci.</span></p>
+        </div>
+        <div *ngIf="comments[1]" class="reply ml-5 mb-2">
+          <form>
+            <div class="form-group">
+              <label for="username">Pseudo</label>
+              <input type="text" class="form-control" placeholder="Pseudo" name="usernmae" [(ngModel)]="username[1]">
+            </div>
+            <div class="form-group">
+              <label for="comment">Commentaire</label>
+              <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[1]"></textarea>
+            </div>
+            <button type="submit" class="btn btn-danger mr-2" (click)="comments[1] = false">Annuler</button>
+            <button type="submit" class="btn btn-primary" (click)="sendComment(username[1], textarea[1])">Envoyer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="jumbotron parralx-bottom">
+</div>
+
+
+
+<ng-template #modalAdopt let-modal>
+  <div class="modal-header">
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAdopt">
+      <h4 class="text-center">Informations personnelles (facultative)</h4>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="firstName">Prénom</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Prénom">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="lastName">Nom</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Nom" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tel">Tél.</label>
+        <input type="text" class="form-control" id="tel" formControlName="tel" placeholder="tél.">
+      </div>
+      <div class="form-group">
+        <label for="address">Adresse</label>
+        <input type="text" class="form-control" id="address" formControlName="address" placeholder="Adresse" >
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="city">Ville</label>
+          <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville" >
+        </div>
+        <div class="form-group col-md-4">
+          <label for="zipCode">Code postal</label>
+          <input type="text" class="form-control" id="zipCode" formControlName="zipCode" placeholder="Code Postal">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="form-check col-md-6">
+            <input class="form-check-input" type="radio" name="appartOrMaison" id="appart"  formControlName="appartOrMaison" value="0" checked>
+            <label class="form-check-label" for="appart">
+              Appartement
+            </label>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="form-check col-md-6">
+            <input class="form-check-input" type="radio" name="appartOrMaison" id="maison" formControlName="appartOrMaison" value="1">
+            <label class="form-check-label" for="maison">
+              Maison
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="jardin">Jardin</label>
+        <div class="row" id="jardin">
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="jardin" formControlName="jardin" id="oui" value="oui" checked>
+              <label class="form-check-label" for="oui">
+                Oui
+              </label>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="jardin" formControlName="jardin" id="non" value="non">
+              <label class="form-check-label" for="non">
+                Non
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Annuler</button>
+    <button  type="submit" class="btn btn-primary" (click)="sendFormAdopt(modal)" >Envoyer</button>
+  </div>
+</ng-template>
+
+
