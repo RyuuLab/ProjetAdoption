@@ -20,5 +20,38 @@ public class Image {
 	@Lob
 	private byte[] image;
 	
+	public Image() {
+		
+	}
+	
+	public Image(Long id_animal, byte[] image ) {
+		this.idAnimal = id_animal;
+		this.image = image;
+	}
+
+	public Long getId_image() {
+		return id_image;
+	}
+
+	public void setId_image(Long id_image) {
+		this.id_image = id_image;
+	}
+
+	public Long getIdAnimal() {
+		return idAnimal;
+	}
+
+	public void setIdAnimal(Long idAnimal) {
+		this.idAnimal = idAnimal;
+	}
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
 	
 }
