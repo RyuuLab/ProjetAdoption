@@ -19,7 +19,7 @@
       <div class="col-6">
             <div class="form-group">
               <label>Espèces enregistrées</label>
-              <select class="custom-select" formControlName="selectedSpecie" name="selectedSpecie">
+              <select class="custom-select" formControlName="selectedSpecie" name="selectedSpecie" >
                 <option selected>Choisissez une caractéristique...</option>
                 <option value="1">cheveux long</option>
                 <option value="2">couleur de yeux</option>
@@ -43,7 +43,7 @@
         </div>
   </form>
     <hr>
-  <form [formGroup]="formRaces">
+  <form [formGroup]="formRace">
     <h4 class="text-center">Races</h4>
     <div class="row">
       <div class="col-12">

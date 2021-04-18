@@ -24,4 +24,8 @@ export class RaceService {
   toUpdate(race: IRace): Observable<any> {
     return this.http.put(AUTH_API + 'modifierRace', race, httpOptions);
   }
+
+  toDelete(idRace: number): Observable<any> {
+    return this.http.delete(AUTH_API + idRace + '/supprimerRace', httpOptions);
+  }
 }

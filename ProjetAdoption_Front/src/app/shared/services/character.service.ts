@@ -22,4 +22,8 @@ export class CharacterService {
   toUpdate(charachter: ICharacter): Observable<any> {
     return this.http.put(AUTH_API + 'modifierCaracteristique', charachter, httpOptions);
   }
+
+  toDelete(idCaracteristique: number): Observable<any> {
+    return this.http.delete(AUTH_API + idCaracteristique + '/supprimerCaracteristique', httpOptions);
+  }
 }

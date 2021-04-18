@@ -23,4 +23,8 @@ export class SpeciesService {
   toUpdate(species: ISpecies): Observable<any> {
     return this.http.put(AUTH_API + 'modifierEspece', species, httpOptions);
   }
+
+  toDelete(idEspece: number): Observable<any> {
+    return this.http.delete(AUTH_API + idEspece + '/supprimerEspece', httpOptions);
+  }
 }

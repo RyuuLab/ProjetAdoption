@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {SpeciesService} from '../shared/services/species.service';
-import {RaceService} from "../shared/services/race.service";
-import {CharacterService} from "../shared/services/character.service";
+import {RaceService} from '../shared/services/race.service';
+import {CharacterService} from '../shared/services/character.service';
+import {ISpecies} from '../shared/interfaces/species.interface';
+import {IRace} from '../shared/interfaces/race.interface';
+import {ICharacter} from '../shared/interfaces/characte.interface';
 
 @Component({
   selector: 'app-admin-custom',
@@ -12,7 +15,10 @@ import {CharacterService} from "../shared/services/character.service";
 export class AdminCustomComponent implements OnInit {
   formSpecies: any;
   formSepecifications: any;
-  formRaces: any;
+  formRace: any;
+  species: ISpecies[];
+  races: IRace[];
+  characters: ICharacter[];
 
   constructor(private formBuilder: FormBuilder,
               private speciesService: SpeciesService,
@@ -24,7 +30,7 @@ export class AdminCustomComponent implements OnInit {
       selectedSpecie: [],
       valueSpecie: [],
     });
-    this.formRaces = this.formBuilder.group({
+    this.formRace = this.formBuilder.group({
       newRace: [],
       selectedRace: [],
       valueRace: [],
@@ -40,7 +46,6 @@ export class AdminCustomComponent implements OnInit {
   }
 
   createSpecie() {
-    console.log(this.formSpecies);
     this.speciesService.toCreate({
       nom_espece: this.formSpecies.value.newSpecie
     }).subscribe(
@@ -54,7 +59,6 @@ export class AdminCustomComponent implements OnInit {
   }
 
   updateSpecie() {
-    console.log(this.formSpecies);
     this.speciesService.toUpdate({
       id_espece: this.formSpecies.value.selectedSpecie,
       nom_espece: this.formSpecies.valueSpecie
@@ -69,14 +73,20 @@ export class AdminCustomComponent implements OnInit {
   }
 
   deleteSpecie() {
-    console.log(this.formSpecies);
+    this.speciesService.toDelete(this.formSpecies.value.selectedSpecie).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   createRace() {
-    console.log(this.formRaces);
     this.raceService.toCreate({
       idEspece: this.formSpecies.value.selectedSpecie,
-      nom_race: this.formRaces.value.newRace
+      nom_race: this.formRace.value.newRace
     }).subscribe(
       data => {
         console.log(data);
@@ -88,10 +98,9 @@ export class AdminCustomComponent implements OnInit {
   }
 
   updateRace() {
-    console.log(this.formRaces);
     this.raceService.toUpdate({
-      id_race: this.formRaces.value.selectedRace,
-      nom_race: this.formRaces.valueRace
+      id_race: this.formRace.value.selectedRace,
+      nom_race: this.formRace.valueRace
     }).subscribe(
       data => {
         console.log(data);
@@ -103,11 +112,17 @@ export class AdminCustomComponent implements OnInit {
   }
 
   deleteRace() {
-    console.log(this.formRaces);
+    this.raceService.toDelete(this.formRace.value.selectedRace).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   createChara() {
-    console.log(this.formSepecifications);
     this.characterService.toCreate({
       id_espece: this.formSpecies.value.selectedSpecie,
       nom_caracteristique: this.formSepecifications.newChara
@@ -122,7 +137,6 @@ export class AdminCustomComponent implements OnInit {
   }
 
   updateChara() {
-    console.log(this.formSepecifications);
     this.characterService.toUpdate({
       id_caracteristique: this.formSepecifications.value.selectedChara,
       nom_caracteristique: this.formSepecifications.valueChara
@@ -137,6 +151,13 @@ export class AdminCustomComponent implements OnInit {
   }
 
   deleteChara() {
-    console.log(this.formSepecifications);
+    this.characterService.toDelete(this.formSepecifications.value.selectedChara).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }
