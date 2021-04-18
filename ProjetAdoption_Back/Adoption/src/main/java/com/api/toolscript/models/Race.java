@@ -15,7 +15,7 @@ public class Race {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_race;
 	
-	private Long id_espece;
+	private Long idEspece;
 	
 	private String nom_race;
 	
@@ -24,7 +24,7 @@ public class Race {
 	}
 	
 	public Race(Long id_espece, String nom_race) {
-		this.id_espece = id_espece;
+		this.idEspece = id_espece;
 		this.nom_race = nom_race;
 	}
 
@@ -36,12 +36,14 @@ public class Race {
 		this.id_race = id_race;
 	}
 
-	public Long getId_espece() {
-		return id_espece;
+	
+
+	public Long getIdEspece() {
+		return idEspece;
 	}
 
-	public void setId_espece(Long id_espece) {
-		this.id_espece = id_espece;
+	public void setIdEspece(Long idEspece) {
+		this.idEspece = idEspece;
 	}
 
 	public String getNom_race() {

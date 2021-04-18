@@ -17,7 +17,7 @@ public class Reponse_com {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_reponse_com;
 	
-	private Long id_commentaire;
+	private Long idCommentaire;
 	
 	@Lob
 	private String reponse_com;
@@ -29,7 +29,7 @@ public class Reponse_com {
 	}
 	
 	public Reponse_com(Long id_commentaire, String reponse_com, Date date_creation) {
-		this.id_commentaire = id_commentaire;
+		this.idCommentaire = id_commentaire;
 		this.reponse_com = reponse_com;
 		this.date_creation = date_creation;
 	}
@@ -42,12 +42,14 @@ public class Reponse_com {
 		this.id_reponse_com = id_reponse_com;
 	}
 
-	public Long getId_commentaire() {
-		return id_commentaire;
+	
+
+	public Long getIdCommentaire() {
+		return idCommentaire;
 	}
 
-	public void setId_commentaire(Long id_commentaire) {
-		this.id_commentaire = id_commentaire;
+	public void setIdCommentaire(Long idCommentaire) {
+		this.idCommentaire = idCommentaire;
 	}
 
 	public String getReponse_com() {

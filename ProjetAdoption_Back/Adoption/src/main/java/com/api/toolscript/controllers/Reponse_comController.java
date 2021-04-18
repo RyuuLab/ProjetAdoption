@@ -34,12 +34,12 @@ public class Reponse_comController {
 	
 	@GetMapping(path="/{id_commentaire}/reponseComByCom")
 	public @ResponseBody Iterable<Reponse_com> getReponseComByCom(@PathVariable Long id_commentaire){
-		return reponse_comRepository.findAllByCommentaire(id_commentaire);
+		return reponse_comRepository.findAllByIdCommentaire(id_commentaire);
 	}
 	
 	@PostMapping(path="/creerReponseCom")
 	public ResponseEntity<?> creerReponseCom(@RequestBody Reponse_com reponse_com){
-		if(reponse_com.getId_commentaire() == null) {
+		if(reponse_com.getIdCommentaire() == null) {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: L'id_commentaire doit être renseigné !"));
 		}
@@ -74,7 +74,7 @@ public class Reponse_comController {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: l'id_commentaire doit être renseigné !"));
 		}else {
-			reponse_comRepository.deleteAllByIdCommentaire(id_commentaire);
+			reponse_comRepository.deleteById(id_commentaire);
 			return ResponseEntity.ok(new MessageResponse("toutes les réponses du commentaire ont été supprimées !"));
 
 		}

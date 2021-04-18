@@ -38,7 +38,7 @@ public class RaceController {
 	
 	@PostMapping(path="/creerRace")
 	public ResponseEntity<?> creerRace(@RequestBody Race race){
-		if(race.getId_espece() == null) {
+		if(race.getIdEspece() == null) {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: L'id_espece doit être renseigné pour la création de la race !"));
 		}else {
