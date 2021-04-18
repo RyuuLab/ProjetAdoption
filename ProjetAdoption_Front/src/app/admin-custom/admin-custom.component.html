@@ -11,7 +11,7 @@
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Nouvelle espèce" formControlName="newSpecie" name="newSpecie">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="createSpecie()">Ajouter</button>
+              <button class="btn btn-outline-success" type="button" (click)="createSpecie()">Ajouter</button>
             </div>
           </div>
         </div>
@@ -19,8 +19,8 @@
       <div class="col-6">
             <div class="form-group">
               <label>Espèces enregistrées</label>
-              <select class="custom-select" formControlName="selectedSpecie" name="selectedSpecie" >
-                <option selected>Choisissez une caractéristique...</option>
+              <select class="custom-select" formControlName="selectedSpecie" name="selectedSpecie" [(ngModel)]="defaultSpecies" (change)="selectSpecies()">
+                <option value="default">Choisissez une espèce...</option>
                 <option value="1">cheveux long</option>
                 <option value="2">couleur de yeux</option>
                 <option value="3">poils long</option>
@@ -29,21 +29,22 @@
           </div>
 
           <div class="col-6">
-            <div class="form-group">
+            <div *ngIf="selectedSpecies" class="form-group">
               <label>Valeur</label>
               <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Valeur" formControlName="valueSpecie" name="valueSpecie">
                 <div class="input-group-append">
-                  <button class="btn btn-outline-secondary" type="button" (click)="updateSpecie()">Modifier</button>
-                  <button class="btn btn-outline-secondary" type="button" (click)="deleteSpecie()">Supprimer</button>
+                  <button class="btn btn-outline-primary" type="button" (click)="updateSpecie()">Modifier</button>
+                  <button class="btn btn-outline-danger" type="button" (click)="deleteSpecie()">Supprimer</button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-  </form>
     <hr>
-  <form [formGroup]="formRace">
+  </form>
+
+  <form *ngIf="selectedSpecies" [formGroup]="formRace">
     <h4 class="text-center">Races</h4>
     <div class="row">
       <div class="col-12">
@@ -52,7 +53,7 @@
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Nouvelle race" formControlName="newRace" name="newRace">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="createRace()">Ajouter</button>
+              <button class="btn btn-outline-success" type="button" (click)="createRace()">Ajouter</button>
             </div>
           </div>
         </div>
@@ -60,8 +61,8 @@
       <div class="col-6">
         <div class="form-group">
           <label>Races enregistrées pour l'espèce</label>
-          <select class="custom-select" formControlName="selectedRace" name="selectedRace">
-            <option selected>Choisissez une race...</option>
+          <select class="custom-select" formControlName="selectedRace" name="selectedRace" [(ngModel)]="defaultRace" (change)="selectRace()">
+            <option value="default">Choisissez une race...</option>
             <option value="1">cheveux long</option>
             <option value="2">couleur de yeux</option>
             <option value="3">poils long</option>
@@ -70,21 +71,22 @@
       </div>
 
       <div class="col-6">
-        <div class="form-group">
+        <div *ngIf="selectedRace" class="form-group">
           <label>Valeur</label>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Valeur" formControlName="valueRace" name="valueRace">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="updateRace()">Modifier</button>
-              <button class="btn btn-outline-secondary" type="button" (click)="deleteRace()">Supprimer</button>
+              <button class="btn btn-outline-primary" type="button" (click)="updateRace()">Modifier</button>
+              <button class="btn btn-outline-danger" type="button" (click)="deleteRace()">Supprimer</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </form>
     <hr>
-  <form [formGroup]="formSepecifications">
+  </form>
+
+  <form *ngIf="selectedSpecies" [formGroup]="formSepecifications">
     <h4 class="text-center">Caractéristiques</h4>
     <div class="row">
       <div class="col-12">
@@ -93,7 +95,7 @@
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Valeur" formControlName="newChara" name="newChara">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="createChara()">Ajouter</button>
+              <button class="btn btn-outline-success" type="button" (click)="createChara()">Ajouter</button>
             </div>
           </div>
         </div>
@@ -101,8 +103,8 @@
       <div class="col-6">
         <div class="form-group">
           <label>Caractéristiques enregistrées pour l'espèce </label>
-          <select class="custom-select" formControlName="selectedChara" name="selectedChara">
-            <option selected>Choisissez une caractéristique...</option>
+          <select class="custom-select" formControlName="selectedChara" name="selectedChara" [(ngModel)]="defaultChara" (change)="selectChara()">
+            <option value="default">Choisissez une caractéristique...</option>
             <option value="1">cheveux long</option>
             <option value="2">couleur de yeux</option>
             <option value="3">poils long</option>
@@ -111,21 +113,22 @@
       </div>
 
       <div class="col-6">
-        <div class="form-group">
+        <div *ngIf="selectedChara" class="form-group">
           <label>Valeur</label>
           <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Valeur" formControlName="valueChara" name="valueChara">
             <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" (click)="updateChara()">Modifier</button>
-              <button class="btn btn-outline-secondary" type="button" (click)="deleteChara()">Supprimer</button>
+              <button class="btn btn-outline-primary" type="button" (click)="updateChara()">Modifier</button>
+              <button class="btn btn-outline-danger" type="button" (click)="deleteChara()">Supprimer</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+    <hr>
   </form>
 </div>
-<hr>
+
 <br>
 
 

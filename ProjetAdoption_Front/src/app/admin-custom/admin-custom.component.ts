@@ -19,6 +19,12 @@ export class AdminCustomComponent implements OnInit {
   species: ISpecies[];
   races: IRace[];
   characters: ICharacter[];
+  defaultSpecies = 'default';
+  defaultRace = 'default';
+  defaultChara = 'default';
+  selectedSpecies: boolean;
+  selectedRace: boolean;
+  selectedChara: boolean;
 
   constructor(private formBuilder: FormBuilder,
               private speciesService: SpeciesService,
@@ -43,6 +49,9 @@ export class AdminCustomComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.selectedSpecies = false;
+    this.selectedRace = false;
+    this.selectedChara = false;
   }
 
   createSpecie() {
@@ -159,5 +168,32 @@ export class AdminCustomComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  selectSpecies() {
+    if (this.formSpecies.value.selectedSpecie !== 'default') {
+      console.log(this.formSpecies.value.selectedSpecie);
+      this.selectedSpecies = true;
+    } else {
+      this.selectedSpecies = false;
+    }
+  }
+
+  selectRace() {
+    if (this.formRace.value.selectedRace !== 'default') {
+      console.log(this.formRace.value.selectedRace);
+      this.selectedRace = true;
+    } else {
+      this.selectedRace = false;
+    }
+  }
+
+  selectChara() {
+    if (this.formSepecifications.value.selectedChara !== 'default') {
+      console.log(this.formSepecifications.value.selectedChara);
+      this.selectedChara = true;
+    } else {
+      this.selectedChara = false;
+    }
   }
 }
