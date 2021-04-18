@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.print.attribute.standard.Sides;
 
 @Entity
 @Table(name = "image")
@@ -18,13 +19,13 @@ public class Image {
 	private Long idAnimal;
 	
 	@Lob
-	private byte[] image;
+	private String image;
 	
 	public Image() {
 		
 	}
 	
-	public Image(Long id_animal, byte[] image ) {
+	public Image(Long id_animal, String image ) {
 		this.idAnimal = id_animal;
 		this.image = image;
 	}
@@ -45,11 +46,11 @@ public class Image {
 		this.idAnimal = idAnimal;
 	}
 
-	public byte[] getImage() {
+	public String getImage() {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	

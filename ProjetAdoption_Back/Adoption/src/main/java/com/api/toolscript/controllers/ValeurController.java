@@ -2,6 +2,7 @@ package com.api.toolscript.controllers;
 
 import java.util.Optional;
 
+import com.api.toolscript.models.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -33,23 +34,22 @@ public class ValeurController {
 	}
 	
 	@PostMapping(path="/creerValeur")
-	public ResponseEntity<?> creerValeur(@RequestBody Valeur valeur){
-		if(valeur.getId_animal() == null) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: L'id_animal doit être renseigné !"));
+	public ResponseEntity<?> creerValeur(@RequestBody Valeur[] valeurs){
+		for(Valeur valeur: valeurs) {
+			if (valeur.getId_animal() == null) {
+				return ResponseEntity.badRequest().body(
+						new MessageResponse("Error: L'id_animal doit être renseigné !"));
+			} else if (valeur.getId_caracteristique() == null) {
+				return ResponseEntity.badRequest().body(
+						new MessageResponse("Error: L'id_caracteristique doit être renseigné !"));
+			} else if (valeur.getValeur() == null || valeur.getValeur().isBlank()) {
+				return ResponseEntity.badRequest().body(
+						new MessageResponse("Error: La valeur doit être renseignée !"));
+			} else {
+				valeurRepository.save(valeur);
+			}
 		}
-		else if(valeur.getId_caracteristique() == null) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: L'id_caracteristique doit être renseigné !"));
-		}
-		else if(valeur.getValeur() == null || valeur.getValeur().isBlank()) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: La valeur doit être renseignée !"));
-		}
-		else {
-			valeurRepository.save(valeur);
 			return ResponseEntity.ok(new MessageResponse("Valeur créée !"));
-		}
 	}
 	
 	@DeleteMapping(path="/{id_valeur}/supprimerValeur")

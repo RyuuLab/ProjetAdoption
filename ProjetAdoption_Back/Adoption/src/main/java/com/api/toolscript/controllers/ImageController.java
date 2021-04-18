@@ -38,15 +38,17 @@ public class ImageController {
 	}
 	
 	@PostMapping(path="/creerImage")
-	public ResponseEntity<?> creerImage(@RequestBody Image image){
-		if(image.getIdAnimal() == null) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: L'id_animal doit être renseigné pour la création de l'image !"));
+	public ResponseEntity<?> creerImage(@RequestBody Image[] images){
+		for(Image image: images) {
+			if(image.getIdAnimal() == null) {
+				return ResponseEntity.badRequest().body(
+						new MessageResponse("Error: L'id_animal doit être renseigné pour la création de l'image !"));
+			}
+			else {
+				imageRepository.save(image);
+			}
 		}
-		else {
-			imageRepository.save(image);
-			return ResponseEntity.ok(new MessageResponse("image créée !"));
-		}
+		return ResponseEntity.ok(new MessageResponse("image créée !"));
 	}
 	
 	@DeleteMapping(path="/{id_image}/supprimerImage")
