@@ -60,7 +60,6 @@ export class AdminCustomComponent implements OnInit {
       nom_espece: this.formSpecies.value.newSpecie
     }).subscribe(
       data => {
-        console.log(data);
         this.getSpecies();
         this.formSpecies.controls['newSpecie'].setValue('');
       },
@@ -77,7 +76,6 @@ export class AdminCustomComponent implements OnInit {
       nom_espece: this.formSpecies.value.valueSpecie
     }).subscribe(
       data => {
-        console.log(data);
         this.getSpecies();
       },
       err => {
@@ -89,7 +87,6 @@ export class AdminCustomComponent implements OnInit {
   deleteSpecie() {
     this.speciesService.toDelete(this.formSpecies.value.selectedSpecie).subscribe(
       data => {
-        console.log(data);
         this.getSpecies();
         this.defaultSpecies = 'default';
         this.selectedSpecies = false;
@@ -106,7 +103,6 @@ export class AdminCustomComponent implements OnInit {
       nom_race: this.formRace.value.newRace
     }).subscribe(
       data => {
-        console.log(data);
         this.getRaces();
         this.formRace.controls['newRace'].setValue('');
       },
@@ -122,7 +118,6 @@ export class AdminCustomComponent implements OnInit {
       nom_race: this.formRace.value.valueRace
     }).subscribe(
       data => {
-        console.log(data);
         this.getRaces();
       },
       err => {
@@ -134,8 +129,9 @@ export class AdminCustomComponent implements OnInit {
   deleteRace() {
     this.raceService.toDelete(this.formRace.value.selectedRace).subscribe(
       data => {
-        console.log(data);
         this.getRaces();
+        this.formRace.controls['valueRace'].setValue('');
+        this.defaultRace = 'default';
       },
       err => {
         console.log(err);
@@ -145,11 +141,12 @@ export class AdminCustomComponent implements OnInit {
 
   createChara() {
     this.characterService.toCreate({
-      id_espece: this.formSpecies.value.selectedSpecie,
-      nom_caracteristique: this.formSepecifications.newChara
+      idEspece: this.formSpecies.value.selectedSpecie,
+      nom_caracteristique: this.formSepecifications.value.newChara
     }).subscribe(
       data => {
-        console.log(data);
+        this.getChara();
+        this.formSepecifications.controls['newChara'].setValue('');
       },
       err => {
         console.log(err);
@@ -160,10 +157,10 @@ export class AdminCustomComponent implements OnInit {
   updateChara() {
     this.characterService.toUpdate({
       id_caracteristique: this.formSepecifications.value.selectedChara,
-      nom_caracteristique: this.formSepecifications.valueChara
+      nom_caracteristique: this.formSepecifications.value.valueChara
     }).subscribe(
       data => {
-        console.log(data);
+        this.getChara();
       },
       err => {
         console.log(err);
@@ -174,7 +171,9 @@ export class AdminCustomComponent implements OnInit {
   deleteChara() {
     this.characterService.toDelete(this.formSepecifications.value.selectedChara).subscribe(
       data => {
-        console.log(data);
+        this.getChara();
+        this.formSepecifications.controls['valueChara'].setValue('');
+        this.defaultChara = 'default';
       },
       err => {
         console.log(err);
@@ -188,6 +187,12 @@ export class AdminCustomComponent implements OnInit {
       this.formSpecies.controls['valueSpecie'].setValue(
         this.species.find(specie => specie.id_espece === +this.formSpecies.value.selectedSpecie).nom_espece);
       this.getRaces();
+      this.getChara();
+      this.defaultSpecies = 'default';
+      this.defaultRace = 'default';
+      this.defaultChara = 'default';
+      this.formRace.controls['valueRace'].setValue('');
+      this.formSepecifications.controls['valueChara'].setValue('');
     } else {
       this.selectedSpecies = false;
     }
@@ -207,6 +212,8 @@ export class AdminCustomComponent implements OnInit {
     if (this.formSepecifications.value.selectedChara !== 'default') {
       console.log(this.formSepecifications.value.selectedChara);
       this.selectedChara = true;
+      this.formSepecifications.controls['valueChara'].setValue(
+        this.characters.find(chara => chara.id_caracteristique === +this.formSepecifications.value.selectedChara).nom_caracteristique);
     } else {
       this.selectedChara = false;
     }
@@ -227,7 +234,17 @@ export class AdminCustomComponent implements OnInit {
     this.raceService.getAll(+this.formSpecies.value.selectedSpecie).subscribe(
       data => {
         this.races = data;
-        console.log(this.races);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getChara() {
+    this.characterService.getAll(+this.formSpecies.value.selectedSpecie).subscribe(
+      data => {
+        this.characters = data;
       },
       err => {
         console.log(err);
