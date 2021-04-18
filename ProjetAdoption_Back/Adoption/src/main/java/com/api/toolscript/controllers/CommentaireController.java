@@ -59,8 +59,11 @@ public class CommentaireController {
 	
 	@PutMapping(path="/modifierCommentaire")
 	public ResponseEntity<?> modifierCommentaire(@RequestBody Commentaire commentaire){
-		commentaireRepository.deleteById(commentaire.getId_commentaire());
-		commentaireRepository.save(commentaire);
+		Commentaire res = commentaireRepository.findById(commentaire.getId_commentaire()).get();
+		res.setId_animal(commentaire.getId_animal());
+		res.setUsername(commentaire.getUsername());
+		res.setCommentaire(commentaire.getCommentaire());
+		commentaireRepository.save(res);
 		return ResponseEntity.ok(new MessageResponse("Commentaire modifié !"));
 	}
 	

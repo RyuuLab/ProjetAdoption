@@ -82,8 +82,10 @@ public class Reponse_comController {
 	
 	@PutMapping(path="/modifierReponseCom")
 	public ResponseEntity<?> modifierReponseCom(@RequestBody Reponse_com reponse_com){
-		reponse_comRepository.deleteById(reponse_com.getId_reponse_com());
-		reponse_comRepository.save(reponse_com);
+		Reponse_com res = reponse_comRepository.findById(reponse_com.getId_reponse_com()).get();
+		res.setIdCommentaire(reponse_com.getIdCommentaire());
+		res.setReponse_com(reponse_com.getReponse_com());
+		reponse_comRepository.save(res);
 		return ResponseEntity.ok(new MessageResponse("Reponse modifiée !"));
 
 	}
