@@ -67,8 +67,9 @@ public class CaracteristiqueController {
 	
 	@PutMapping(path="/modifierCaracteristique")
 	public ResponseEntity<?> modifierCaracteristique(@RequestBody Caracteristique caracteristique){
-		caracteristiqueRepository.deleteById(caracteristique.getId_caracteristique());
-		caracteristiqueRepository.save(caracteristique);
-		return new ResponseEntity<Caracteristique>(caracteristiqueRepository.save(caracteristique), HttpStatus.OK);
+		Caracteristique res = caracteristiqueRepository.findById(caracteristique.getId_caracteristique()).get();
+		res.setNom_caracteristique(caracteristique.getNom_caracteristique());
+		caracteristiqueRepository.save(res);
+		return new ResponseEntity<Caracteristique>(caracteristiqueRepository.save(res), HttpStatus.OK);
 	}
 }
