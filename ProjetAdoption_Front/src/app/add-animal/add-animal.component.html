@@ -50,20 +50,16 @@
       </div>
       <div class="form-group">
         <label>Espèce</label>
-        <select class="custom-select" formControlName="species" [(ngModel)]="inputSpecies">
+        <select class="custom-select" formControlName="species" [(ngModel)]="defaultSpecies" (change)="selectSpecies()">
           <option value='default'>Choisissez une espèce...</option>
-          <option value="1">Matthias</option>
-          <option value="2">MATITI</option>
-          <option value="3">NEGRO</option>
+          <option *ngFor="let specie of species" value="{{specie.id_espece}}">{{specie.nom_espece}}</option>
         </select>
       </div>
-      <div class="form-group">
+      <div *ngIf="selectedSpecies" class="form-group">
         <label>Race</label>
-        <select class="custom-select" formControlName="race" [(ngModel)]="inputRace">
+        <select class="custom-select" formControlName="race" [(ngModel)]="defaultRace">
           <option value='default'>Choisissez une race...</option>
-          <option value="1">Matthias</option>
-          <option value="2">MATITI</option>
-          <option value="3">NEGRO</option>
+          <option *ngFor="let race of races" value="{{race.id_race}}">{{race.nom_race}}</option>
         </select>
       </div>
       <div class="form-group">
@@ -83,15 +79,14 @@
       </div>
      </div>
 
-      <div class="col-7">
+      <div *ngIf="selectedSpecies" class="col-7">
         <label>Spécifications  <span type="button"  (click)="addSpecifications()">+</span></label>
         <div formArrayName="specifications"
              *ngFor="let item of specifications.controls; let i = index">
           <div [formGroupName]="i" class="row mb-2">
-            <select class="custom-select col-5 pr-1" formControlName='specificationName'>
-              <option value="1">cheveux long</option>
-              <option value="2">couleur de yeux</option>
-              <option value="3">poils long</option>
+            <select class="custom-select col-5 pr-1" formControlName='specificationName' >
+              <option value="default">Choisissez une caractéristique...</option>
+              <option *ngFor="let character of characters" value="{{character.id_caracteristique}}">{{character.nom_caracteristique}}</option>
             </select>
 
             <div class="input-group col-6">
@@ -108,7 +103,7 @@
     </div>
   </form>
 </div>
-
+<button (click)="create()">create</button>
 <hr>
 <br>
 

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {SpeciesService} from '../shared/services/species.service';
+import {RaceService} from '../shared/services/race.service';
+import {CharacterService} from '../shared/services/character.service';
+import {ISpecies} from '../shared/interfaces/species.interface';
+import {IRace} from '../shared/interfaces/race.interface';
+import {ICharacter} from '../shared/interfaces/characte.interface';
+import {AnimalService} from '../shared/services/animal.service';
 
 @Component({
   selector: 'app-add-animal',
@@ -9,11 +16,18 @@ import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
 export class AddAnimalComponent implements OnInit {
   createAnimalForm: FormGroup;
   images = [];
-  inputSpecies: any = 'default';
-  inputRace: any = 'default';
-  constructor(private formBuilder: FormBuilder) { }
-
-  ngOnInit(): void {
+  defaultSpecies = 'default';
+  defaultRace = 'default';
+  species: ISpecies[];
+  races: IRace[];
+  characters: ICharacter[];
+  selectedSpecies: boolean;
+  constructor(private formBuilder: FormBuilder,
+              private speciesService: SpeciesService,
+              private raceService: RaceService,
+              private characterService: CharacterService,
+              private animalService: AnimalService
+  ) {
     this.createAnimalForm = this.formBuilder.group({
       name: [],
       age: [],
@@ -27,6 +41,17 @@ export class AddAnimalComponent implements OnInit {
       fileSource: [],
       specifications: this.formBuilder.array([this.createSpecifications()])
     });
+  }
+
+  ngOnInit(): void {
+    this.speciesService.getAll().subscribe(
+        data => {
+          this.species = data;
+        },
+        err => {
+          console.log(err);
+        }
+    );
   }
 
   onFileChange(event) {
@@ -52,7 +77,7 @@ export class AddAnimalComponent implements OnInit {
 
   createSpecifications() {
     return this.formBuilder.group({
-      specificationName: [''],
+      specificationName: ['default'],
       specificationValue: ['']
     });
   }
@@ -71,5 +96,45 @@ export class AddAnimalComponent implements OnInit {
       fileSource: this.images
     });
     console.log(this.createAnimalForm);
+  }
+
+  selectSpecies() {
+    this.specifications.clear();
+    this.addSpecifications();
+    if (this.defaultSpecies !== 'default') {
+      this.selectedSpecies = true;
+      this.raceService.getAll(+this.createAnimalForm.value.species).subscribe(
+          data => {
+            this.races = data;
+          },
+          err => {
+            console.log(err);
+          }
+      );
+      this.characterService.getAll(+this.createAnimalForm.value.species).subscribe(
+          data => {
+            this.characters = data;
+          },
+          err => {
+            console.log(err);
+          }
+      );
+      this.defaultRace = 'default';
+    } else {
+      this.selectedSpecies = false;
+    }
+  }
+
+  create() {
+    this.animalService.toCreate({
+
+    }).subscribe(
+        data => {
+          console.log(data);
+        },
+        err => {
+          console.log(err);
+        }
+    );
   }
 }
