@@ -16,6 +16,12 @@ export class SpeciesService {
   constructor(private http: HttpClient) { }
 
 
+
+
+  getAll(): Observable<any> {
+    return this.http.get(AUTH_API + 'especes', httpOptions);
+  }
+
   toCreate(species: ISpecies): Observable<any> {
     return this.http.post(AUTH_API + 'creerEspece', species, httpOptions);
   }

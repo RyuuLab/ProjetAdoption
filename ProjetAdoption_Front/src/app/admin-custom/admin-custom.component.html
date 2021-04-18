@@ -21,9 +21,7 @@
               <label>Espèces enregistrées</label>
               <select class="custom-select" formControlName="selectedSpecie" name="selectedSpecie" [(ngModel)]="defaultSpecies" (change)="selectSpecies()">
                 <option value="default">Choisissez une espèce...</option>
-                <option value="1">cheveux long</option>
-                <option value="2">couleur de yeux</option>
-                <option value="3">poils long</option>
+                <option *ngFor="let specie of species" value="{{specie.id_espece}}">{{specie.nom_espece}}</option>
               </select>
             </div>
           </div>
@@ -63,9 +61,7 @@
           <label>Races enregistrées pour l'espèce</label>
           <select class="custom-select" formControlName="selectedRace" name="selectedRace" [(ngModel)]="defaultRace" (change)="selectRace()">
             <option value="default">Choisissez une race...</option>
-            <option value="1">cheveux long</option>
-            <option value="2">couleur de yeux</option>
-            <option value="3">poils long</option>
+            <option *ngFor="let race of races" value="{{race.id_race}}">{{race.nom_race}}</option>
           </select>
         </div>
       </div>

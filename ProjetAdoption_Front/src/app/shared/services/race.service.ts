@@ -17,6 +17,10 @@ export class RaceService {
   constructor(private http: HttpClient) { }
 
 
+  getAll(idEspace: number): Observable<any> {
+    return this.http.get(AUTH_API + idEspace + '/raceByEspece', httpOptions);
+  }
+
   toCreate(race: IRace): Observable<any> {
     return this.http.post(AUTH_API + 'creerRace', race, httpOptions);
   }

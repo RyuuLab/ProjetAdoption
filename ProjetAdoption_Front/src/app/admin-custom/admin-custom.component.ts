@@ -52,6 +52,7 @@ export class AdminCustomComponent implements OnInit {
     this.selectedSpecies = false;
     this.selectedRace = false;
     this.selectedChara = false;
+    this.getSpecies();
   }
 
   createSpecie() {
@@ -60,6 +61,8 @@ export class AdminCustomComponent implements OnInit {
     }).subscribe(
       data => {
         console.log(data);
+        this.getSpecies();
+        this.formSpecies.controls['newSpecie'].setValue('');
       },
       err => {
         console.log(err);
@@ -68,12 +71,14 @@ export class AdminCustomComponent implements OnInit {
   }
 
   updateSpecie() {
+    console.log(this.formSpecies.value.valueSpecie);
     this.speciesService.toUpdate({
       id_espece: this.formSpecies.value.selectedSpecie,
-      nom_espece: this.formSpecies.valueSpecie
+      nom_espece: this.formSpecies.value.valueSpecie
     }).subscribe(
       data => {
         console.log(data);
+        this.getSpecies();
       },
       err => {
         console.log(err);
@@ -85,6 +90,9 @@ export class AdminCustomComponent implements OnInit {
     this.speciesService.toDelete(this.formSpecies.value.selectedSpecie).subscribe(
       data => {
         console.log(data);
+        this.getSpecies();
+        this.defaultSpecies = 'default';
+        this.selectedSpecies = false;
       },
       err => {
         console.log(err);
@@ -99,6 +107,8 @@ export class AdminCustomComponent implements OnInit {
     }).subscribe(
       data => {
         console.log(data);
+        this.getRaces();
+        this.formRace.controls['newRace'].setValue('');
       },
       err => {
         console.log(err);
@@ -109,10 +119,11 @@ export class AdminCustomComponent implements OnInit {
   updateRace() {
     this.raceService.toUpdate({
       id_race: this.formRace.value.selectedRace,
-      nom_race: this.formRace.valueRace
+      nom_race: this.formRace.value.valueRace
     }).subscribe(
       data => {
         console.log(data);
+        this.getRaces();
       },
       err => {
         console.log(err);
@@ -124,6 +135,7 @@ export class AdminCustomComponent implements OnInit {
     this.raceService.toDelete(this.formRace.value.selectedRace).subscribe(
       data => {
         console.log(data);
+        this.getRaces();
       },
       err => {
         console.log(err);
@@ -172,8 +184,10 @@ export class AdminCustomComponent implements OnInit {
 
   selectSpecies() {
     if (this.formSpecies.value.selectedSpecie !== 'default') {
-      console.log(this.formSpecies.value.selectedSpecie);
       this.selectedSpecies = true;
+      this.formSpecies.controls['valueSpecie'].setValue(
+        this.species.find(specie => specie.id_espece === +this.formSpecies.value.selectedSpecie).nom_espece);
+      this.getRaces();
     } else {
       this.selectedSpecies = false;
     }
@@ -181,8 +195,9 @@ export class AdminCustomComponent implements OnInit {
 
   selectRace() {
     if (this.formRace.value.selectedRace !== 'default') {
-      console.log(this.formRace.value.selectedRace);
       this.selectedRace = true;
+      this.formRace.controls['valueRace'].setValue(
+        this.races.find(race => race.id_race === +this.formRace.value.selectedRace).nom_race);
     } else {
       this.selectedRace = false;
     }
@@ -195,5 +210,28 @@ export class AdminCustomComponent implements OnInit {
     } else {
       this.selectedChara = false;
     }
+  }
+
+  getSpecies() {
+    this.speciesService.getAll().subscribe(
+      data => {
+        this.species = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getRaces() {
+    this.raceService.getAll(+this.formSpecies.value.selectedSpecie).subscribe(
+      data => {
+        this.races = data;
+        console.log(this.races);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }
