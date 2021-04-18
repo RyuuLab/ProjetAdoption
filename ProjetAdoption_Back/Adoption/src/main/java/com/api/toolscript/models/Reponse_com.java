@@ -28,10 +28,11 @@ public class Reponse_com {
 		
 	}
 	
-	public Reponse_com(Long id_commentaire, String reponse_com, Date date_creation) {
+	public Reponse_com(Long id_commentaire, String reponse_com) {
 		this.idCommentaire = id_commentaire;
 		this.reponse_com = reponse_com;
-		this.date_creation = date_creation;
+		long millis=System.currentTimeMillis();
+		this.date_creation = new java.sql.Date(millis);
 	}
 
 	public Long getId_reponse_com() {
