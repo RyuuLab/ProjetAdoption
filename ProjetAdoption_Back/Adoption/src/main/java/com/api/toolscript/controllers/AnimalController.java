@@ -81,9 +81,9 @@ public class AnimalController {
 		res.setHistoire(animal.getHistoire());
 		res.setCouleur(animal.getCouleur());
 		res.setCaractere(animal.getCaractere());
-		res.setEspece(animal.getEspece());
+		res.setIdEspece(animal.getIdEspece());
 		res.setAdopte(animal.getAdopte());
-		res.setRace(animal.getRace());
+		res.setIdRace(animal.getIdRace());
 		long millis=System.currentTimeMillis();
 		res.setDate_modification(new java.sql.Date(millis));
 		animalRepository.save(res);
