@@ -1,0 +1,15 @@
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item" (click)="changeTemplate=true"><a >Ajouter un animal</a></li>
+      <li class="breadcrumb-item"(click)="changeTemplate=false"><a>Ajouter, modifier ou supprimer une espèce</a></li>
+    </ol>
+  </nav>
+</div>
+
+<ng-container *ngIf="changeTemplate; else adminCustom">
+  <app-add-animal></app-add-animal>
+</ng-container>
+<ng-template #adminCustom>
+  <app-admin-custom></app-admin-custom>
+</ng-template>

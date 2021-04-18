@@ -1,0 +1,148 @@
+<div class="modal-header">
+  <h4 *ngIf="isModal == 1" class="modal-title">Inscription</h4>
+  <h4 *ngIf="isModal == 0" class="modal-title">Se connecter</h4>
+  <h4 *ngIf="isModal == 2" class="modal-title">Mot de passe oublié ?</h4>
+  <button type="button" class="close buttonClose" aria-label="Close" (click)="this.modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body signUp">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+
+        <form *ngIf="isModal == 1" [formGroup]="formSignIn" (ngSubmit)="onRegister()">
+            <small class="text-danger" *ngIf="errorMessage">
+              {{errorMessage}}
+            </small>
+            <small class="text-success" *ngIf="successMessage">
+                {{successMessage}}
+            </small>
+          <div class="form-group">
+            <input type="text" class="form-control" id="penName" formControlName="penName" placeholder="Nom de plume">
+            <div class="text-danger" *ngIf="penName.invalid && (penName.dirty || penName.touched)">
+              <small *ngIf="penName.errors.required">
+                Le nom de plume est requis.
+              </small>
+              <small
+                *ngIf="penName.errors.minlength">
+                Le nom de plume doit comporter au moins 4 caractères.
+              </small>
+              <small
+                *ngIf="penName.errors.maxlength">
+                Le nom de plume ne doit comporter plus de 30 caractères.
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="email" class="form-control" id="mail" formControlName="mail" placeholder="Adresse mail">
+            <div class="text-danger" *ngIf="mail.invalid && (mail.dirty || mail.touched)">
+              <small *ngIf="mail.errors.required">L'adresse mail est requise.</small>
+              <small *ngIf="mail.errors.email"> L'adresse mail doit être valide.</small>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="password" formControlName="password" placeholder="Mot de passe">
+            <div class="text-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
+              <small *ngIf="password.errors.required">
+                Le mot de passe est requis.
+              </small>
+              <small
+                *ngIf="password.errors.minlength">
+                Le mot de passe doit comporter au moins 6 caractères.
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirmez votre mot de passe">
+            <div class="text-danger" *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)">
+              <small *ngIf="confirmPassword.errors.required">
+                Le mot de passe doit être confirmé.
+              </small>
+              <small
+                *ngIf="confirmPassword.errors.confirmPasswordValidator">
+                Les mots de passe ne correspondent pas.
+              </small>
+            </div>
+          </div>
+          <div class="progress" style="height: 5px;">
+            <div class="progress-bar {{colorProgressBar}}" role="progressbar" style="width: {{this.modalCompleted}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <br>
+          <div class="divButton">
+            <a class="linkToSwitchModal" (click)="openFromOtherModal(0)"><u>Déjà inscrit ? </u></a>
+            <button type="submit" class="btn btn-danger float-right" [disabled]="!formSignIn.valid">Créer un compte </button>
+          </div>
+        </form>
+
+        <form *ngIf="isModal == 0" [formGroup]="formSignUp" (ngSubmit)="onConnect()">
+          <small class="text-danger" *ngIf="errorMessage">
+            {{errorMessage}}
+          </small>
+          <div class="form-group">
+            <input type="text" class="form-control" id="identifiant" formControlName="identifiant" placeholder="Identifiant">
+            <div class="text-danger" *ngIf="identifiant.invalid && (identifiant.dirty || identifiant.touched)">
+              <small *ngIf="identifiant.errors.required">
+                L'identifiant est requis.
+              </small>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" id="passwordToConnect" formControlName="passwordToConnect" placeholder="Mot de passe">
+            <div class="text-danger" *ngIf="passwordToConnect.invalid && (passwordToConnect.dirty || passwordToConnect.touched)">
+              <small *ngIf="passwordToConnect.errors.required">
+                Le mot de passe est requis.
+              </small>
+            </div>
+
+            <p class="text-right"> <a class="linkToSwitchModal text-right" (click)="openFromOtherModal( 2)"><u>mot de passe oublié ? </u></a></p>
+          </div>
+          <div class="progress" style="height: 5px;">
+            <div class="progress-bar {{colorProgressBar}}" role="progressbar" style="width: {{this.modalCompleted}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <br>
+          <br>
+          <div class="divButton">
+            <a class="linkToSwitchModal" (click)="openFromOtherModal( 1)"><u>Créer un compte ? </u></a>
+            <button type="submit" class="btn btn-danger float-right" [disabled]="!formSignUp.valid">Se connecter </button>
+          </div>
+        </form>
+
+
+        <form *ngIf="isModal == 2" [formGroup]="formForgetPassword" (ngSubmit)="onForgetPassword()">
+          <div class="form-group">
+            <input type="text" class="form-control" id="identifiantOrMail" formControlName="identifiantOrMail" placeholder="Identifiant ou E-mail">
+            <div class="text-danger" *ngIf="identifiantOrMail.invalid && (identifiantOrMail.dirty || identifiantOrMail.touched)">
+              <small *ngIf="identifiantOrMail.errors.required">
+                L'identifiant ou l'adresse mail est requis.
+              </small>
+            </div>
+          </div>
+          <div class="progress" style="height: 5px;">
+            <div class="progress-bar {{colorProgressBar}}" role="progressbar" style="width: {{this.modalCompleted}}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <br>
+          <br>
+          <div class="divButton">
+            <a class="linkToSwitchModal" (click)="openFromOtherModal( 0)"><u>Se connecter ? </u></a>
+            <button type="submit" class="btn btn-danger float-right" [disabled]="!formForgetPassword.valid">Rénitialiser le mot de passe </button>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="col">
+        <div class="d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <img src="../../assets/images/catdog.jpg" class="card-img-top" alt="...">
+            <div class="card-body">
+              <p class="card-text">Une famille est le seul cadeau qu'ils souhaitent !</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

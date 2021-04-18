@@ -1,0 +1,42 @@
+.jumbotron {
+  height: 300px;
+  border-radius: 0;
+  color: white;
+  text-shadow: 2px 1px black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../../assets/images/home.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parralx-bottom {
+  margin: 0;
+}
+
+thead {
+  text-align: center;
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
+.div-carousel img {
+  width: 100%;
+  height: 400px !important;
+}
+
+.container {
+  margin-bottom: 150px;
+}
+
+.reply {
+  width: 80%;
+}
+
+.comment {
+  border: 1px solid #bdbdbd;
+  padding: 15px;
+  margin-bottom: 15px;
+}

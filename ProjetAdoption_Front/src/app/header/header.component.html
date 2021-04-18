@@ -1,0 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-ligng serve
+ht bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand title" routerLink="/accueil">{{title}}</a>
+
+  <div class="collapse navbar-collapse" id="navbarToggler">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/accueil" routerLinkActive="active">Accueil</a>
+      </li>
+    </ul>
+    <button *ngIf="!isAuthenticated" class="btn btn-outline-info my-2 my-sm-1 mx-2" (click)="open(modalSign, 1)">S'inscrire</button>
+    <button *ngIf="!isAuthenticated" class="btn btn-outline-success my-2 my-sm-1 mx-2" (click)="open(modalSign, 0)">Se connecter</button>
+    <div *ngIf="isAuthenticated" ngbDropdown class="btn-group">
+      <div class="input-group-append">
+        <button ngbDropdownToggle class="btn-profile btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown">
+          {{this.user.username.toUpperCase()}}
+        </button>
+        <button class="btn-logout btn btn-outline-danger" type="button" (click)="signOut()"><i class="material-icons align-middle">logout</i></button>
+      </div>
+      <div ngbDropdownMenu class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" routerLink="/profil">Profil</a>
+        <a class="dropdown-item" routerLink="/">Mes écrits</a>
+        <a class="dropdown-item" routerLink="/">Mes Contacts</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<ng-template #modalSign let-modal>
+  <app-connexion *ngIf="true" [isModal]="isModal" [modal]="modal" [modalCompleted]="modalCompleted"></app-connexion>
+</ng-template>
+
+
+

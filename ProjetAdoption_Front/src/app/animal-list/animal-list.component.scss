@@ -1,0 +1,58 @@
+ngb-carousel .wrapper {
+  position: relative;
+  height: 0;
+  padding-top: 55%; /* Keep ratio for 900x500 images */
+}
+
+ngb-carousel .wrapper>img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.row {
+  margin: 20px;
+  margin-bottom: 150px;
+}
+
+.jumbotron {
+  border-radius: 0;
+  color: white;
+  text-shadow: 2px 1px black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../../assets/images/home.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parralx-bottom {
+  margin: 0;
+}
+
+thead {
+  text-align: center;
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
+.red {
+  color: #6d081a;
+  font-weight: bolder;
+
+}
+
+.card {
+  width: 18rem;
+  height: auto;
+  cursor: pointer;
+}
+
+
+
+
+

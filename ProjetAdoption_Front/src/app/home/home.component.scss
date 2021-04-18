@@ -1,0 +1,84 @@
+.row {
+  margin: 20px;
+  margin-bottom: 150px;
+}
+
+.jumbotron {
+  border-radius: 0;
+  color: white;
+  text-shadow: 2px 1px black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../../assets/images/home.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.parralx-bottom {
+  margin: 0;
+}
+
+thead {
+  text-align: center;
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
+.red {
+  color: #6d081a;
+  font-weight: bolder;
+
+}
+
+.card {
+  width: 18rem;
+  height: 12rem;
+  cursor: pointer;
+}
+
+.card-header {
+  font-weight: bolder;
+}
+
+.card.border-info:hover {
+  background-color: #17a2b8 !important;
+  .card-body, .card-header, .stories {
+    color: white !important;
+  }
+}
+
+.card.border-secondary:hover {
+  background-color: #6c757d !important;
+  .card-body, .card-header, .profile {
+    color: white !important;
+  }
+}
+
+.card.border-success:hover {
+  background-color: #28a745!important;
+  .card-body, .card-header, .contacts {
+    color: white !important;
+  }
+}
+
+.card.border-danger:hover {
+  background-color: #dc3545 !important;
+  .card-body, .card-header {
+    color: white !important;
+  }
+}
+
+.stories {
+  color : #17a2b8 !important;
+}
+
+.contacts {
+  color :#28a745 !important;
+}
+.profile {
+  color : #6c757d !important;
+}
+
+
