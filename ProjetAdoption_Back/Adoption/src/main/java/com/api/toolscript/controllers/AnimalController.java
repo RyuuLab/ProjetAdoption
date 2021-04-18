@@ -76,11 +76,20 @@ public class AnimalController {
 	
 	@PutMapping(path="/modifierAnimal")
 	public ResponseEntity<?> modifierAnimal(@RequestBody Animal animal){
+		Animal res = animalRepository.findById(animal.getId_animal()).get();
+		res.setNom(animal.getNom());
+		res.setAge(animal.getAge());
+		res.setSexe(animal.getSexe());
+		res.setHistoire(animal.getHistoire());
+		res.setCouleur(animal.getCouleur());
+		res.setCaractere(animal.getCaractere());
+		res.setEspece(animal.getEspece());
+		res.setAdopte(animal.getAdopte());
+		res.setRace(animal.getRace());
 		long millis=System.currentTimeMillis();
-		animal.setDate_modification(new java.sql.Date(millis));
-		animalRepository.deleteById(animal.getId_animal());
-		animalRepository.save(animal);
-		return new ResponseEntity<Animal>(animalRepository.save(animal), HttpStatus.OK);
+		res.setDate_modification(new java.sql.Date(millis));
+		animalRepository.save(res);
+		return new ResponseEntity<Animal>(animalRepository.save(res), HttpStatus.OK);
 	}
 	
 	
