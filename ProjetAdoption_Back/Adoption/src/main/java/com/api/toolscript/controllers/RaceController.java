@@ -64,6 +64,7 @@ public class RaceController {
 	public ResponseEntity<?> modifierRace(@RequestBody Race race){
 		Race res = raceRepository.findById(race.getId_race()).get();
 		res.setNom_race(race.getNom_race());
+		raceRepository.save(res);
 		return ResponseEntity.ok(new MessageResponse("Race modifiée !"));
 	}
 	

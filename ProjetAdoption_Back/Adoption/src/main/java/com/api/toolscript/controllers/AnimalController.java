@@ -52,9 +52,9 @@ public class AnimalController {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: Le sexe de l'animal doit être renseigné!"));
 		}
-		else if(animal.getAge() == null || animal.getSexe().isBlank()) {
+		else if(animal.getAge() == null) {
 			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: Le sexe de l'animal doit être renseigné!"));
+					new MessageResponse("Error: L'age de l'animal doit être renseigné!"));
 		}
 		else {
 			animalRepository.save(animal);
@@ -76,6 +76,8 @@ public class AnimalController {
 	
 	@PutMapping(path="/modifierAnimal")
 	public ResponseEntity<?> modifierAnimal(@RequestBody Animal animal){
+		long millis=System.currentTimeMillis();
+		animal.setDate_modification(new java.sql.Date(millis));
 		animalRepository.deleteById(animal.getId_animal());
 		animalRepository.save(animal);
 		return new ResponseEntity<Animal>(animalRepository.save(animal), HttpStatus.OK);

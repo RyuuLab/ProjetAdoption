@@ -36,8 +36,14 @@ public class CommentaireController {
 	
 	@PostMapping(path="/creerCommentaire")
 	public ResponseEntity<?> creerCommentaire(@RequestBody Commentaire commentaire){
-		commentaireRepository.save(commentaire);
-		return new ResponseEntity<Commentaire>(commentaireRepository.save(commentaire), HttpStatus.OK);
+		if(commentaire.getId_animal() == null) {
+			return ResponseEntity.badRequest().body(
+					new MessageResponse("Error: L'id_animal doit être renseigné !"));
+		}else {
+			commentaireRepository.save(commentaire);
+			return new ResponseEntity<Commentaire>(commentaireRepository.save(commentaire), HttpStatus.OK);
+		}
+		
 	}
 	
 	@DeleteMapping(path="/{id_commentaire}/supprimerCommentaire")

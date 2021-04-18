@@ -31,12 +31,13 @@ public class Commentaire {
 		
 	}
 	
-	public Commentaire(Long id_commentaire, Long id_animal, String username, String commentaire, Date date_creation) {
+	public Commentaire(Long id_commentaire, Long id_animal, String username, String commentaire) {
 		this.id_commentaire = id_commentaire;
 		this.id_animal = id_animal;
 		this.username = username;
 		this.commentaire = commentaire;
-		this.date_creation = date_creation;
+		long millis=System.currentTimeMillis();
+		this.date_creation = new java.sql.Date(millis);
 	}
 
 	public Long getId_commentaire() {

@@ -49,7 +49,7 @@ public class Animal {
 		
 	}
 	
-	public Animal(String nom, Integer age, String sexe, String histoire, String couleur, String caractere, String espece, String adopte, String race, Date date_creation, Date date_modification) {
+	public Animal(String nom, Integer age, String sexe, String histoire, String couleur, String caractere, String espece, String adopte, String race) {
 		this.nom = nom;
 		this.age = age;
 		this.sexe = sexe;
@@ -59,8 +59,9 @@ public class Animal {
 		this.espece = espece;
 		this.adopte = adopte;
 		this.race = race;
-		this.date_creation = date_creation;
-		this.date_modification = date_modification;
+		long millis=System.currentTimeMillis();
+		this.date_creation = new java.sql.Date(millis); 
+		this.date_modification = null;
 	}
 
 	public Long getId_animal() {
