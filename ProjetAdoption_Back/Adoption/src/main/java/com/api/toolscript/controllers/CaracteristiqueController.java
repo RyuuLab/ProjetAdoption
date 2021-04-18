@@ -41,7 +41,7 @@ public class CaracteristiqueController {
 	
 	@PostMapping(path="/creerCaracteristique")
 	public ResponseEntity<?> creerCaracteristique(@RequestBody Caracteristique caracteristique){
-		if(caracteristique.getId_espece() == null) {
+		if(caracteristique.getIdEspece() == null) {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: L'id_espece doit être renseigné!"));
 		}else if(caracteristique.getNom_caracteristique() == null || caracteristique.getNom_caracteristique().isBlank()) {

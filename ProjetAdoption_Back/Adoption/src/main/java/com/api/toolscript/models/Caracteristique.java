@@ -54,6 +54,12 @@ public class Caracteristique {
 	public void setNom_caracteristique(String nom_caracteristique) {
 		this.nom_caracteristique = nom_caracteristique;
 	}
-	
-	
+
+	public Long getIdEspece() {
+		return idEspece;
+	}
+
+	public void setIdEspece(Long idEspece) {
+		this.idEspece = idEspece;
+	}
 }
