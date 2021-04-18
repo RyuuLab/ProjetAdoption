@@ -40,11 +40,8 @@ public class AnimalController {
 	
 	@PostMapping(path="/creerAnimal")
 	public ResponseEntity<?> creerAnimal(@RequestBody Animal animal){
-		if(animal.getAdopte() == null || animal.getAdopte().isBlank()) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: Le status de l'animal doit être renseigné!"));
-		}
-		else if(animal.getNom() == null || animal.getNom().isBlank()) {
+		
+		if(animal.getNom() == null || animal.getNom().isBlank()) {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: Le nom l'animal doit être renseigné!"));
 		}
@@ -57,10 +54,13 @@ public class AnimalController {
 					new MessageResponse("Error: L'age de l'animal doit être renseigné!"));
 		}
 		else {
+			animal.setAdopte("non");
 			animalRepository.save(animal);
 			return new ResponseEntity<Animal>(animalRepository.save(animal), HttpStatus.OK);
 
 		}
+		
+		
 	}
 	
 	@DeleteMapping(path="/{id_animal}/supprimerAnimal")
