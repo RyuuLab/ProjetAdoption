@@ -15,6 +15,11 @@ const httpOptions = {
 export class CharacterService {
   constructor(private http: HttpClient) { }
 
+
+  getAll(idEspace: number): Observable<any> {
+    return this.http.get(AUTH_API + idEspace + '/allCaractByEspece', httpOptions);
+  }
+
   toCreate(charachter: ICharacter): Observable<any> {
     return this.http.post(AUTH_API + 'creerCaracteristique', charachter, httpOptions);
   }

@@ -101,9 +101,7 @@
           <label>Caractéristiques enregistrées pour l'espèce </label>
           <select class="custom-select" formControlName="selectedChara" name="selectedChara" [(ngModel)]="defaultChara" (change)="selectChara()">
             <option value="default">Choisissez une caractéristique...</option>
-            <option value="1">cheveux long</option>
-            <option value="2">couleur de yeux</option>
-            <option value="3">poils long</option>
+            <option *ngFor="let character of characters" value="{{character.id_caracteristique}}">{{character.nom_caracteristique}}</option>
           </select>
         </div>
       </div>
