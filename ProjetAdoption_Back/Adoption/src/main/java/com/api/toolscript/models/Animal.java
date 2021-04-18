@@ -120,12 +120,22 @@ public class Animal {
 		this.caractere = caractere;
 	}
 
-	public Long getEspece() {
+	
+
+	public Long getIdEspece() {
 		return idEspece;
 	}
 
-	public void setEspece(Long espece) {
-		this.idEspece = espece;
+	public void setIdEspece(Long idEspece) {
+		this.idEspece = idEspece;
+	}
+
+	public Long getIdRace() {
+		return idRace;
+	}
+
+	public void setIdRace(Long idRace) {
+		this.idRace = idRace;
 	}
 
 	public String getAdopte() {
@@ -134,14 +144,6 @@ public class Animal {
 
 	public void setAdopte(String adopte) {
 		this.adopte = adopte;
-	}
-
-	public Long getRace() {
-		return idRace;
-	}
-
-	public void setRace(Long race) {
-		this.idRace = race;
 	}
 
 	public Date getDate_creation() {
