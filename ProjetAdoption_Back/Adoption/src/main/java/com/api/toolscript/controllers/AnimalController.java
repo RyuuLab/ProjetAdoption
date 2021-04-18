@@ -34,8 +34,8 @@ public class AnimalController {
 	}
 	
 	@GetMapping(path="/animauxByEspece")
-	public @ResponseBody Iterable<Animal> getAnimauxByEspece(@PathVariable String espece){
-		return animalRepository.findAllByEspece(espece);
+	public @ResponseBody Iterable<Animal> getAnimauxByEspece(@PathVariable Long id_espece){
+		return animalRepository.findAllByIdEspece(id_espece);
 	}
 	
 	@PostMapping(path="/creerAnimal")

@@ -34,12 +34,12 @@ public class Animal {
 	
 	private String caractere;
 	
-	private String espece;
+	private Long idEspece;
 	
 	@NotBlank
 	private String adopte;
 	
-	private String race;
+	private Long idRace;
 	
 	private Date date_creation;
 	
@@ -49,16 +49,16 @@ public class Animal {
 		
 	}
 	
-	public Animal(String nom, Integer age, String sexe, String histoire, String couleur, String caractere, String espece, String adopte, String race) {
+	public Animal(String nom, Integer age, String sexe, String histoire, String couleur, String caractere, Long id_espece, String adopte, Long id_race) {
 		this.nom = nom;
 		this.age = age;
 		this.sexe = sexe;
 		this.histoire = histoire;
 		this.couleur = couleur;
 		this.caractere = caractere;
-		this.espece = espece;
+		this.idEspece = id_espece;
 		this.adopte = adopte;
-		this.race = race;
+		this.idRace = id_race;
 		long millis=System.currentTimeMillis();
 		this.date_creation = new java.sql.Date(millis); 
 		this.date_modification = null;
@@ -120,12 +120,12 @@ public class Animal {
 		this.caractere = caractere;
 	}
 
-	public String getEspece() {
-		return espece;
+	public Long getEspece() {
+		return idEspece;
 	}
 
-	public void setEspece(String espece) {
-		this.espece = espece;
+	public void setEspece(Long espece) {
+		this.idEspece = espece;
 	}
 
 	public String getAdopte() {
@@ -136,12 +136,12 @@ public class Animal {
 		this.adopte = adopte;
 	}
 
-	public String getRace() {
-		return race;
+	public Long getRace() {
+		return idRace;
 	}
 
-	public void setRace(String race) {
-		this.race = race;
+	public void setRace(Long race) {
+		this.idRace = race;
 	}
 
 	public Date getDate_creation() {
