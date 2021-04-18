@@ -16,7 +16,7 @@ public class Caracteristique {
 	private Long id_caracteristique; 
 	
 	@NotBlank
-	private Long id_espece;
+	private Long idEspece;
 	
 	@NotBlank
 	private String nom_caracteristique;
@@ -27,7 +27,7 @@ public class Caracteristique {
 	
 	public Caracteristique(Long id_caracteristique, Long id_espece, String nom_carateristique) {
 		this.id_caracteristique = id_caracteristique;
-		this.id_espece = id_espece;
+		this.idEspece = id_espece;
 		this.nom_caracteristique = nom_carateristique;
 	}
 
@@ -40,11 +40,11 @@ public class Caracteristique {
 	}
 
 	public Long getId_espece() {
-		return id_espece;
+		return idEspece;
 	}
 
 	public void setId_espece(Long id_espece) {
-		this.id_espece = id_espece;
+		this.idEspece = id_espece;
 	}
 
 	public String getNom_caracteristique() {

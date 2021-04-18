@@ -33,6 +33,11 @@ public class AnimalController {
 		return animalRepository.findById(id_animal);
 	}
 	
+	@GetMapping(path="/animauxByEspece")
+	public @ResponseBody Iterable<Animal> getAnimauxByEspece(@PathVariable String espece){
+		return animalRepository.findAllByEspece(espece);
+	}
+	
 	@PostMapping(path="/creerAnimal")
 	public ResponseEntity<?> creerAnimal(@RequestBody Animal animal){
 		if(animal.getAdopte() == null || animal.getAdopte().isBlank()) {

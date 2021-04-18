@@ -34,6 +34,11 @@ public class CaracteristiqueController {
 		return caracteristiqueRepository.findById(id_caract);
 	}
 	
+	@GetMapping(path="/{id_espece}/allCaractByEspece")
+	public @ResponseBody Iterable<Caracteristique> getAllCaractByEspece(@PathVariable Long id_espece){
+		return caracteristiqueRepository.findAllByIdEspece(id_espece);
+	}
+	
 	@PostMapping(path="/creerCaracteristique")
 	public ResponseEntity<?> creerCaracteristique(@RequestBody Caracteristique caracteristique){
 		if(caracteristique.getId_espece() == null) {

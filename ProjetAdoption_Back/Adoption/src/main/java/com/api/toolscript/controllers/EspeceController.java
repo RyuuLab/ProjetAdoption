@@ -34,6 +34,11 @@ public class EspeceController {
 		return especeRepository.findById(id_espece);
 	}
 	
+	@GetMapping(path="/especes")
+	public @ResponseBody Iterable<Espece> getAllEspece(){
+		return especeRepository.findAll();
+	}
+	
 	@PostMapping(path="/creerEspece")
 	public ResponseEntity<?> creerEspece(@RequestBody Espece espece){
 		if(espece.getNom_espece() == null || espece.getNom_espece().isBlank()) {

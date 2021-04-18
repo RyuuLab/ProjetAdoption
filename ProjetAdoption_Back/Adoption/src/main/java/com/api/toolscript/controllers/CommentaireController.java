@@ -38,7 +38,6 @@ public class CommentaireController {
 	public ResponseEntity<?> creerCommentaire(@RequestBody Commentaire commentaire){
 		commentaireRepository.save(commentaire);
 		return new ResponseEntity<Commentaire>(commentaireRepository.save(commentaire), HttpStatus.OK);
-
 	}
 	
 	@DeleteMapping(path="/{id_commentaire}/supprimerCommentaire")
