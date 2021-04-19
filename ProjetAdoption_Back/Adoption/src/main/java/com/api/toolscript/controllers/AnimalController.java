@@ -33,7 +33,7 @@ public class AnimalController {
 		return animalRepository.findById(id_animal);
 	}
 	
-	@GetMapping(path="/animauxByEspece")
+	@GetMapping(path="/{id_espece}/animauxByEspece")
 	public @ResponseBody Iterable<Animal> getAnimauxByEspece(@PathVariable Long id_espece){
 		return animalRepository.findAllByIdEspece(id_espece);
 	}
