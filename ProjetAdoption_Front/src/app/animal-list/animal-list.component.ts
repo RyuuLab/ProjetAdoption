@@ -54,4 +54,7 @@ export class AnimalListComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(imageBase64);
   }
 
+  toAnimal(idAnimal: number) {
+    this.router.navigate(['/animal', idAnimal]);
+  }
 }

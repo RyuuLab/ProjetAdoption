@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'menu-admin', component: MenuAdminComponent, data: {title: 'Menu admin'}  },
   { path: 'liste-especes', component: SpeciesListComponent, data: {title: 'Liste d\'especes'}  },
   { path: 'liste-animaux/:specieId', component: AnimalListComponent, data: {title: 'Liste d\'animaux'}  },
-  { path: 'animal', component: AnimalComponent, data: {title: 'Animal'}  },
+  { path: 'animal/:animalId', component: AnimalComponent, data: {title: 'Animal'}  },
   { path: 'page-introuvable', component: PageNotFoundComponent, data: {title: 'Page introuvable'} },
   { path: '**', redirectTo: 'page-introuvable', pathMatch: 'full'}
   // { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard], data: {title: 'Profil'}  },
