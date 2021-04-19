@@ -13,8 +13,8 @@ ngb-carousel .wrapper>img {
 }
 
 .row {
-  margin: 20px;
-  margin-bottom: 150px;
+  margin: auto;
+  width: 100% !important;
 }
 
 .jumbotron {
@@ -47,10 +47,19 @@ thead {
 }
 
 .card {
-  width: 18rem;
-  height: auto;
-  cursor: pointer;
+  min-width: 22rem!important;
+  height: auto!important;
+  cursor: pointer!important;
+  padding: 0;
 }
+
+.flex-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 
 
 

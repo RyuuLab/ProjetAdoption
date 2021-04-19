@@ -23,4 +23,8 @@ export class ImageService {
   getImageById(idImage: number): Observable<any> {
     return this.http.get(AUTH_API + idImage, httpOptions);
   }
+
+  getImageByIdAnimal(idAnimal: number): Observable<any> {
+    return this.http.get(AUTH_API + idAnimal + '/imageByAnimal', httpOptions);
+  }
 }

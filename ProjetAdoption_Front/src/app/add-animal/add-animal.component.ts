@@ -160,19 +160,6 @@ export class AddAnimalComponent implements OnInit {
       );
   }
 
-  transform(imageBase64: string){
-    this.imageService.getImageById(1).subscribe(
-        data => {
-          console.log(data.image);
-          this.transform(data.image);
-        },
-        err => {
-          console.log(err);
-        }
-    );
-    return this.image = this.sanitizer.bypassSecurityTrustResourceUrl(imageBase64);
-  }
-
   uploadImages(data: any) {
     const images: IImage[] = [];
     this.createAnimalForm.value.fileSource.forEach(element =>

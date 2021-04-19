@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {Title} from '@angular/platform-browser';
+import {DomSanitizer, Title} from '@angular/platform-browser';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SiteDataService} from '../shared/services/site-data.service';
 import {IAnimal} from '../shared/interfaces/animal.interface';
 import {AnimalService} from '../shared/services/animal.service';
+import {ImageService} from '../shared/services/image.service';
 
 @Component({
   selector: 'app-animal-list',
@@ -19,7 +20,9 @@ export class AnimalListComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private siteDataService: SiteDataService,
-    private animalService: AnimalService
+    private animalService: AnimalService,
+    private imageService: ImageService,
+    private sanitizer: DomSanitizer
   ) {
     this.siteDataService.changeTitle(titleService, route);
   }
@@ -28,14 +31,27 @@ export class AnimalListComponent implements OnInit {
     this.specieId = +this.route.snapshot.paramMap.get('specieId');
     console.log(this.specieId);
     this.animalService.getAllBySpecie(this.specieId).subscribe(
-      data => {
-        console.log(data);
-        this.animals = data;
+      animals => {
+        this.animals = animals;
+        this.animals.forEach(
+          animal => {
+            this.imageService.getImageByIdAnimal(animal.id_animal).subscribe(
+              images => {
+                animal.image = images;
+                console.log(this.animals);
+              }
+            );
+          }
+        );
       },
       err => {
         console.log(err);
         }
     );
+  }
+
+  transform(imageBase64: string){
+    return this.sanitizer.bypassSecurityTrustResourceUrl(imageBase64);
   }
 
 }
