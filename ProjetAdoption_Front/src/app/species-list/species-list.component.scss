@@ -43,7 +43,6 @@ thead {
 .red {
   color: #6d081a;
   font-weight: bolder;
-
 }
 
 .card {
@@ -84,15 +83,12 @@ thead {
   }
 }
 
-.stories {
-  color : #17a2b8 !important;
+.flex-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.contacts {
-  color :#28a745 !important;
-}
-.profile {
-  color : #6c757d !important;
-}
 
 

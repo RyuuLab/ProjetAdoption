@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormArray, FormBuilder, FormGroup} from '@angular/forms';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
+import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SpeciesService} from '../shared/services/species.service';
 import {RaceService} from '../shared/services/race.service';
 import {CharacterService} from '../shared/services/character.service';
@@ -7,10 +7,10 @@ import {ISpecies} from '../shared/interfaces/species.interface';
 import {IRace} from '../shared/interfaces/race.interface';
 import {ICharacter} from '../shared/interfaces/characte.interface';
 import {AnimalService} from '../shared/services/animal.service';
-import {ImageService} from "../shared/services/image.service";
-import {DomSanitizer} from "@angular/platform-browser";
-import {IImage} from "../shared/interfaces/image.interface";
-import {ValeurService} from "../shared/services/valeur.service";
+import {ImageService} from '../shared/services/image.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {IImage} from '../shared/interfaces/image.interface';
+import {ValeurService} from '../shared/services/valeur.service';
 
 @Component({
   selector: 'app-add-animal',
@@ -27,6 +27,11 @@ export class AddAnimalComponent implements OnInit {
   characters: ICharacter[];
   selectedSpecies: boolean;
   image: any;
+  showAlert: boolean = false;
+  successMessage: boolean;
+  name: string;
+  @Output() sendForm = new EventEmitter<FormGroup>();
+  @Input() savedForm: FormGroup;
   constructor(private formBuilder: FormBuilder,
               private speciesService: SpeciesService,
               private raceService: RaceService,
@@ -37,16 +42,16 @@ export class AddAnimalComponent implements OnInit {
               private valeurService: ValeurService
   ) {
     this.createAnimalForm = this.formBuilder.group({
-      name: [],
-      age: [],
-      sex: [],
-      story: [],
-      color: [],
-      character: [],
-      species: [],
-      race: [],
+      name: ['', Validators.required],
+      age: ['', Validators.required],
+      sex: ['', Validators.required],
+      story: ['', Validators.required],
+      color: ['', Validators.required],
+      character: ['', Validators.required],
+      species: ['', Validators.required],
+      race: ['', Validators.required],
       file: [],
-      fileSource: [],
+      fileSource: ['', Validators.required],
       specifications: this.formBuilder.array([this.createSpecifications()])
     });
   }
@@ -55,6 +60,22 @@ export class AddAnimalComponent implements OnInit {
     this.speciesService.getAll().subscribe(
         data => {
           this.species = data;
+          if (this.savedForm) {
+            this.createAnimalForm = this.savedForm;
+            this.defaultSpecies = this.createAnimalForm.value.species;
+            console.log(this.defaultSpecies);
+            if (this.defaultSpecies && this.species.find(specie => specie.id_espece === +this.defaultSpecies)) {
+              this.selectedSpecies = true;
+              this.getRaces(+this.createAnimalForm.value.species);
+              this.getCharacters(+this.createAnimalForm.value.species);
+              this.defaultRace = this.createAnimalForm.value.race;
+            } else {
+              this.createAnimalForm.controls.species.setValue('default');
+              console.log('false');
+            }
+            this.createAnimalForm.controls.file.setValue('');
+            this.createAnimalForm.controls.fileSource.setValue('');
+          }
         },
         err => {
           console.log(err);
@@ -110,22 +131,8 @@ export class AddAnimalComponent implements OnInit {
     this.addSpecifications();
     if (this.defaultSpecies !== 'default') {
       this.selectedSpecies = true;
-      this.raceService.getAll(+this.createAnimalForm.value.species).subscribe(
-          data => {
-            this.races = data;
-          },
-          err => {
-            console.log(err);
-          }
-      );
-      this.characterService.getAll(+this.createAnimalForm.value.species).subscribe(
-          data => {
-            this.characters = data;
-          },
-          err => {
-            console.log(err);
-          }
-      );
+      this.getRaces(+this.createAnimalForm.value.species);
+      this.getCharacters(+this.createAnimalForm.value.species);
       this.defaultRace = 'default';
     } else {
       this.selectedSpecies = false;
@@ -177,6 +184,15 @@ export class AddAnimalComponent implements OnInit {
     this.imageService.toCreate(images).subscribe(
         image => {
           console.log(data);
+          this.name = this.createAnimalForm.value.name;
+          this.createAnimalForm.reset();
+          this.images = [];
+          this.defaultSpecies = 'default';
+          this.defaultRace = 'default';
+          this.selectedSpecies = false;
+          this.successMessage = true;
+          this.showAlert = true;
+          this.deleteSuccessMessage();
         },
         err => {
           console.log(err);
@@ -207,5 +223,42 @@ export class AddAnimalComponent implements OnInit {
           }
       );
   }
+  }
+
+  deleteSuccessMessage() {
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
+    setTimeout(() => {
+      this.successMessage = false;
+    }, 5400);
+  }
+
+  saveForm() {
+    console.log('change');
+    console.log(this.createAnimalForm);
+    this.sendForm.emit(this.createAnimalForm);
+  }
+
+  getRaces(idSpecie: number) {
+    this.raceService.getAll(idSpecie).subscribe(
+      data => {
+        this.races = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  getCharacters(idSpecie: number) {
+    this.characterService.getAll(idSpecie).subscribe(
+      data => {
+        this.characters = data;
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

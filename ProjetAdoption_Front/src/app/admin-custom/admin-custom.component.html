@@ -2,6 +2,9 @@
 <h4 class="text-center">Ajouter, modifier ou supprimer une espèce</h4>
 <hr>
 <div class="container">
+  <div *ngIf="successMessage" class="alert alert-success" role="alert" [style.opacity]="!showAlert ? '0' : '1'" [style.visibility]="!showAlert ? 'hidden' : 'visible'">
+    {{successMessage}}
+  </div>
   <form [formGroup]="formSpecies">
     <h4 class="text-center">Espèces</h4>
     <div class="row">

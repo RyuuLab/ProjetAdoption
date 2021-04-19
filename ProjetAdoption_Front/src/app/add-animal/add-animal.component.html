@@ -1,19 +1,28 @@
 <br>
 <h4 class="text-center">Ajouter un animal</h4>
+
 <hr>
 <div class="container">
-  <form [formGroup]="createAnimalForm">
+  <form [formGroup]="createAnimalForm" (change)="saveForm()">
+    <div *ngIf="successMessage" class="alert alert-success" role="alert" [style.opacity]="!showAlert ? '0' : '1'" [style.visibility]="!showAlert ? 'hidden' : 'visible'">
+      {{this.name}} a été ajouté avec succès.
+    </div>
     <div class="row">
-
      <div class="col-5">
       <div class="form-group">
         <label for="name">Nom</label>
         <input type="text" class="form-control" id="name" formControlName="name" placeholder="Nom">
+        <div class="text-danger" *ngIf="createAnimalForm.controls['name'].invalid && (createAnimalForm.controls['name'].dirty || createAnimalForm.controls['name'].touched)">
+          <small *ngIf="createAnimalForm.controls['name'].errors.required">Le nom est un champ obligatoire</small>
+        </div>
       </div>
       <div class="form-group">
         <label for="age">Age</label>
         <input type="text" class="form-control" id="age" formControlName="age" placeholder="Age">
       </div>
+       <div class="text-danger" *ngIf="createAnimalForm.controls['age'].invalid && (createAnimalForm.controls['age'].dirty || createAnimalForm.controls['age'].touched)">
+         <small *ngIf="createAnimalForm.controls['age'].errors.required">L'age est un champ obligatoire</small>
+       </div>
       <div class="form-group">
         <label for="sex">Sexe</label>
       <div class="row" id="sex">
@@ -38,15 +47,24 @@
       <div class="form-group">
         <label for="story">Histoire</label>
         <textarea class="form-control" id="story" rows="3" formControlName="story" placeholder="Histoire"></textarea>
+        <div class="text-danger" *ngIf="createAnimalForm.controls['story'].invalid && (createAnimalForm.controls['story'].dirty || createAnimalForm.controls['story'].touched)">
+          <small *ngIf="createAnimalForm.controls['story'].errors.required">L'histoire est un champ obligatoire</small>
+        </div>
       </div>
       <div class="form-group">
         <label for="color">Couleur</label>
         <input type="text" class="form-control" id="color" formControlName="color" placeholder="Couleur">
+        <div class="text-danger" *ngIf="createAnimalForm.controls['color'].invalid && (createAnimalForm.controls['color'].dirty || createAnimalForm.controls['color'].touched)">
+          <small *ngIf="createAnimalForm.controls['color'].errors.required">La couleur est un champ obligatoire</small>
+        </div>
       </div>
 
       <div class="form-group">
         <label for="character">Caractère</label>
         <input type="text" class="form-control" id="character" formControlName="character" placeholder="Caractère">
+        <div class="text-danger" *ngIf="createAnimalForm.controls['character'].invalid && (createAnimalForm.controls['character'].dirty || createAnimalForm.controls['character'].touched)">
+          <small *ngIf="createAnimalForm.controls['character'].errors.required">Le caractère est un champ obligatoire</small>
+        </div>
       </div>
       <div class="form-group">
         <label>Espèce</label>
@@ -54,6 +72,9 @@
           <option value='default'>Choisissez une espèce...</option>
           <option *ngFor="let specie of species" value="{{specie.id_espece}}">{{specie.nom_espece}}</option>
         </select>
+        <div class="text-danger" *ngIf="createAnimalForm.controls['species'].dirty || createAnimalForm.controls['species'].touched">
+          <small *ngIf="createAnimalForm.value.species === 'default'">L'espèce est un champ obligatoire</small>
+        </div>
       </div>
       <div *ngIf="selectedSpecies" class="form-group">
         <label>Race</label>
@@ -61,15 +82,21 @@
           <option value='default'>Choisissez une race...</option>
           <option *ngFor="let race of races" value="{{race.id_race}}">{{race.nom_race}}</option>
         </select>
+        <div class="text-danger" *ngIf="createAnimalForm.controls['race'].dirty || createAnimalForm.controls['race'].touched">
+          <small *ngIf="createAnimalForm.value.race === 'default'">L'espèce est un champ obligatoire</small>
+        </div>
       </div>
-      <div class="form-group">
-       <input
-         type="file"
-         id="file"
-         class="inputfile"
-         formControlName="file"
-         multiple=""
-         (change)="onFileChange($event)">
+      <div class="form-group ">
+        <label for="file-upload" class="custom-file-upload">
+          <span class="material-icons align-bottom text-primary">add_a_photo</span> Ajouter des photos
+        </label>
+        <input
+          type="file"
+          id="file-upload"
+          class="inputfile"
+          formControlName="file"
+          multiple=""
+          (change)="onFileChange($event)">
       </div>
       <div class="row">
         <div *ngFor='let url of images; let index = index;' class="image-area col-3">
@@ -77,6 +104,7 @@
           <a class="remove-image"  style="display: inline;" (click)="removeImg(index)">&#215;</a>
         </div>
       </div>
+       <button type="button" class="btn btn-success btn-lg btn-block" (click)="create()" [disabled]="!this.createAnimalForm.valid">Ajouter un animal</button>
      </div>
 
       <div *ngIf="selectedSpecies" class="col-7">
@@ -92,7 +120,7 @@
             <div class="input-group col-6">
               <input type="text" class="form-control" formControlName='specificationValue' placeholder="valeur">
               <div class="input-group-append">
-                <button class="btn btn-outline-danger pb-0" type="button" (click)="deleteSpecifications(i)"><span class="material-icons text-red">cancel</span></button>
+                <button class="btn btn-outline-danger pb-0" type="button" (click)="deleteSpecifications(i)"><span class="material-icons">close</span></button>
               </div>
             </div>
           </div>
@@ -102,9 +130,11 @@
 
     </div>
   </form>
-  <button type="button" class="btn btn-primary" (click)="create()">Ajouter un animal</button>
+
 </div>
 <hr>
 <br>
+
+
 
 

@@ -6,8 +6,6 @@ hr {
   width: 50%;
 }
 
-
-
 .image-area {
   position: relative;
   width: 25%;
@@ -41,6 +39,25 @@ hr {
 .remove-image:hover {
   background: #E54E4E;
   cursor: pointer;
+}
+
+.form-group {
+  margin: 0!important;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  margin-top: 7px;
+}
+
+.custom-file-upload:hover {
+  background-color: #d7d7d7;
 }
 
 

@@ -1,68 +1,32 @@
-<div class="jumbotron">
-  <div>
-    <h1 class="display-4">{{title}}</h1>
-    <p class="lead">
-      <span>Les animaux sont nés pour nous apprendre à aimer</span>
-    </p>
-    <p class="lead">
-      <a class="btn btn-danger btn-lg" href="#" role="button">Adopter</a>
-    </p>  </div>
-</div>
-<hr>
-<div class="container">
-  <div class="row">
-    <div class="col-3 d-flex justify-content-center">
-      <div class="card border-info mb-3">
-        <div class="card-header">CHIEN</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">X chiens vous attendent</h5>
-        </div>
-      </div>
+<div class="flex-wrapper">
+  <div class="main">
+  <div class="jumbotron">
+    <div>
+      <h1 class="display-4">{{title}}</h1>
+      <p class="lead">
+        <span>Liste de toutes les espèces disponibles sur Adopt Me!</span>
+      </p>
     </div>
-    <div class="col-3 d-flex justify-content-center">
-      <div class="card border-info mb-3">
-        <div class="card-header">CHIEN</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">X chiens vous attendent</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-3 d-flex justify-content-center">
-      <div class="card border-info mb-3">
-        <div class="card-header">CHIEN</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">X chiens vous attendent</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-3 d-flex justify-content-center">
-      <div class="card border-info mb-3">
-        <div class="card-header">CHAT</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">X chats vous attendent</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-3 d-flex justify-content-center">
-      <div class="card border-info mb-3">
-        <div class="card-header">CHIEN</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">X chiens vous attendent</h5>
-        </div>
-      </div>
-    </div>
-    <div class="col-3 d-flex justify-content-center">
-      <div class="card border-info mb-3">
-        <div class="card-header">CHIEN</div>
-        <div class="card-body text-info">
-          <h5 class="card-title">X chiens vous attendent</h5>
+  </div>
+  <hr>
+  <div class="container">
+    <div class="row">
+      <div class="col-3 d-flex justify-content-center" *ngFor="let specie of species" (click)="toAnimalList(specie.id_espece)">
+        <div class="card border-info mb-3">
+          <div class="card-header">{{specie.nom_espece}}</div>
+          <div class="card-body text-info">
+            <h5 class="card-title"></h5>
+          </div>
         </div>
       </div>
     </div>
   </div>
+  <hr>
+</div>
+  <div class="footer">
+    <div class="jumbotron parralx-bottom">
+    </div>
+  </div>
 </div>
 
-<hr>
 
-<div class="jumbotron parralx-bottom">
-</div>

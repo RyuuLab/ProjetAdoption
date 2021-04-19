@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
 
   toStories() {
     console.log('to stories');
-    this.router.navigate(['mes-ecrits']);
+    this.router.navigate(['liste-especes']);
   }
 
   toProfile() {

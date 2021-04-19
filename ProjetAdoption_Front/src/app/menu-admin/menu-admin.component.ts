@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-menu-admin',
@@ -7,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuAdminComponent implements OnInit {
   changeTemplate: boolean;
+  formSave: FormGroup;
 
   constructor() { }
 
@@ -14,4 +16,7 @@ export class MenuAdminComponent implements OnInit {
     this.changeTemplate = true;
   }
 
+  saveForm(event: FormGroup) {
+    this.formSave = event;
+  }
 }

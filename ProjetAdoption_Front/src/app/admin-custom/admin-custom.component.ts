@@ -25,6 +25,8 @@ export class AdminCustomComponent implements OnInit {
   selectedSpecies: boolean;
   selectedRace: boolean;
   selectedChara: boolean;
+  showAlert: boolean = false;
+  successMessage: string;
 
   constructor(private formBuilder: FormBuilder,
               private speciesService: SpeciesService,
@@ -60,8 +62,12 @@ export class AdminCustomComponent implements OnInit {
       nom_espece: this.formSpecies.value.newSpecie
     }).subscribe(
       data => {
-        this.getSpecies();
+        const newSpecie = this.formSpecies.value.newSpecie;
         this.formSpecies.controls['newSpecie'].setValue('');
+        this.getSpecies();
+        this.successMessage = 'l\'espèce ' + newSpecie + ' a été ajouté';
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -77,6 +83,10 @@ export class AdminCustomComponent implements OnInit {
     }).subscribe(
       data => {
         this.getSpecies();
+        this.successMessage = 'l\'espèce a été modifé en ' + this.formSpecies.value.valueSpecie;
+        this.showAlert = true;
+        this.deleteSuccessMessage();
+
       },
       err => {
         console.log(err);
@@ -85,11 +95,16 @@ export class AdminCustomComponent implements OnInit {
   }
 
   deleteSpecie() {
+    const specie = this.formSpecies.value.valueSpecie;
     this.speciesService.toDelete(this.formSpecies.value.selectedSpecie).subscribe(
       data => {
         this.getSpecies();
+        this.formSpecies.controls['valueSpecie'].setValue('');
         this.defaultSpecies = 'default';
         this.selectedSpecies = false;
+        this.successMessage = 'l\'espèce ' + specie + ' a été supprimé';
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -103,8 +118,12 @@ export class AdminCustomComponent implements OnInit {
       nom_race: this.formRace.value.newRace
     }).subscribe(
       data => {
+        const newRace = this.formRace.value.newRace;
         this.getRaces();
         this.formRace.controls['newRace'].setValue('');
+        this.successMessage = 'la race ' + newRace + ' a été ajouté';
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -119,6 +138,9 @@ export class AdminCustomComponent implements OnInit {
     }).subscribe(
       data => {
         this.getRaces();
+        this.successMessage = 'la race a été modifé en ' + this.formRace.value.valueRace;
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -127,11 +149,15 @@ export class AdminCustomComponent implements OnInit {
   }
 
   deleteRace() {
+    const race = this.formRace.value.valueRace;
     this.raceService.toDelete(this.formRace.value.selectedRace).subscribe(
       data => {
         this.getRaces();
         this.formRace.controls['valueRace'].setValue('');
         this.defaultRace = 'default';
+        this.successMessage = 'la race ' + race + ' a été supprimé';
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -145,8 +171,12 @@ export class AdminCustomComponent implements OnInit {
       nom_caracteristique: this.formSepecifications.value.newChara
     }).subscribe(
       data => {
+        const newChara = this.formSepecifications.value.newChara;
         this.getChara();
         this.formSepecifications.controls['newChara'].setValue('');
+        this.successMessage = 'le caractère ' + newChara + ' a été ajouté';
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -161,6 +191,9 @@ export class AdminCustomComponent implements OnInit {
     }).subscribe(
       data => {
         this.getChara();
+        this.successMessage = 'le caractère a été modifé en ' + this.formSepecifications.value.valueChara;
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -169,11 +202,15 @@ export class AdminCustomComponent implements OnInit {
   }
 
   deleteChara() {
+    const chara = this.formSepecifications.value.valueChara;
     this.characterService.toDelete(this.formSepecifications.value.selectedChara).subscribe(
       data => {
         this.getChara();
         this.formSepecifications.controls['valueChara'].setValue('');
         this.defaultChara = 'default';
+        this.successMessage = 'le caractéyre ' + chara + ' a été supprimé';
+        this.showAlert = true;
+        this.deleteSuccessMessage();
       },
       err => {
         console.log(err);
@@ -188,7 +225,6 @@ export class AdminCustomComponent implements OnInit {
         this.species.find(specie => specie.id_espece === +this.formSpecies.value.selectedSpecie).nom_espece);
       this.getRaces();
       this.getChara();
-      this.defaultSpecies = 'default';
       this.defaultRace = 'default';
       this.defaultChara = 'default';
       this.formRace.controls['valueRace'].setValue('');
@@ -250,5 +286,14 @@ export class AdminCustomComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  deleteSuccessMessage() {
+    setTimeout(() => {
+      this.showAlert = false;
+    }, 5000);
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 5400);
   }
 }
