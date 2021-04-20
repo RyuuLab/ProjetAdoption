@@ -2,6 +2,8 @@ package com.api.adoption.controllers;
 
 import java.util.Optional;
 
+import com.api.adoption.repository.EspeceRepository;
+import com.api.adoption.repository.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +29,18 @@ public class AnimalController {
 
 	@Autowired
 	private AnimalRepository animalRepository;
-	
+
+	@Autowired
+	private EspeceRepository especeRepository;
+
+	@Autowired
+	private RaceRepository raceRepository;
+
 	@GetMapping(path="/{id_animal}")
 	public @ResponseBody Optional<Animal> getAnimalById(@PathVariable Long id_animal){
+		Animal animal = animalRepository.findById(id_animal).get();
+		animal.setNom_espece(especeRepository.findById(animal.getIdEspece()).get().getNom_espece());
+		animal.setNom_race(raceRepository.findById(animal.getIdRace()).get().getNom_race());
 		return animalRepository.findById(id_animal);
 	}
 	

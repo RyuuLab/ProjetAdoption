@@ -44,6 +44,10 @@ public class Animal {
 	private Date date_creation;
 	
 	private Date date_modification;
+
+	private transient String nom_espece;
+
+	private transient String nom_race;
 	
 	public Animal() {
 		
@@ -161,6 +165,20 @@ public class Animal {
 	public void setDate_modification(Date date_modification) {
 		this.date_modification = date_modification;
 	}
-	
-	
+
+	public String getNom_espece() {
+		return nom_espece;
+	}
+
+	public void setNom_espece(String nom_espece) {
+		this.nom_espece = nom_espece;
+	}
+
+	public String getNom_race() {
+		return nom_race;
+	}
+
+	public void setNom_race(String nom_race) {
+		this.nom_race = nom_race;
+	}
 }
