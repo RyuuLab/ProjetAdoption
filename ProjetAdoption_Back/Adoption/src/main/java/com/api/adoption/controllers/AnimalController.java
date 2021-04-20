@@ -101,5 +101,13 @@ public class AnimalController {
 		return new ResponseEntity<Animal>(animalRepository.save(res), HttpStatus.OK);
 	}
 	
+	@PutMapping(path="/adoption")
+	public ResponseEntity<?> adoption(@PathVariable Long id_animal){
+		Animal res = animalRepository.findById(id_animal).get();
+		res.setAdopte("oui");
+		return ResponseEntity.ok(new MessageResponse("Champ adoption = oui !"));
+
+	}
+	
 	
 }

@@ -39,6 +39,7 @@ public class ValeurController {
 		return valeurRepository.findById(id_valeur);
 	}
 	
+	
 	@PostMapping(path="/creerValeur")
 	public ResponseEntity<?> creerValeur(@RequestBody Valeur[] valeurs){
 		for(Valeur valeur: valeurs) {
@@ -89,6 +90,18 @@ public class ValeurController {
 		res.setValeur(valeur.getValeur());
 		valeurRepository.save(res);
 		return ResponseEntity.ok(new MessageResponse("Valeur modifiée !"));
+
+	}
+	
+	@PutMapping(path="/{TabValeur}/modifierTabValeurs")
+	public ResponseEntity<?> modifierTabValeurs(@RequestBody List<Valeur> valeurs){
+		valeurs.stream().forEach(valeur -> {
+			Valeur res = valeurRepository.findById(valeur.getId_valeur()).get();
+			res.setIdAnimal(valeur.getIdAnimal());
+			res.setId_caracteristique(valeur.getId_caracteristique());
+			res.setValeur(valeur.getValeur());
+		});
+		return ResponseEntity.ok(new MessageResponse("Valeurs modifiées !"));
 
 	}
 }
