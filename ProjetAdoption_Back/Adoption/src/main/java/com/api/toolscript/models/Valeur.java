@@ -1,10 +1,6 @@
 package com.api.toolscript.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -17,8 +13,9 @@ public class Valeur {
 	
 	@NotBlank
 	private Long idAnimal;
-	
-	private String nom_caracteristique;
+
+
+	private transient String nom_caracteristique;
 	 
 	@NotBlank
 	private Long id_caracteristique;
