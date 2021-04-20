@@ -1,6 +1,15 @@
 package com.api.adoption.controllers;
 
+<<<<<<< HEAD
 import java.util.List;
+=======
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+>>>>>>> 4f7b9e789202d8084cc0037825bbd96209c343b6
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +48,14 @@ public class Reponse_comController {
 	}
 	
 	@PostMapping(path="/creerReponseCom")
-	public List<Reponse_com> creerReponseCom(@RequestBody Reponse_com reponse_com){
-			reponse_comRepository.save(reponse_com);
-			return reponse_comRepository.findAllByIdCommentaire(reponse_com.getIdCommentaire());
-	}
+    public List<Reponse_com> creerReponseCom(@RequestBody Reponse_com reponse_com){
+    		
+    	DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
+		Date date = Calendar.getInstance().getTime();
+		reponse_com.setDate_creation(format.format(date));
+        reponse_comRepository.save(reponse_com);
+        return reponse_comRepository.findAllByIdCommentaire(reponse_com.getIdCommentaire());
+    }
 	
 	@DeleteMapping(path="/{id_reponse_com}/supprimerReponseCom")
 	public ResponseEntity<?> supprimerReponseCom(@PathVariable Long id_reponse_com){

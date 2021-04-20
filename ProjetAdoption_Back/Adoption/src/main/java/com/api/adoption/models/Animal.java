@@ -1,14 +1,23 @@
 package com.api.adoption.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "animal")
@@ -41,9 +50,10 @@ public class Animal {
 	
 	private Long idRace;
 	
-	private Date date_creation;
 	
-	private Date date_modification;
+	private String date_creation;
+	
+	private String date_modification;
 
 	private transient String nom_espece;
 
@@ -63,7 +73,6 @@ public class Animal {
 		this.idEspece = id_espece;
 		this.adopte = adopte;
 		this.idRace = id_race;
-		this.date_creation = new Date(); 
 		this.date_modification = null;
 	}
 
@@ -149,19 +158,19 @@ public class Animal {
 		this.adopte = adopte;
 	}
 
-	public Date getDate_creation() {
+	public String getDate_creation() {
 		return date_creation;
 	}
 
-	public void setDate_creation(Date date_creation) {
+	public void setDate_creation(String date_creation) {
 		this.date_creation = date_creation;
 	}
 
-	public Date getDate_modification() {
+	public String getDate_modification() {
 		return date_modification;
 	}
 
-	public void setDate_modification(Date date_modification) {
+	public void setDate_modification(String date_modification) {
 		this.date_modification = date_modification;
 	}
 

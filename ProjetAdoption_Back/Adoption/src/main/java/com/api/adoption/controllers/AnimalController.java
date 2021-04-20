@@ -1,7 +1,14 @@
 package com.api.adoption.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
+
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import com.api.adoption.repository.EspeceRepository;
 import com.api.adoption.repository.RaceRepository;
@@ -50,6 +57,7 @@ public class AnimalController {
 		return animalRepository.findAllByIdEspece(id_espece);
 	}
 	
+	
 	@PostMapping(path="/creerAnimal")
 	public ResponseEntity<?> creerAnimal(@RequestBody Animal animal){
 		
@@ -66,7 +74,11 @@ public class AnimalController {
 					new MessageResponse("Error: L'age de l'animal doit être renseigné!"));
 		}
 		else {
+			DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
+			Date date = Calendar.getInstance().getTime();
+			animal.setDate_creation(format.format(date));
 			animal.setAdopte("non");
+			animal.setDate_modification(null);
 			animalRepository.save(animal);
 			return new ResponseEntity<Animal>(animalRepository.save(animal), HttpStatus.OK);
 
@@ -84,6 +96,7 @@ public class AnimalController {
 		}
 	}
 	
+	
 	@PutMapping(path="/modifierAnimal")
 	public ResponseEntity<?> modifierAnimal(@RequestBody Animal animal){
 		Animal res = animalRepository.findById(animal.getId_animal()).get();
@@ -96,7 +109,9 @@ public class AnimalController {
 		res.setIdEspece(animal.getIdEspece());
 		res.setAdopte(animal.getAdopte());
 		res.setIdRace(animal.getIdRace());
-		res.setDate_modification(new Date());
+		DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
+		Date date = Calendar.getInstance().getTime();
+		res.setDate_modification(format.format(date));
 		animalRepository.save(res);
 		return new ResponseEntity<Animal>(animalRepository.save(res), HttpStatus.OK);
 	}

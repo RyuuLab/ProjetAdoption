@@ -1,6 +1,11 @@
 package com.api.adoption.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +61,9 @@ public class CommentaireController {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: L'id_animal doit être renseigné !"));
 		}else {
+			DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
+			Date date = Calendar.getInstance().getTime();
+			commentaire.setDate_creation(format.format(date));
 			commentaireRepository.save(commentaire);
 			return new ResponseEntity<Commentaire>(commentaireRepository.save(commentaire), HttpStatus.OK);
 		}

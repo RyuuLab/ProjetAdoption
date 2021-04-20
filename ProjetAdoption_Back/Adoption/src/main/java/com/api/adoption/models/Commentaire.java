@@ -28,7 +28,7 @@ public class Commentaire {
 	
 	private transient List<Reponse_com> TabReponse;
 	
-	private Date date_creation;
+	private String date_creation;
 	
 	public Commentaire() {
 		
@@ -39,7 +39,6 @@ public class Commentaire {
 		this.idAnimal = id_animal;
 		this.username = username;
 		this.commentaire = commentaire;
-		this.date_creation = new Date();
 	}
 
 	public Long getId_commentaire() {
@@ -82,11 +81,11 @@ public class Commentaire {
 		this.commentaire = commentaire;
 	}
 
-	public Date getDate_creation() {
+	public String getDate_creation() {
 		return date_creation;
 	}
 
-	public void setDate_creation(Date date_creation) {
+	public void setDate_creation(String date_creation) {
 		this.date_creation = date_creation;
 	}
 	
