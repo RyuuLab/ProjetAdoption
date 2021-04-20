@@ -1,7 +1,9 @@
 package com.api.toolscript.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.api.toolscript.models.Caracteristique;
 import com.api.toolscript.models.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.toolscript.models.Valeur;
 import com.api.toolscript.payload.response.MessageResponse;
+import com.api.toolscript.repository.CaracteristiqueRepository;
 import com.api.toolscript.repository.ValeurRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -28,6 +31,9 @@ public class ValeurController {
 	@Autowired
 	private ValeurRepository valeurRepository;
 	
+	@Autowired
+	private CaracteristiqueRepository caracteristiqueRepository;
+	
 	@GetMapping(path="/{id_valeur}")
 	public @ResponseBody Optional<Valeur> getValeurById(@PathVariable Long id_valeur){
 		return valeurRepository.findById(id_valeur);
@@ -36,7 +42,7 @@ public class ValeurController {
 	@PostMapping(path="/creerValeur")
 	public ResponseEntity<?> creerValeur(@RequestBody Valeur[] valeurs){
 		for(Valeur valeur: valeurs) {
-			if (valeur.getId_animal() == null) {
+			if (valeur.getIdAnimal() == null) {
 				return ResponseEntity.badRequest().body(
 						new MessageResponse("Error: L'id_animal doit être renseigné !"));
 			} else if (valeur.getId_caracteristique() == null) {
@@ -51,6 +57,17 @@ public class ValeurController {
 		}
 			return ResponseEntity.ok(new MessageResponse("Valeur créée !"));
 	}
+	
+	
+	@GetMapping(path="/animal/{id_animal}")
+    public @ResponseBody Iterable<Valeur> getValeurByIdAnimal(@PathVariable Long id_animal){
+        List<Valeur> valeurs =  valeurRepository.findAllByIdAnimal(id_animal);
+        valeurs.stream().forEach(valeur -> {
+            Caracteristique c = caracteristiqueRepository.findById(valeur.getId_caracteristique()).get();
+            valeur.setNom_caracteristique(c.getNom_caracteristique());
+        });
+        return valeurs;
+    }
 	
 	@DeleteMapping(path="/{id_valeur}/supprimerValeur")
 	public ResponseEntity<?> supprimerValeur(@PathVariable Long id_valeur){
@@ -67,7 +84,7 @@ public class ValeurController {
 	@PutMapping(path="/modifierValeur")
 	public ResponseEntity<?> modifierValeur(@RequestBody Valeur valeur){
 		Valeur res = valeurRepository.findById(valeur.getId_valeur()).get();
-		res.setId_animal(valeur.getId_animal());
+		res.setIdAnimal(valeur.getIdAnimal());
 		res.setId_caracteristique(valeur.getId_caracteristique());
 		res.setValeur(valeur.getValeur());
 		valeurRepository.save(res);

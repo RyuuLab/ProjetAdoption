@@ -16,7 +16,9 @@ public class Valeur {
 	private Long id_valeur;
 	
 	@NotBlank
-	private Long id_animal;
+	private Long idAnimal;
+	
+	private String nom_caracteristique;
 	 
 	@NotBlank
 	private Long id_caracteristique;
@@ -29,7 +31,7 @@ public class Valeur {
 	}
 	
 	public Valeur(Long id_animal, Long id_caracteristique, String valeur) {
-		this.id_animal = id_animal;
+		this.idAnimal = id_animal;
 		this.id_caracteristique = id_caracteristique;
 		this.valeur = valeur;
 	}
@@ -42,12 +44,22 @@ public class Valeur {
 		this.id_valeur = id_valeur;
 	}
 
-	public Long getId_animal() {
-		return id_animal;
+	
+
+	public String getNom_caracteristique() {
+		return nom_caracteristique;
 	}
 
-	public void setId_animal(Long id_animal) {
-		this.id_animal = id_animal;
+	public void setNom_caracteristique(String nom_caracteristique) {
+		this.nom_caracteristique = nom_caracteristique;
+	}
+
+	public Long getIdAnimal() {
+		return idAnimal;
+	}
+
+	public void setIdAnimal(Long idAnimal) {
+		this.idAnimal = idAnimal;
 	}
 
 	public Long getId_caracteristique() {
