@@ -1,5 +1,6 @@
 package com.api.toolscript.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.toolscript.models.Animal;
 import com.api.toolscript.models.Commentaire;
+import com.api.toolscript.models.Reponse_com;
 import com.api.toolscript.payload.response.MessageResponse;
 import com.api.toolscript.repository.CommentaireRepository;
+import com.api.toolscript.repository.Reponse_comRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -29,14 +32,27 @@ public class CommentaireController {
 	@Autowired
 	private CommentaireRepository commentaireRepository;
 	
+	@Autowired
+	private Reponse_comRepository reponse_comRepository;
+	
 	@GetMapping(path="/{id_commentaire}")
 	public @ResponseBody Optional<Commentaire> getCommentaireById(@PathVariable Long id_commentaire){
 		return commentaireRepository.findById(id_commentaire);
 	}
 	
+	@GetMapping(path="/animal/{id_animal}")
+	public @ResponseBody Iterable<Commentaire> getCommentaireByIdAnimal(@PathVariable Long id_animal){
+		List<Commentaire> commentaires = commentaireRepository.findAllByIdAnimal(id_animal);
+		commentaires.stream().forEach(commentaire -> {
+			List<Reponse_com> r = reponse_comRepository.findAllByIdCommentaire(commentaire.getId_commentaire());
+			commentaire.setTabReponse(r); 
+		});
+		return commentaires;
+	}
+	
 	@PostMapping(path="/creerCommentaire")
 	public ResponseEntity<?> creerCommentaire(@RequestBody Commentaire commentaire){
-		if(commentaire.getId_animal() == null) {
+		if(commentaire.getIdAnimal() == null) {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: L'id_animal doit être renseigné !"));
 		}else {
@@ -60,7 +76,7 @@ public class CommentaireController {
 	@PutMapping(path="/modifierCommentaire")
 	public ResponseEntity<?> modifierCommentaire(@RequestBody Commentaire commentaire){
 		Commentaire res = commentaireRepository.findById(commentaire.getId_commentaire()).get();
-		res.setId_animal(commentaire.getId_animal());
+		res.setIdAnimal(commentaire.getIdAnimal());
 		res.setUsername(commentaire.getUsername());
 		res.setCommentaire(commentaire.getCommentaire());
 		commentaireRepository.save(res);

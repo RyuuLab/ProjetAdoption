@@ -1,6 +1,7 @@
 package com.api.toolscript.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +19,14 @@ public class Commentaire {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id_commentaire;
 	
-	private Long id_animal;
+	private Long idAnimal;
 	
 	private String username;
 	
 	@Lob
 	private String commentaire;
+	
+	private transient List<Reponse_com> TabReponse;
 	
 	private Date date_creation;
 	
@@ -33,7 +36,7 @@ public class Commentaire {
 	
 	public Commentaire(Long id_commentaire, Long id_animal, String username, String commentaire) {
 		this.id_commentaire = id_commentaire;
-		this.id_animal = id_animal;
+		this.idAnimal = id_animal;
 		this.username = username;
 		this.commentaire = commentaire;
 		long millis=System.currentTimeMillis();
@@ -48,12 +51,20 @@ public class Commentaire {
 		this.id_commentaire = id_commentaire;
 	}
 
-	public Long getId_animal() {
-		return id_animal;
+	public Long getIdAnimal() {
+		return idAnimal;
 	}
 
-	public void setId_animal(Long id_animal) {
-		this.id_animal = id_animal;
+	public void setIdAnimal(Long idAnimal) {
+		this.idAnimal = idAnimal;
+	}
+
+	public List<Reponse_com> getTabReponse() {
+		return TabReponse;
+	}
+
+	public void setTabReponse(List<Reponse_com> tabReponse) {
+		TabReponse = tabReponse;
 	}
 
 	public String getUsername() {
