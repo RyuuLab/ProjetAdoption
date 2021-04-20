@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 
@@ -43,27 +44,14 @@ public class Reponse_comController {
 	}
 	
 	@PostMapping(path="/creerReponseCom")
-	public ResponseEntity<?> creerReponseCom(@RequestBody Reponse_com reponse_com){
-		if(reponse_com.getIdCommentaire() == null) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: L'id_commentaire doit être renseigné !"));
-		}
-		else if(reponse_com.getUsername() == null || reponse_com.getUsername().isBlank()){
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: Le username doit être renseigné !"));
-		}
-		else if(reponse_com.getReponseCom() == null || reponse_com.getReponseCom().isBlank()) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: la réponse doit être renseignée !"));
-		}
-		else {
-			DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
-			Date date = Calendar.getInstance().getTime();
-			reponse_com.setDate_creation(format.format(date));
-			reponse_comRepository.save(reponse_com);
-			return ResponseEntity.ok(new MessageResponse("ReponseCom créée !"));
-		}
-	}
+    public List<Reponse_com> creerReponseCom(@RequestBody Reponse_com reponse_com){
+    		
+    	DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
+		Date date = Calendar.getInstance().getTime();
+		reponse_com.setDate_creation(format.format(date));
+        reponse_comRepository.save(reponse_com);
+        return reponse_comRepository.findAllByIdCommentaire(reponse_com.getIdCommentaire());
+    }
 	
 	@DeleteMapping(path="/{id_reponse_com}/supprimerReponseCom")
 	public ResponseEntity<?> supprimerReponseCom(@PathVariable Long id_reponse_com){
