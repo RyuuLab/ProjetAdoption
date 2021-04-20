@@ -35,8 +35,7 @@ public class Reponse_com {
 	public Reponse_com(Long id_commentaire, String reponse_com, String username) {
 		this.idCommentaire = id_commentaire;
 		this.reponse_com = reponse_com;
-		long millis=System.currentTimeMillis();
-		this.date_creation = new java.sql.Date(millis);
+		this.date_creation = new Date();
 		this.username = username;
 	}
 

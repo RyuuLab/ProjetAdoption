@@ -63,8 +63,7 @@ public class Animal {
 		this.idEspece = id_espece;
 		this.adopte = adopte;
 		this.idRace = id_race;
-		long millis=System.currentTimeMillis();
-		this.date_creation = new java.sql.Date(millis); 
+		this.date_creation = new Date(); 
 		this.date_modification = null;
 	}
 

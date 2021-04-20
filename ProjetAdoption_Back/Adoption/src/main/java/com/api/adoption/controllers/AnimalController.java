@@ -1,5 +1,6 @@
 package com.api.adoption.controllers;
 
+import java.util.Date;
 import java.util.Optional;
 
 import com.api.adoption.repository.EspeceRepository;
@@ -95,8 +96,7 @@ public class AnimalController {
 		res.setIdEspece(animal.getIdEspece());
 		res.setAdopte(animal.getAdopte());
 		res.setIdRace(animal.getIdRace());
-		long millis=System.currentTimeMillis();
-		res.setDate_modification(new java.sql.Date(millis));
+		res.setDate_modification(new Date());
 		animalRepository.save(res);
 		return new ResponseEntity<Animal>(animalRepository.save(res), HttpStatus.OK);
 	}

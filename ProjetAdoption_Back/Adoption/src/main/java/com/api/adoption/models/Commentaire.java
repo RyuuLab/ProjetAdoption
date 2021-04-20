@@ -39,8 +39,7 @@ public class Commentaire {
 		this.idAnimal = id_animal;
 		this.username = username;
 		this.commentaire = commentaire;
-		long millis=System.currentTimeMillis();
-		this.date_creation = new java.sql.Date(millis);
+		this.date_creation = new Date();
 	}
 
 	public Long getId_commentaire() {
