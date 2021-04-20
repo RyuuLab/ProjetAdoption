@@ -100,6 +100,7 @@ public class ValeurController {
 			res.setIdAnimal(valeur.getIdAnimal());
 			res.setId_caracteristique(valeur.getId_caracteristique());
 			res.setValeur(valeur.getValeur());
+			valeurRepository.save(res);
 		});
 		return ResponseEntity.ok(new MessageResponse("Valeurs modifiées !"));
 
