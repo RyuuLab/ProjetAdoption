@@ -1,5 +1,6 @@
 package com.api.adoption.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,23 +39,9 @@ public class Reponse_comController {
 	}
 	
 	@PostMapping(path="/creerReponseCom")
-	public ResponseEntity<?> creerReponseCom(@RequestBody Reponse_com reponse_com){
-		if(reponse_com.getIdCommentaire() == null) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: L'id_commentaire doit être renseigné !"));
-		}
-		else if(reponse_com.getUsername() == null || reponse_com.getUsername().isBlank()){
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: Le username doit être renseigné !"));
-		}
-		else if(reponse_com.getReponseCom() == null || reponse_com.getReponseCom().isBlank()) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: la réponse doit être renseignée !"));
-		}
-		else {
+	public List<Reponse_com> creerReponseCom(@RequestBody Reponse_com reponse_com){
 			reponse_comRepository.save(reponse_com);
-			return ResponseEntity.ok(new MessageResponse("ReponseCom créée !"));
-		}
+			return reponse_comRepository.findAllByIdCommentaire(reponse_com.getIdCommentaire());
 	}
 	
 	@DeleteMapping(path="/{id_reponse_com}/supprimerReponseCom")
@@ -76,7 +63,6 @@ public class Reponse_comController {
 		}else {
 			reponse_comRepository.deleteById(id_commentaire);
 			return ResponseEntity.ok(new MessageResponse("toutes les réponses du commentaire ont été supprimées !"));
-
 		}
 	}
 	
@@ -88,8 +74,5 @@ public class Reponse_comController {
 		res.setUsername(reponse_com.getUsername());
 		reponse_comRepository.save(res);
 		return ResponseEntity.ok(new MessageResponse("Reponse modifiée !"));
-
 	}
-	
-	
 }
