@@ -13,12 +13,15 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AnimalService {
-
   constructor(private http: HttpClient) { }
 
 
   getAllBySpecie(specieId: number): Observable<any> {
     return this.http.get(AUTH_API + specieId + '/animauxByEspece', httpOptions);
+  }
+
+  getAllByAnimal(animalId: number): Observable<any> {
+    return this.http.get(AUTH_API + animalId , httpOptions);
   }
 
   toCreate(animal: IAnimal): Observable<any> {

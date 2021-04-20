@@ -15,6 +15,7 @@ export class AnimalListComponent implements OnInit {
   title = this.siteDataService.title;
   specieId: number;
   animals: IAnimal[];
+  isLoading: boolean;
   constructor(
     private titleService: Title,
     private route: ActivatedRoute,
@@ -28,26 +29,9 @@ export class AnimalListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.specieId = +this.route.snapshot.paramMap.get('specieId');
-    console.log(this.specieId);
-    this.animalService.getAllBySpecie(this.specieId).subscribe(
-      animals => {
-        this.animals = animals;
-        this.animals.forEach(
-          animal => {
-            this.imageService.getImageByIdAnimal(animal.id_animal).subscribe(
-              images => {
-                animal.image = images;
-                console.log(this.animals);
-              }
-            );
-          }
-        );
-      },
-      err => {
-        console.log(err);
-        }
-    );
+    this.getAnimals();
   }
 
   transform(imageBase64: string){
@@ -56,5 +40,28 @@ export class AnimalListComponent implements OnInit {
 
   toAnimal(idAnimal: number) {
     this.router.navigate(['/animal', idAnimal]);
+  }
+
+  async getAnimals() {
+    let i = 0;
+    this.animalService.getAllBySpecie(this.specieId).subscribe(
+      animals => {
+        this.animals = animals;
+        this.animals.forEach(
+          (animal, index) => {
+            this.imageService.getImageByIdAnimal(animal.id_animal).subscribe(
+              images => {
+                animal.image = images;
+                i++;
+                if (i === this.animals.length) {this.isLoading = false; }
+              }
+            );
+          }
+        );
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

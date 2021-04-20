@@ -1,24 +1,14 @@
 <div class="jumbotron">
 
 </div>
-<div class="container">
+<div *ngIf="!isLoading" class="container">
   <hr>
   <div class="row">
   <div class="div-carousel col-6">
-    <ngb-carousel *ngIf="images">
-      <ng-template ngbSlide>
+    <ngb-carousel>
+      <ng-template *ngFor="let image of animal.image" ngbSlide>
         <div class="picsum-img-wrapper">
-          <img src="../../assets/images/1.jpg" alt="Random first slide">
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img src="../../assets/images/3408.jpg" alt="Random second slide">
-        </div>
-      </ng-template>
-      <ng-template ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img src="../../assets/images/4.jpg" alt="Random third slide">
+          <img [src]="transform(image.image)"  alt="Random first slide">
         </div>
       </ng-template>
     </ngb-carousel>
@@ -26,24 +16,17 @@
   <div class="col-6">
     <div class="row">
       <div class="col-6">
-        <p>Nom: </p>
-        <p>Age:</p>
-        <p>Sexe:</p>
-        <p>Couleur</p>
-        <p>Caractère:</p>
-        <p>espèce:</p>
-        <p>adopté:</p>
-        <p>Race:</p>
+        <p>Nom: {{animal.nom}}</p>
+        <p>Age: {{animal.age}}</p>
+        <p>Sexe: {{animal.sexe}}</p>
+        <p>Couleur {{animal.couleur}}</p>
+        <p>Caractère: {{animal.caractere}}</p>
+        <p>espèce: {{animal.idEspece}}</p>
+        <p>adopté: {{animal.adopte}}</p>
+        <p>Race: {{animal.idRace}}</p>
       </div>
       <div class="col-6">
-        <p>Nom: </p>
-        <p>Age:</p>
-        <p>Sexe:</p>
-        <p>Couleur</p>
-        <p>Caractère:</p>
-        <p>espèce:</p>
-        <p>adopté:</p>
-        <p>Race:</p>
+        <p *ngFor="let chara of animal.character">{{chara.nom_caracteristique}}: {{chara.valeur}}</p>
       </div>
       <div class="col-12">
         <button type="button" class="btn btn-info" (click)="openModalFormAdopt(modalAdopt)">L'adopter</button>
@@ -52,7 +35,7 @@
 
   </div>
     <div class="col-12">
-        <p><span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores dignissimos doloribus in ipsam quidem sapiente vitae voluptate. Aliquid, ea, voluptatibus! Facere neque perspiciatis placeat quidem tenetur! Cumque dignissimos est sequi.</span><span>Accusamus ad asperiores blanditiis deserunt dolor dolorum earum et eveniet hic iusto officia omnis pariatur provident quae quisquam repellat reprehenderit repudiandae, similique sit tenetur totam ut, vero vitae voluptas voluptatibus.</span><span>A animi at culpa doloremque eligendi maxime necessitatibus omnis pariatur ratione, recusandae suscipit, temporibus unde ut! Alias architecto assumenda commodi cum facere laudantium minus quia rem, saepe sed, tempora voluptatibus.</span><span>Aliquid deleniti facere nulla quaerat quam? A autem culpa inventore labore repellat similique soluta? Aliquam deleniti dolore molestias qui quos voluptatum? Amet asperiores distinctio excepturi natus non nulla perferendis porro!</span><span>Eaque, neque, nulla. Commodi, cum eaque eos eveniet fuga in libero molestiae, nam neque, nulla officiis possimus recusandae suscipit unde ut voluptas voluptatibus! Consectetur expedita fugit nobis placeat reprehenderit veritatis!</span>
+        <p>{{animal.histoire}}
         </p>
     <hr>
     </div>

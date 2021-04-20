@@ -1,4 +1,5 @@
 import {IImage} from './image.interface';
+import {ICharacter} from './characte.interface';
 
 export interface IAnimal {
   id_animal?: number;
@@ -12,5 +13,6 @@ export interface IAnimal {
   adopte?: string;
   idRace?: number;
   image?: IImage[];
+  character?: ICharacter[];
 }
 

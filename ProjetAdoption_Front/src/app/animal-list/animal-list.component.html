@@ -12,7 +12,7 @@
     </div>
     <hr>
     <div class="container">
-      <div class="row d-flex justify-content-center">
+      <div *ngIf="!isLoading" class="row d-flex justify-content-center">
           <div class="col-3 m-2 card" *ngFor="let animal of animals;" (click)="toAnimal(animal.id_animal)">
             <img [src]="transform(animal.image[0].image)" class="card-img-top">
             <div class="card-body">

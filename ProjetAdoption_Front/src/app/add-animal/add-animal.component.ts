@@ -192,7 +192,7 @@ export class AddAnimalComponent implements OnInit {
     this.createAnimalForm.value.specifications.forEach(element => {
           if (element.specificationName !== 'default' && element.specificationValue !== '') {
             valeurs.push({
-              id_animal: data.id_animal,
+              idAnimal: data.id_animal,
               id_caracteristique: element.specificationName,
               valeur: element.specificationValue
             });

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {IImage} from "../interfaces/image.interface";
-import {Observable} from "rxjs";
-import {ICharacter} from "../interfaces/characte.interface";
+import {Observable} from 'rxjs';
+import {ICharacter} from '../interfaces/characte.interface';
 
 const AUTH_API = 'http://localhost:8080/valeur/';
 
@@ -20,4 +19,10 @@ export class ValeurService {
   toCreate(valeurs: ICharacter[]): Observable<any> {
     return this.http.post(AUTH_API + 'creerValeur', valeurs, httpOptions);
   }
+
+
+  getByAnimal(idAnimal): Observable<any> {
+    return this.http.get(AUTH_API + 'animal/' + idAnimal, httpOptions);
+  }
+
 }
