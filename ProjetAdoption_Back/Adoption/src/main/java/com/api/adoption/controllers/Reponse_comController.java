@@ -1,5 +1,10 @@
 package com.api.adoption.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +57,9 @@ public class Reponse_comController {
 					new MessageResponse("Error: la réponse doit être renseignée !"));
 		}
 		else {
+			DateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss",Locale.FRANCE);
+			Date date = Calendar.getInstance().getTime();
+			reponse_com.setDate_creation(format.format(date));
 			reponse_comRepository.save(reponse_com);
 			return ResponseEntity.ok(new MessageResponse("ReponseCom créée !"));
 		}
