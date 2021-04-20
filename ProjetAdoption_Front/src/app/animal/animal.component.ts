@@ -7,6 +7,9 @@ import {ValeurService} from '../shared/services/valeur.service';
 import {AnimalService} from '../shared/services/animal.service';
 import {ImageService} from '../shared/services/image.service';
 import {IAnimal} from '../shared/interfaces/animal.interface';
+import {forkJoin} from 'rxjs';
+import {CommentService} from '../shared/services/comment.service';
+import {RespCommentService} from '../shared/services/resp-comment.service';
 
 @Component({
   selector: 'app-animal',
@@ -14,7 +17,6 @@ import {IAnimal} from '../shared/interfaces/animal.interface';
   styleUrls: ['./animal.component.scss']
 })
 export class AnimalComponent implements OnInit {
-  images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
   animal: IAnimal;
   comment = false;
   comments = [false, false];
@@ -30,7 +32,9 @@ export class AnimalComponent implements OnInit {
                 private valeurService: ValeurService,
                 private animalService: AnimalService,
                 private imageService: ImageService,
-                private sanitizer: DomSanitizer
+                private sanitizer: DomSanitizer,
+                private commentService: CommentService,
+                private respCommentService: RespCommentService
   ) {
     this.formAdopt = this.formBuilder.group({
       firstName: [''],
@@ -47,28 +51,37 @@ export class AnimalComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.animalId = +this.route.snapshot.paramMap.get('animalId');
-    this.animalService.getAllByAnimal(this.animalId).subscribe(
-      animal => {
-        this.animal = animal;
-        this.valeurService.getByAnimal(this.animalId).subscribe(
-          chara => {
-            this.animal.character = chara;
-            this.imageService.getImageByIdAnimal(this.animalId).subscribe(
-              images => {
-                this.animal.image = images;
-                this.isLoading = false;
-                console.log(this.animal);
-              }
-            );
-          }
-        );
-      }
-    );
+    this.getAnimal();
   }
 
   sendComment(username: any, textarea: any) {
     console.log(username);
     console.log(textarea);
+    this.commentService.toCreate({
+      idAnimal: this.animalId,
+      username,
+      commentaire: textarea
+    }).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
+  }
+
+
+  sendResComment(username: any, textarea: any) {
+    console.log(username);
+    console.log(textarea);
+    this.respCommentService.toCreate({
+      idCommentaire: 2,
+      idAnimal: this.animalId,
+      username,
+      reponseCom: textarea
+    }).subscribe(
+      data => {
+        console.log(data);
+      }
+    );
   }
 
   sendFormAdopt(modal: any) {
@@ -83,4 +96,17 @@ export class AnimalComponent implements OnInit {
   transform(imageBase64: string){
     return this.sanitizer.bypassSecurityTrustResourceUrl(imageBase64);
   }
+
+  getAnimal() {
+    forkJoin({
+      animal:  this.animalService.getAllByAnimal(this.animalId),
+      animalChara: this.valeurService.getByAnimal(this.animalId),
+      animalImage:  this.imageService.getImageByIdAnimal(this.animalId)
+    }).subscribe( data => {
+      this.animal = data.animal;
+      this.animal.character = data.animalChara;
+      this.animal.image = data.animalImage;
+      this.isLoading = false;
+    });
+    }
 }

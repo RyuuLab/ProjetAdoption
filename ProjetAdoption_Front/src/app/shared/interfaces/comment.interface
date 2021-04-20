@@ -1,0 +1,15 @@
+export interface IComment {
+  id_commentaire?: number;
+  idAnimal?: number;
+  username?: string;
+  commentaire?: string;
+  reponse_com?: IRespComment[];
+}
+
+export interface IRespComment {
+  id_reponse_com?: number;
+  idCommentaire?: number;
+  username?: string;
+  reponseCom?: string;
+
+}
