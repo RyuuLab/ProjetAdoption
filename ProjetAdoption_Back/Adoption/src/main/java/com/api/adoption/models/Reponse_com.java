@@ -21,7 +21,7 @@ public class Reponse_com {
 	private Long idCommentaire;
 	
 	@Lob
-	private String reponse_com;
+	private String reponseCom;
 	
 	@NotBlank
 	private String username;
@@ -34,8 +34,8 @@ public class Reponse_com {
 	
 	public Reponse_com(Long id_commentaire, String reponse_com, String username) {
 		this.idCommentaire = id_commentaire;
-		this.reponse_com = reponse_com;
 		this.date_creation = new Date();
+		this.reponseCom = reponse_com;
 		this.username = username;
 	}
 
@@ -65,12 +65,12 @@ public class Reponse_com {
 		this.idCommentaire = idCommentaire;
 	}
 
-	public String getReponse_com() {
-		return reponse_com;
+	public String getReponseCom() {
+		return reponseCom;
 	}
 
-	public void setReponse_com(String reponse_com) {
-		this.reponse_com = reponse_com;
+	public void setReponseCom(String reponseCom) {
+		this.reponseCom = reponseCom;
 	}
 
 	public Date getDate_creation() {

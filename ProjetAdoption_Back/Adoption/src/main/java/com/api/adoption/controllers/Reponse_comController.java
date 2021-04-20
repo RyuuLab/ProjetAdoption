@@ -43,15 +43,11 @@ public class Reponse_comController {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: L'id_commentaire doit être renseigné !"));
 		}
-		else if(reponse_com.getDate_creation() == null) {
-			return ResponseEntity.badRequest().body(
-					new MessageResponse("Error: La date de création doit être renseignée !"));
-		}
 		else if(reponse_com.getUsername() == null || reponse_com.getUsername().isBlank()){
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: Le username doit être renseigné !"));
 		}
-		else if(reponse_com.getReponse_com() == null || reponse_com.getReponse_com().isBlank()) {
+		else if(reponse_com.getReponseCom() == null || reponse_com.getReponseCom().isBlank()) {
 			return ResponseEntity.badRequest().body(
 					new MessageResponse("Error: la réponse doit être renseignée !"));
 		}
@@ -88,7 +84,7 @@ public class Reponse_comController {
 	public ResponseEntity<?> modifierReponseCom(@RequestBody Reponse_com reponse_com){
 		Reponse_com res = reponse_comRepository.findById(reponse_com.getId_reponse_com()).get();
 		res.setIdCommentaire(reponse_com.getIdCommentaire());
-		res.setReponse_com(reponse_com.getReponse_com());
+		res.setReponseCom(reponse_com.getReponseCom());
 		res.setUsername(reponse_com.getUsername());
 		reponse_comRepository.save(res);
 		return ResponseEntity.ok(new MessageResponse("Reponse modifiée !"));

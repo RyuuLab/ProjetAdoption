@@ -14,5 +14,7 @@ export interface IAnimal {
   idRace?: number;
   image?: IImage[];
   character?: ICharacter[];
+  nom_espece?: string;
+  nom_race?: string;
 }
 

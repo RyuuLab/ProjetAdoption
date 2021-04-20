@@ -7,8 +7,8 @@
   <div class="div-carousel col-6">
     <ngb-carousel>
       <ng-template *ngFor="let image of animal.image" ngbSlide>
-        <div class="picsum-img-wrapper">
-          <img [src]="transform(image.image)"  alt="Random first slide">
+        <div class="picsum-img-wrapper justify-content-center">
+          <img class="center" [src]="transform(image.image)"  alt="Random first slide">
         </div>
       </ng-template>
     </ngb-carousel>
@@ -21,9 +21,9 @@
         <p>Sexe: {{animal.sexe}}</p>
         <p>Couleur {{animal.couleur}}</p>
         <p>Caractère: {{animal.caractere}}</p>
-        <p>espèce: {{animal.idEspece}}</p>
+        <p>espèce: {{animal.nom_espece}}</p>
         <p>adopté: {{animal.adopte}}</p>
-        <p>Race: {{animal.idRace}}</p>
+        <p>Race: {{animal.nom_race}}</p>
       </div>
       <div class="col-6">
         <p *ngFor="let chara of animal.character">{{chara.nom_caracteristique}}: {{chara.valeur}}</p>
@@ -84,7 +84,7 @@
               <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[0]"></textarea>
             </div>
             <button type="submit" class="btn btn-danger mr-2" (click)="comments[0] = false">Annuler</button>
-            <button type="submit" class="btn btn-primary" (click)="sendComment(username[0], textarea[0])">Envoyer</button>
+            <button type="submit" class="btn btn-primary" (click)="sendResComment(username[0], textarea[0])">Envoyer</button>
           </form>
         </div>
       </div>
@@ -112,7 +112,7 @@
               <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[1]"></textarea>
             </div>
             <button type="submit" class="btn btn-danger mr-2" (click)="comments[1] = false">Annuler</button>
-            <button type="submit" class="btn btn-primary" (click)="sendComment(username[1], textarea[1])">Envoyer</button>
+            <button type="submit" class="btn btn-primary" (click)="sendResComment(username[1], textarea[1])">Envoyer</button>
           </form>
         </div>
       </div>
