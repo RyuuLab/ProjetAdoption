@@ -45,9 +45,17 @@ Récuperer le code :
 ```
 $ git clone https://github.com/dengler5u/ProjetAdoption.git
 ```
-Compiler le Back :
+Executer le Back :
 
 * Importer dans Eclipse ou IntelliJ le dossier Adoption qui se trouve dans ProjetAdoption/ProjetAdoption_Back
 * Se rendre dans Java Ressources -> src/main/java -> com.api.adoption et executer AdoptionApp.java
 
- 
+Executer le Front :
+
+* suivre ce lien [Comment Executer le Front](https://github.com/dengler5u/ProjetAdoption/tree/main/ProjetAdoption_Front#readme)
+
+***
+## API
+***
+
+[ENDPOINTS](https://github.com/dengler5u/ProjetAdoption/tree/main/ProjetAdoption_Back#readme)
