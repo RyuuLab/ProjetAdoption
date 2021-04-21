@@ -83,12 +83,11 @@ public class ValeurController {
 	}
 	
 	@PutMapping(path="/modifierValeur")
-	public ResponseEntity<?> modifierValeur(@RequestBody Valeur valeur){
-		Valeur res = valeurRepository.findById(valeur.getId_valeur()).get();
-		res.setIdAnimal(valeur.getIdAnimal());
-		res.setId_caracteristique(valeur.getId_caracteristique());
-		res.setValeur(valeur.getValeur());
-		valeurRepository.save(res);
+	public ResponseEntity<?> modifierValeur(@RequestBody Valeur[] valeurs){
+		for(Valeur valeur: valeurs) {
+			valeur.setValeur(valeur.getValeur());
+			valeurRepository.save(valeur);
+		}
 		return ResponseEntity.ok(new MessageResponse("Valeur modifiée !"));
 
 	}

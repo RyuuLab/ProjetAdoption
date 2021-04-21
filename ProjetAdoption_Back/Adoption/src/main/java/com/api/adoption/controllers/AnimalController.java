@@ -2,14 +2,12 @@ package com.api.adoption.controllers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Optional;
+import java.util.*;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import com.api.adoption.models.Valeur;
 import com.api.adoption.repository.EspeceRepository;
 import com.api.adoption.repository.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +52,12 @@ public class AnimalController {
 	
 	@GetMapping(path="/{id_espece}/animauxByEspece")
 	public @ResponseBody Iterable<Animal> getAnimauxByEspece(@PathVariable Long id_espece){
-		return animalRepository.findAllByIdEspece(id_espece);
+		List<Animal> animals = animalRepository.findAllByIdEspece(id_espece);
+		for(Animal animal: animals) {
+			animal.setNom_espece(especeRepository.findById(animal.getIdEspece()).get().getNom_espece());
+			animal.setNom_race(raceRepository.findById(animal.getIdRace()).get().getNom_race());
+		}
+		return animals;
 	}
 	
 	
