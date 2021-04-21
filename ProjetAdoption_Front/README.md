@@ -1,27 +1,13 @@
-# Myapp
+***
+## Installation et utilisation d'Angular
+***
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.5.
+Comment installer Anguler :
 
-## Development server
+* Télécharger et Installer Node Js  --> [Download](https://nodejs.org/en/download/)
+* Installer Angular CLI en ouvrant un invite de commande et en utilisant cette ligne de code `npm install -g @angular/cli`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Executer le Front :
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+* Se rendre dans le dossier ProjetAdoption_Front et ouvrir un invite de commande
+* Executer la commande `ng serve`
