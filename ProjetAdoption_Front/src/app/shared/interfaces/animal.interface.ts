@@ -1,5 +1,7 @@
 import {IImage} from './image.interface';
 import {ICharacter} from './characte.interface';
+// @ts-ignore
+import {IComment} from './comment.interface';
 
 export interface IAnimal {
   id_animal?: number;
@@ -16,5 +18,6 @@ export interface IAnimal {
   character?: ICharacter[];
   nom_espece?: string;
   nom_race?: string;
+  comments?: IComment[];
 }
 

@@ -1,3 +1,5 @@
+<div class="flex-wrapper">
+  <div class="main">
 <div class="jumbotron">
 
 </div>
@@ -5,16 +7,23 @@
   <hr>
   <div class="row">
   <div class="div-carousel col-6">
-    <ngb-carousel>
+    <ngb-carousel *ngIf="!isUploadImage && animal.image.length > 1">
       <ng-template *ngFor="let image of animal.image" ngbSlide>
         <div class="picsum-img-wrapper justify-content-center">
           <img class="center" [src]="transform(image.image)"  alt="Random first slide">
         </div>
       </ng-template>
     </ngb-carousel>
+    <ngb-carousel *ngIf="!isUploadImage && animal.image.length === 1">
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper justify-content-center">
+          <img class="center" [src]="transform(animal.image[0].image)"  alt="Random first slide">
+        </div>
+      </ng-template>
+    </ngb-carousel>
   </div>
   <div class="col-6">
-    <div class="row">
+    <div *ngIf="!isAdmin" class="row">
       <div class="col-6">
         <p>Nom: {{animal.nom}}</p>
         <p>Age: {{animal.age}}</p>
@@ -30,101 +39,120 @@
       </div>
       <div class="col-12">
         <button type="button" class="btn btn-info" (click)="openModalFormAdopt(modalAdopt)">L'adopter</button>
+        <button type="button" class="btn btn-primary ml-5"
+                shareButton="twitter"
+                url="lien de partage : http://localhost:4200/animal/{{animalId}}"
+                #twtBtn="shareButton">
+                twitter
+        </button>
+        <button type="button" class="btn btn-primary ml-5"
+                shareButton="facebook"
+                url="http://localhost:4200/animal/{{animalId}}"
+                #twtBtn="shareButton">
+                facebook
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isAdmin" class="row">
+      <div class="col-6">
+        <p>Nom: <input type="text" value="{{animal.nom}}" [(ngModel)]="animal.nom"></p>
+        <p>Age: <input type="text" value="{{animal.age}}" [(ngModel)]="animal.age"></p>
+        <p>Sexe: <input type="text" value="{{animal.sexe}}" [(ngModel)]="animal.sexe"></p>
+        <p>Couleur <input type="text" value="{{animal.couleur}}" [(ngModel)]="animal.couleur"></p>
+        <p>Caractère: <input type="text" value="{{animal.caractere}}" [(ngModel)]="animal.caractere"></p>
+        <p>espèce: <input type="text" value="{{animal.nom_espece}}" [(ngModel)]="animal.nom_espece"></p>
+        <p>adopté: <input type="text" value="{{animal.adopte}}" [(ngModel)]="animal.adopte"></p>
+        <p>Race: <select class="custom-select" [(ngModel)]="animal.idRace">
+          <option value='default'>Choisissez une race...</option>
+          <option *ngFor="let race of races" value="{{race.id_race}}">{{race.nom_race}}</option>
+        </select></p>
+      </div>
+      <div class="col-6">
+        <p *ngFor="let chara of animal.character">{{chara.nom_caracteristique}}: <input type="text" value="{{chara.valeur}}" [(ngModel)]="chara.valeur"></p>
+      </div>
+      <div class="col-12">
+        <button type="button" class="btn btn-info" (click)="updateAnimal()">Modifier</button>
       </div>
     </div>
 
   </div>
-    <div class="col-12">
-        <p>{{animal.histoire}}
+    <div  class="col-12">
+        <p *ngIf="!isAdmin">{{animal.histoire}}
         </p>
+      <textarea *ngIf="isAdmin" class="form-control" rows="3" [(ngModel)]="animal.histoire">{{animal.histoire}}</textarea>
     <hr>
+      <div *ngIf="isAdmin" class="form-group ">
+        <label for="file-upload" class="custom-file-upload">
+          <span class="material-icons align-bottom text-primary">add_a_photo</span> Ajouter des photos
+        </label>
+        <input
+          type="file"
+          id="file-upload"
+          class="inputfile"
+          multiple=""
+          (change)="onFileChange($event)">
+      </div>
+      <div  *ngIf="isAdmin" class="row">
+        <div *ngFor='let image of animal.image; let index = index;' class="image-area col-3">
+          <img [src]="image.image" class="rounded" alt="...">
+          <a class="remove-image"  style="display: inline;" (click)="removeImg(image.id_image)">&#215;</a>
+        </div>
+        <div *ngFor='let url of images; let index = index;' class="image-area col-3">
+          <img [src]="url" class="rounded" alt="...">
+          <a class="remove-image"  style="display: inline;" (click)="removeImgAdd(index)">&#215;</a>
+        </div>
+      </div>
     </div>
 
-    <div class="col-12">
+    <div *ngIf="!isAdmin" class="col-12">
       <button *ngIf="!comment" type="submit" class="btn btn-primary" (click)="comment = true">Ecrire un commentaire</button>
       <form *ngIf="comment">
         <h4>ECRIRE UN COMMENTAIRE:</h4>
         <div class="form-group">
           <label for="username">Pseudo</label>
-          <input type="text" class="form-control" id="username" placeholder="Pseudo"  name="username" #username>
+          <input type="text" class="form-control" id="username" placeholder="Pseudo"  name="username" [(ngModel)]="usernameAddComment">
         </div>
         <div class="form-group">
           <label for="comment">Commentaire</label>
-          <textarea class="form-control" id="comment" rows="2" placeholder="Ajouter un commentaire..." name="comment" #textarea></textarea>
+          <textarea class="form-control" id="comment" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textareaAddComment"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary float-right ml-2" (click)="sendComment(username.value, textarea.value)">Envoyer</button>
+        <button type="submit" class="btn btn-primary float-right ml-2" (click)="sendComment(usernameAddComment, textareaAddComment)">Envoyer</button>
         <button type="submit" class="btn btn-danger float-right" (click)="comment = false">Annuler</button>
       </form>
     </div>
 
-    <div class="col-12">
+    <div *ngIf="animal.comments.length > 0" class="col-12">
       <hr>
       <h4>DERNIERS COMMENTAIRES :</h4>
-      <div class="comment">
-        <h5><strong>Hichem</strong> | 18/04/2021</h5>
-        <p><span>Bonjour, est-il toujours disponible ?</span></p>
-        <button *ngIf="!comments[0]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[0] = true">Répondre</button>
-        <hr>
-        <div class="reply ml-5 mb-2">
-          <h6><strong>Admin</strong> | 18/04/2021</h6>
-          <p><span>Bonjour, oui il est toujours disponilble, je vous invite à remplir le formulaire si vous êtes intéressé.</span></p>
+      <div class="comment" *ngFor="let comment of animal.comments">
+
+        <h5><strong>{{comment.username}}</strong> - <span class="text-secondary"><small>{{comment.date_creation}}</small></span></h5>
+        <p><span>{{comment.commentaire}}</span></p>
+        <button *ngIf="!comments[comment.id_commentaire]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[comment.id_commentaire] = true">Répondre</button>
+        <hr *ngIf="comment.tabReponse.length > 0">
+        <div class="reply ml-5 mb-2" *ngFor="let respComment of comment.tabReponse">
+          <h6><strong>{{respComment.username}}</strong> - <span class="text-secondary"> <small>{{respComment.date_creation}}</small></span></h6>
+          <p><span>{{respComment.reponseCom}}</span></p>
         </div>
-        <div class="reply ml-5 mb-2">
-          <h6><strong>Hichem</strong> | 18/04/2021</h6>
-          <p><span>D'accord merci pour votre réponse.</span></p>
-        </div>
-        <div *ngIf="comments[0]" class="reply ml-5 mb-2">
+        <div *ngIf="comments[comment.id_commentaire]" class="reply ml-5 mb-2">
           <form>
             <div class="form-group">
               <label for="username">Pseudo</label>
-              <input type="text" class="form-control" placeholder="Pseudo" name="username" [(ngModel)]="username[0]">
+              <input type="text" class="form-control" placeholder="Pseudo" name="username" [(ngModel)]="username[comment.id_commentaire]">
             </div>
             <div class="form-group">
               <label for="comment">Commentaire</label>
-              <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[0]"></textarea>
+              <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[comment.id_commentaire]"></textarea>
             </div>
-            <button type="submit" class="btn btn-danger mr-2" (click)="comments[0] = false">Annuler</button>
-            <button type="submit" class="btn btn-primary" (click)="sendResComment(username[0], textarea[0])">Envoyer</button>
-          </form>
-        </div>
-      </div>
-      <div class="comment">
-        <h5><strong>Jonathan</strong> | 18/04/2021</h5>
-        <p><span>Bonjour, depuis combien de temps est-il castré ? </span></p>
-        <button *ngIf="!comments[1]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[1] = true">Répondre</button>
-        <hr>
-        <div class="reply ml-5 mb-2">
-          <h6><strong>Admin</strong> | 18/04/2021</h6>
-          <p><span>Bonjour, il est castré depuis le 12 janvier 2021.</span></p>
-        </div>
-        <div class="reply ml-5 mb-2">
-          <h6><strong>Jonathan</strong> | 18/04/2021</h6>
-          <p><span>Merci.</span></p>
-        </div>
-        <div *ngIf="comments[1]" class="reply ml-5 mb-2">
-          <form>
-            <div class="form-group">
-              <label for="username">Pseudo</label>
-              <input type="text" class="form-control" placeholder="Pseudo" name="usernmae" [(ngModel)]="username[1]">
-            </div>
-            <div class="form-group">
-              <label for="comment">Commentaire</label>
-              <textarea class="form-control" rows="2" placeholder="Ajouter un commentaire..." name="comment" [(ngModel)]="textarea[1]"></textarea>
-            </div>
-            <button type="submit" class="btn btn-danger mr-2" (click)="comments[1] = false">Annuler</button>
-            <button type="submit" class="btn btn-primary" (click)="sendResComment(username[1], textarea[1])">Envoyer</button>
+            <button type="submit" class="btn btn-danger mr-2" (click)="comments[comment.id_commentaire] = false">Annuler</button>
+            <button type="submit" class="btn btn-primary" (click)="sendResComment(username[comment.id_commentaire], textarea[comment.id_commentaire], comment.id_commentaire)">Envoyer</button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-<div class="jumbotron parralx-bottom">
-</div>
-
 
 
 <ng-template #modalAdopt let-modal>
@@ -142,6 +170,10 @@
           <label for="lastName">Nom</label>
           <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Nom" >
         </div>
+      </div>
+      <div class="form-group">
+        <label for="mail">Mail</label>
+        <input type="text" class="form-control" id="mail" formControlName="mail" placeholder="mail" >
       </div>
       <div class="form-group">
         <label for="tel">Tél.</label>
@@ -164,7 +196,7 @@
       <div class="form-row">
         <div class="form-group col-md-6">
           <div class="form-check col-md-6">
-            <input class="form-check-input" type="radio" name="appartOrMaison" id="appart"  formControlName="appartOrMaison" value="0" checked>
+            <input class="form-check-input" type="radio" name="appartOrMaison" id="appart"  formControlName="appartOrMaison" value="appartement" checked>
             <label class="form-check-label" for="appart">
               Appartement
             </label>
@@ -172,7 +204,7 @@
         </div>
         <div class="form-group col-md-6">
           <div class="form-check col-md-6">
-            <input class="form-check-input" type="radio" name="appartOrMaison" id="maison" formControlName="appartOrMaison" value="1">
+            <input class="form-check-input" type="radio" name="appartOrMaison" id="maison" formControlName="appartOrMaison" value="maison">
             <label class="form-check-label" for="maison">
               Maison
             </label>
@@ -204,8 +236,12 @@
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Annuler</button>
-    <button  type="submit" class="btn btn-primary" (click)="sendFormAdopt(modal)" >Envoyer</button>
+    <button  type="submit" class="btn btn-primary" (click)="sendFormAdopt(modal)" [disabled]="!this.formAdopt.valid">Envoyer</button>
   </div>
 </ng-template>
+</div>
+<div class="footer">
 
+</div>
+<div>
 

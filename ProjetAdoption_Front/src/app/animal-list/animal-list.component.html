@@ -1,6 +1,6 @@
 <div class="flex-wrapper">
   <div class="main">
-    <div class="jumbotron">
+<div class="jumbotron">
       <div>
         <h1 class="display-4">{{title}}</h1>
         <p class="lead">
@@ -10,21 +10,26 @@
           <a class="btn btn-danger btn-lg" href="#" role="button">Adopter</a>
         </p>  </div>
     </div>
+
     <hr>
     <div class="container">
+
+      <input [(ngModel)]="searchText" type="text" class="form-control" placeholder="Rechercher une couleur, l'age, la race, sexe, caractère...">
       <div *ngIf="!isLoading" class="row d-flex justify-content-center">
-          <div class="col-3 m-2 card" *ngFor="let animal of animals;" (click)="toAnimal(animal.id_animal)">
+          <div class="col-3 m-2 card" *ngFor="let animal of animals | filter : searchText" (click)="toAnimal(animal.id_animal)">
             <img [src]="transform(animal.image[0].image)" class="card-img-top">
             <div class="card-body">
               <p class="card-title"><strong class="text-info">{{animal.nom.toUpperCase()}}</strong> <span class="float-right">Adopté : <strong>{{animal.adopte}}</strong> </span></p>
             </div>
           </div>
       </div>
+      <app-loading-spinner *ngIf="isLoading" class="loading-spinner row justify-content-center mt-5"></app-loading-spinner>
     </div>
   </div>
   <div class="footer">
-    <hr>
-    <div class="jumbotron parralx-bottom">
-    </div>
+
   </div>
-</div>
+  <div>
+
+
+

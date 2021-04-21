@@ -112,6 +112,7 @@ export class ConnexionComponent implements OnInit {
   onConnect() {
     this.authService.login(this.identifiant.value, this.passwordToConnect.value).subscribe(
       data => {
+        console.log('test');
         this.tokenStorageService.saveToken(data.accessToken);
         this.tokenStorageService.saveUser(data);
         this.userService.getUser();

@@ -23,9 +23,6 @@
         <hr>
         <div class="card-body">
           <h5 class="card-title">{{this.user.username}}</h5>
-          <p>Description de votre profil</p>
-          <p>Vos écrits</p>
-          <p>Vos contacts</p>
         </div>
         <div class="card-footer">
           <small class="text-muted">Compte crée le 31/01/2021</small>
@@ -39,9 +36,16 @@
         <div class="card-body">
           <p class="text-right"><span class="text-red">*</span>  champs obligatoires</p>
           <form [formGroup]="formUser">
+            <app-loading-spinner *ngIf="isLoading" class="loading-spinner row justify-content-center"></app-loading-spinner>
+            <div class="alert alert-success" role="alert" *ngIf="successMessage">
+              {{successMessage}}
+            </div>
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage">
+              {{errorMessage}}
+            </div>
             <div class="form-group">
               <label for="penName">Nom de plume <span class="text-red">*</span> </label>
-              <div class="input-group mb-3">
+              <div class="input-group mb-0">
                 <input type="text" class="form-control" id="penName" formControlName="penName" value="Nom de plume" #penName [readonly]="!btnEditPenName">
                 <div class="input-group-append">
                   <button *ngIf="!btnEditPenName" class="btn-form btn btn-outline-info" type="button" (click)="openEditPenName()"><i class="material-icons align-middle">create</i></button>
@@ -49,18 +53,35 @@
                   <button *ngIf="btnEditPenName" class="btn-form btn btn-outline-danger" type="button" (click)="cancelPenName()"><i class="material-icons align-middle">close</i></button>
                 </div>
               </div>
+              <div class="text-danger" *ngIf="penNameF.invalid && (penNameF.dirty || penNameF.touched)">
+                <small *ngIf="penNameF.errors.required">
+                  Le nom de plume est requis.
+                </small>
+                <small
+                  *ngIf="penNameF.errors.minlength">
+                  Le nom de plume doit comporter au moins 4 caractères.
+                </small>
+                <small
+                  *ngIf="penNameF.errors.maxlength">
+                  Le nom de plume ne doit comporter plus de 30 caractères.
+                </small>
+              </div>
             </div>
 
 
             <div class="form-group">
               <label for="mail">Adresse mail <span class="text-red">*</span> </label>
-              <div class="input-group mb-3">
+              <div class="input-group mb-0">
                 <input type="text" class="form-control" id="mail" formControlName="mail" value="test@test.fr" #mail [readonly]="!btnEditMail">
                 <div class="input-group-append">
                   <button *ngIf="!btnEditMail" class="btn-form btn btn-outline-info" type="button" (click)="openEditMail()"><i class="material-icons align-middle">create</i></button>
                   <button *ngIf="btnEditMail" class="btn-form btn btn-outline-success" type="button" (click)="saveMail()"><i class="material-icons align-middle">check</i></button>
                   <button *ngIf="btnEditMail" class="btn-form btn btn-outline-danger" type="button" (click)="cancelMail()"><i class="material-icons align-middle">close</i></button>
                 </div>
+              </div>
+              <div class="text-danger" *ngIf="mailF.invalid && (mailF.dirty || mailF.touched)">
+                <small *ngIf="mailF.errors.required">L'adresse mail est requise.</small>
+                <small *ngIf="mailF.errors.email"> L'adresse mail doit être valide.</small>
               </div>
             </div>
 
@@ -71,15 +92,30 @@
             <div *ngIf="editPassword" class="form-group">
               <label for="password">Mot de passe</label>
               <input type="password" class="form-control" id="password" formControlName="password" placeholder="Nouveau mot de passe" #password>
+              <div class="text-danger" *ngIf="passwordF.invalid && (passwordF.dirty || passwordF.touched)">
+                <small
+                  *ngIf="passwordF.errors.minlength">
+                  Le nouveau mot de passe doit comporter au moins 6 caractères.
+                </small>
+              </div>
             </div>
 
             <div *ngIf="editPassword" class="form-group">
               <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" placeholder="Confirmez votre nouveau mot de passe">
+              <div class="text-danger" *ngIf="passwordF.valid && confirmPasswordF.invalid && (confirmPasswordF.dirty || confirmPasswordF.touched)">
+                <small *ngIf="confirmPasswordF.errors.required">
+                  Le nouveau mot de passe doit être confirmé.
+                </small>
+                <small
+                  *ngIf="confirmPasswordF.errors.confirmPasswordValidator">
+                  Les nouveaux mots de passe ne correspondent pas.
+                </small>
+              </div>
             </div>
 
             <div *ngIf="editPassword" class="form-group">
               <button class="btn btn-danger float-right" (click)="cancelPassword()"><i class="stories material-icons align-middle">close</i> </button>
-              <button class="btn btn-success float-right mr-2" (click)="savePassword()"><i class="stories material-icons align-middle">check</i> </button>
+              <button class="btn btn-success float-right mr-2" (click)="savePassword()" [disabled]="!(passwordF.valid && confirmPasswordF.valid)"><i class="stories material-icons align-middle">check</i> </button>
 
             </div>
           </form>
@@ -87,37 +123,7 @@
           <br>
           <br>
 
-          <form [formGroup]="formPersonalInformations">
-            <h4 class="text-center">Informations personnelles (facultative)</h4>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="firstName">Prénom</label>
-                <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Prénom" #firstName [readonly]="!btnEditPersonnalInformations">
-              </div>
-              <div class="form-group col-md-6">
-                <label for="lastName">Nom</label>
-                <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Nom" [readonly]="!btnEditPersonnalInformations">
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="address">Adresse</label>
-              <input type="text" class="form-control" id="address" formControlName="address" placeholder="Adresse" [readonly]="!btnEditPersonnalInformations">
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6">
-                <label for="city">Ville</label>
-                <input type="text" class="form-control" id="city" formControlName="city" placeholder="Ville" [readonly]="!btnEditPersonnalInformations">
-              </div>
-              <div class="form-group col-md-4">
-                <label for="zipCode">Code postal</label>
-                <input type="text" class="form-control" id="zipCode" formControlName="zipCode" placeholder="Code Postal" [readonly]="!btnEditPersonnalInformations">
-              </div>
-            </div>
-            <button *ngIf="!btnEditPersonnalInformations" class="btn btn-outline-info float-right" (click)="openEditPersonnaleInformations()">Modifier</button>
-            <button *ngIf="btnEditPersonnalInformations" class="btn btn-outline-danger float-right" (click)="cancelPersonnaleInformations()">Annuler</button>
-            <button *ngIf="btnEditPersonnalInformations" class="btn btn-outline-success float-right mr-1" (click)="savePersonnaleInformations()">Enregistrer les modificatons</button>
 
-          </form>
         </div>
 
 
@@ -125,10 +131,7 @@
 
     </div>
 
-</div>
+  </div>
 </div>
 
 <hr>
-
-<div class="jumbotron parralx-bottom">
-</div>

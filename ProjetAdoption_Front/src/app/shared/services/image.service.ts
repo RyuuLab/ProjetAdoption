@@ -27,4 +27,8 @@ export class ImageService {
   getImageByIdAnimal(idAnimal: number): Observable<any> {
     return this.http.get(AUTH_API + idAnimal + '/imageByAnimal', httpOptions);
   }
+
+  deleteImage(idImage: number): Observable<any> {
+    return this.http.delete(AUTH_API + idImage + '/supprimerImage', httpOptions);
+  }
 }

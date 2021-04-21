@@ -1,0 +1,30 @@
+.jumbotron {
+  border-radius: 0;
+  color: white;
+  text-shadow: 2px 1px black;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("../assets/images/home.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0;
+}
+
+.parralx-bottom {
+  margin: 0;
+}
+
+thead {
+  text-align: center;
+}
+
+.bolder {
+  font-weight: bolder;
+}
+
+.flex-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}

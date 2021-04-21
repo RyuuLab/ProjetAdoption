@@ -20,9 +20,12 @@ export class ValeurService {
     return this.http.post(AUTH_API + 'creerValeur', valeurs, httpOptions);
   }
 
-
   getByAnimal(idAnimal): Observable<any> {
     return this.http.get(AUTH_API + 'animal/' + idAnimal, httpOptions);
+  }
+
+  toUpdate(valeurs: ICharacter[]): Observable<any> {
+    return this.http.put(AUTH_API + 'modifierValeur', valeurs, httpOptions);
   }
 
 }

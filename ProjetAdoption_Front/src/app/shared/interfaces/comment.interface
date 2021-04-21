@@ -3,7 +3,8 @@ export interface IComment {
   idAnimal?: number;
   username?: string;
   commentaire?: string;
-  reponse_com?: IRespComment[];
+  date_creation?: Date;
+  tabReponse?: IRespComment[];
 }
 
 export interface IRespComment {
@@ -11,5 +12,5 @@ export interface IRespComment {
   idCommentaire?: number;
   username?: string;
   reponseCom?: string;
-
+  date_creation?: string;
 }

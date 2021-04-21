@@ -20,4 +20,8 @@ export class CommentService {
   toCreate(comment: IComment): Observable<any> {
     return this.http.post(AUTH_API + 'creerCommentaire', comment, httpOptions);
   }
+
+  getCommentByIdAnimal(idAnimal: number): Observable<any> {
+    return this.http.get(AUTH_API + 'animal/' + idAnimal, httpOptions);
+  }
 }

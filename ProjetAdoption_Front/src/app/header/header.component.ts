@@ -64,5 +64,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   signOut() {
     this.userService.signOut();
     this.router.navigate(['accueil']);
+    console.log(this.isAuthenticated);
+    this.isAuthenticated = !this.user;
+    this.userService.userLoad.next(null);
   }
 }

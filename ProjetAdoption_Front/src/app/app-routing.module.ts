@@ -14,7 +14,7 @@ import {AnimalComponent} from './animal/animal.component';
 const routes: Routes = [
   { path: '', redirectTo: '/accueil', pathMatch: 'full' },
   { path: 'accueil', component: HomeComponent, data: {title: 'Accueil'}  },
-  { path: 'profil', component: ProfileComponent, data: {title: 'Profil'}  },
+  { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard], data: {title: 'Profil'}  },
   { path: 'ajouter-animal', component: AddAnimalComponent, data: {title: 'Ajouter un animal'}  },
   { path: 'admin-custom', component: AdminCustomComponent, data: {title: 'Admin custom'}  },
   { path: 'menu-admin', component: MenuAdminComponent, data: {title: 'Menu admin'}  },
@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'animal/:animalId', component: AnimalComponent, data: {title: 'Animal'}  },
   { path: 'page-introuvable', component: PageNotFoundComponent, data: {title: 'Page introuvable'} },
   { path: '**', redirectTo: 'page-introuvable', pathMatch: 'full'}
-  // { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard], data: {title: 'Profil'}  },
+
 
 ];
 

@@ -28,4 +28,8 @@ export class AnimalService {
     return this.http.post(AUTH_API + 'creerAnimal', animal, httpOptions);
   }
 
+  toUpadte(animal: IAnimal): Observable<any> {
+    return this.http.put(AUTH_API + 'modifierAnimal', animal, httpOptions);
+  }
+
 }

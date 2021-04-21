@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
 import {IUser} from '../interfaces/user.interface';
 
-const AUTH_API = 'http://localhost:8080/';
+const AUTH_API = 'http://localhost:8080/user/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,29 +15,61 @@ const httpOptions = {
 })
 export class UserService {
   user: IUser;
+  isAdmin: boolean = false;
   userLoad = new Subject<IUser>();
+  autoSignUpDone = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private tokeStorageService: TokenStorageService) { }
+  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) { }
 
 
-  changePasswordAPI(user: IUser): Observable<any> {
-    return this.http.put(AUTH_API + 'test', {
-      user
-    }, httpOptions);
+  changePassword(user: IUser): Observable<any> {
+    return this.http.put(AUTH_API + 'changePassword', user, httpOptions);
+  }
+
+  changeUsername(user: IUser): Observable<any> {
+    return this.http.put(AUTH_API + 'changeUsername', user, httpOptions);
+  }
+
+  changeMail(user: IUser): Observable<any> {
+    return this.http.put(AUTH_API + 'changeMail', user, httpOptions);
+  }
+
+  getUserAPI(id: number): Observable<any> {
+    return this.http.get(AUTH_API + id, httpOptions);
   }
 
   getUser() {
-    this.user = this.tokeStorageService.getUser();
+    if (this.tokenStorageService.getUser()) {
+      const id = this.tokenStorageService.getUser().id;
+      this.getUserAPI(id).subscribe(
+        data => {
+          this.user = data;
+          this.userLoad.next(this.user);
+          this.autoSignUpDone.next(true);
+          if (this.user.username === 'admin') {
+              this.isAdmin = true;
+          }
+        }
+      );
+    } else {
+      this.autoSignUpDone.next(true);
+    }
+  }
+
+  updateUser() {
     this.userLoad.next(this.user);
-    console.log(this.user);
   }
 
   signOut() {
-    this.tokeStorageService.signOut();
-    this.getUser();
+    this.tokenStorageService.signOut();
+    this.user = null;
+    this.isAdmin = false;
+    this.userLoad.next(null);
   }
 
   autoSignUp() {
     this.getUser();
   }
+
+
 }

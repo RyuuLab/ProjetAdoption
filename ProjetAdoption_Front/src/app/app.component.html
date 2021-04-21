@@ -1,3 +1,10 @@
-<app-header></app-header>
-
-<router-outlet></router-outlet>
+<div class="flex-wrapper">
+  <div class="main">
+    <app-header [hidden]="!showApp"></app-header>
+    <router-outlet *ngIf="showApp"></router-outlet>
+  </div>
+  <div class="footer">
+    <div class="jumbotron parralx-bottom">
+    </div>
+  </div>
+<div>

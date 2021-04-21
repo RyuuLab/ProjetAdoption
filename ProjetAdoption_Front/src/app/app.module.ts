@@ -17,6 +17,9 @@ import { MenuAdminComponent } from './menu-admin/menu-admin.component';
 import { SpeciesListComponent } from './species-list/species-list.component';
 import { AnimalListComponent } from './animal-list/animal-list.component';
 import { AnimalComponent } from './animal/animal.component';
+import {LoadingSpinnerComponent} from './shared/loading-spinner/loading-spinner.component';
+import {FilterPipe} from './shared/tools/filter.pipe';
+import { ShareModule } from 'ngx-sharebuttons';
 
 // @ts-ignore
 @NgModule({
@@ -33,6 +36,8 @@ import { AnimalComponent } from './animal/animal.component';
     SpeciesListComponent,
     AnimalListComponent,
     AnimalComponent,
+    LoadingSpinnerComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
@@ -40,7 +45,8 @@ import { AnimalComponent } from './animal/animal.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    ShareModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

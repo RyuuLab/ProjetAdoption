@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
-// @ts-ignore
-import {IRespComment} from '../interfaces/comment.interface';
+import {IFormAdoption} from '../interfaces/formAdoption';
 
-const AUTH_API = 'http://localhost:8080/reponse_com/';
+const AUTH_API = 'http://localhost:8080/formulaire_adoption/';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,10 +12,10 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
-export class RespCommentService {
+export class FormService {
   constructor(private http: HttpClient) { }
 
-  toCreate(respComment: IRespComment): Observable<any> {
-    return this.http.post(AUTH_API + 'creerReponseCom', respComment, httpOptions);
+  toCreate(form: IFormAdoption): Observable<any> {
+    return this.http.post(AUTH_API + 'creerFormulaire_adoption', form, httpOptions);
   }
 }
