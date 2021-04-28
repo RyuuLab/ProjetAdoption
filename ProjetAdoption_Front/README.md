@@ -10,4 +10,6 @@ Comment installer Anguler :
 Executer le Front :
 
 * Se rendre dans le dossier ProjetAdoption_Front et ouvrir un invite de commande
-* Executer la commande `ng serve`
+* Executer les commandes :
+  `npm -i`
+  `ng serve`
