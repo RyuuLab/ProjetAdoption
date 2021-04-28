@@ -17,6 +17,11 @@ Le site permet de chercher un animal selon les différentes espèces présentent
 Si l'utilisateur n'a pas trouvé ce qu'il recherchait, il peut transmettre un formulaire avec ses informations personnelles et un message afin d'expliquer ses besoins pour qu'un administrateur puisse lui proposer un animal en fonction de ceux-ci.
 Il est également possible de laisser des commentaires sous chaque présentation d'un animal afin de demander des informations supplémentaires si nécessaire.
 
+Il est possible de créer un compte et de s'identifier sur le site internet, l'identification permet à l'utilisateur de disposer d'un profil et lors de l'écriture d'un commentaire, l'utilisateur n'a plus besoin de renseigner son pseudonyme.
+
+Un compte Admin est également disponible avec le jeu de données disponible ici -->
+Ce compte permet de gérer tout ce qui est ajout, création, suppression des différents élèments. 
+
 ***
 ## Technologies
 ***
