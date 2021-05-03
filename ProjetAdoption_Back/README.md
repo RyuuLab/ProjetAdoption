@@ -11,9 +11,9 @@
 7. [FormulaireController](#formulairecontroller)
 8. [ImageController](#imagecontroller)
 9. [RaceController](#racecontroller)
-10.[Reponse_comController](#reponse_comcontroller)
-11.[UserController](#usercontroller)
-12.[ValeurController](#valeurcontroller)
+10. [Reponse_comController](#reponse_comcontroller)
+11. [UserController](#usercontroller)
+12. [ValeurController](#valeurcontroller)
 
 ***
 
