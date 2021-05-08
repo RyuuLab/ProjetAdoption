@@ -40,8 +40,8 @@ Introduction à l'installation du projet :
 
 Pour la base de donnée :
 
-* Executer le script sur MySql Workbench --> [Script](https://github.com/dengler5u/ProjetAdoption/blob/main/ScriptBdd.sql)
-* Executer le script sur MySql Workbench --> [Script](https://github.com/dengler5u/ProjetAdoption/blob/main/DataScript.sql)
+* Executer le script pour les tables sur MySql Workbench --> [Script des tables ](https://github.com/dengler5u/ProjetAdoption/blob/main/ScriptBdd.sql)
+* Executer le script pour les données sur MySql Workbench --> [Script données](https://github.com/dengler5u/ProjetAdoption/blob/main/DataScript.sql)
 
 Récuperer le code :
 
