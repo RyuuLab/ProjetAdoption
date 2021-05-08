@@ -94,6 +94,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }).subscribe(
       data => {
         console.log(data);
+        modal.close();
       }
     );
   }
