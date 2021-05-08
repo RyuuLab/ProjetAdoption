@@ -9,7 +9,7 @@ export class ErrorMessageService {
     console.log(errorMessage);
     switch (errorMessage) {
       case 'Error: Username is already taken!':
-        return 'Le nom de plume est déjà utilisé.';
+        return 'Le pseudo est déjà utilisé.';
         break;
       case 'Error: Email is already in use!':
         return 'Le mail déjà utilisé.';

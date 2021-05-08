@@ -61,7 +61,7 @@
         <p>Sexe: <input type="text" value="{{animal.sexe}}" [(ngModel)]="animal.sexe"></p>
         <p>Couleur <input type="text" value="{{animal.couleur}}" [(ngModel)]="animal.couleur"></p>
         <p>Caractère: <input type="text" value="{{animal.caractere}}" [(ngModel)]="animal.caractere"></p>
-        <p>espèce: <input type="text" value="{{animal.nom_espece}}" [(ngModel)]="animal.nom_espece"></p>
+        <p>espèce: {{animal.nom_espece}}</p>
         <p>adopté: <input type="text" value="{{animal.adopte}}" [(ngModel)]="animal.adopte"></p>
         <p>Race: <select class="custom-select" [(ngModel)]="animal.idRace">
           <option value='default'>Choisissez une race...</option>
@@ -129,7 +129,7 @@
 
         <h5><strong>{{comment.username}}</strong> - <span class="text-secondary"><small>{{comment.date_creation}}</small></span></h5>
         <p><span>{{comment.commentaire}}</span></p>
-        <button *ngIf="!comments[comment.id_commentaire]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[comment.id_commentaire] = true">Répondre</button>
+        <button *ngIf="!comments[comment.id_commentaire]" type="submit" class="btn btn-primary btn-sm mb-2" (click)="comments[comment.id_commentaire] = true; changePseudo(comment.id_commentaire)">Répondre</button>
         <hr *ngIf="comment.tabReponse.length > 0">
         <div class="reply ml-5 mb-2" *ngFor="let respComment of comment.tabReponse">
           <h6><strong>{{respComment.username}}</strong> - <span class="text-secondary"> <small>{{respComment.date_creation}}</small></span></h6>
@@ -153,6 +153,7 @@
     </div>
   </div>
 </div>
+<app-loading-spinner *ngIf="isLoading" class="loading-spinner row justify-content-center mt-5"></app-loading-spinner>
 
 
 <ng-template #modalAdopt let-modal>
@@ -160,7 +161,7 @@
   </div>
   <div class="modal-body">
     <form [formGroup]="formAdopt">
-      <h4 class="text-center">Informations personnelles (facultative)</h4>
+      <h4 class="text-center">Formulaire d'adoption</h4>
       <div class="form-row">
         <div class="form-group col-md-6">
           <label for="firstName">Prénom</label>

@@ -20,6 +20,10 @@ export class AnimalService {
     return this.http.get(AUTH_API + specieId + '/animauxByEspece', httpOptions);
   }
 
+  getCountAnimals(): Observable<any> {
+    return this.http.get(AUTH_API + 'countAnimals', httpOptions);
+  }
+
   getAllByAnimal(animalId: number): Observable<any> {
     return this.http.get(AUTH_API + animalId , httpOptions);
   }

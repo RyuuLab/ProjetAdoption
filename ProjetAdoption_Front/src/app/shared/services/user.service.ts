@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {TokenStorageService} from './token-storage.service';
 import {IUser} from '../interfaces/user.interface';
+import {Router} from '@angular/router';
 
 const AUTH_API = 'http://localhost:8080/user/';
 
@@ -19,7 +20,11 @@ export class UserService {
   userLoad = new Subject<IUser>();
   autoSignUpDone = new BehaviorSubject(false);
 
-  constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) { }
+  constructor(
+    private http: HttpClient,
+    private tokenStorageService: TokenStorageService,
+    private router: Router,
+    ) { }
 
 
   changePassword(user: IUser): Observable<any> {
@@ -65,6 +70,7 @@ export class UserService {
     this.user = null;
     this.isAdmin = false;
     this.userLoad.next(null);
+    this.router.navigate(['accueil']);
   }
 
   autoSignUp() {

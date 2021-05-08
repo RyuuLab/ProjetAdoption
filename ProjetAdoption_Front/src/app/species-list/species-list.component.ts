@@ -13,6 +13,7 @@ import {ISpecies} from '../shared/interfaces/species.interface';
 export class SpeciesListComponent implements OnInit {
   title = 'Catégorie';
   species: ISpecies[];
+  isLoading: any;
   constructor(
     private titleService: Title,
     private route: ActivatedRoute,
@@ -24,9 +25,12 @@ export class SpeciesListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.speciesService.getAll().subscribe(
         data => {
           this.species = data;
+          this.isLoading = false;
+          console.log(data);
         },
         err => {
           console.log(err);
@@ -34,7 +38,16 @@ export class SpeciesListComponent implements OnInit {
     );
   }
 
-  toAnimalList(specieId: number) {
-    this.router.navigate(['/liste-animaux', specieId]);
+  toAnimalList(specieId: number, nbrAnimalEspece: number) {
+    if (nbrAnimalEspece > 0) {
+      this.router.navigate(['/liste-animaux', specieId]);
+    }
+  }
+
+  addPlural(specie: ISpecies) {
+    if (specie.nbrAnimalEspece > 1) {
+      return specie.nom_espece + 's' + ' disponibles';
+    }
+    return specie.nom_espece  + ' disponible';
   }
 }

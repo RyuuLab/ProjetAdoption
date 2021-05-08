@@ -5,17 +5,18 @@
       <span>Les animaux sont nés pour nous apprendre à aimer</span>
     </p>
     <p class="lead">
-      <a class="btn btn-danger btn-lg" href="#" role="button">Adopter</a>
-    </p>  </div>
+      <a class="btn btn-danger btn-lg mr-2" role="button" (click)="toSpecies()">Adopter</a>
+    </p>
+  </div>
 </div>
 <hr>
 <div class="container">
 <div class="row">
   <div class="col-12 col-md-6 d-flex justify-content-center">
-    <div class="card border-info mb-3" (click)="toStories()">
+    <div class="card border-info mb-3" (click)="toSpecies()">
       <div class="card-header"> <i class="stories material-icons align-middle">pets</i>  Adopter </div>
       <div class="card-body text-info">
-        <h5 class="card-title">X animaux vous attendent</h5>
+        <h5 class="card-title">{{countAnimals}} animaux vous attendent</h5>
         <p class="card-text">On a tous une chance d'être adoptés....</p>
       </div>
     </div>
@@ -24,7 +25,7 @@
     <div class="card border-secondary mb-3" (click)="toProfile()">
       <div class="card-header"> <i class="profile material-icons align-middle">account_circle</i> Mon profil  </div>
       <div class="card-body text-secondary">
-        <h5 class="card-title">{{this.user ? this.user.username : 'Nom de plume'}}</h5>
+        <h5 class="card-title">{{this.user ? this.user.username : 'Pseudo'}}</h5>
         <p class="card-text">Accéder à votre profil ici....</p>
       </div>
     </div>
@@ -38,8 +39,54 @@
       </div>
     </div>
   </div>
+
+  <div class="col-12 col-md-6 d-flex justify-content-center">
+    <div class="card border-info mb-3" (click)="toInfo(modalAdopt)">
+      <div class="card-header text-info"> <i class=" material-icons align-middle">info</i>  Contactez-nous</div>
+      <div class="card-body text-info">
+        <h5 class="card-title">Formulaire </h5>
+        <p class="card-text">Vous n'avez pas trouvé votre bonheur ? Laissez-nous vos critères... </p>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 
 <hr>
 
+
+<ng-template #modalAdopt let-modal>
+  <div class="modal-header">
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAdopt">
+      <h4 class="text-center">Formulaire de contact</h4>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="firstName">Prénom</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName" placeholder="Prénom">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="lastName">Nom</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Nom" >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="mail">Mail</label>
+        <input type="text" class="form-control" id="mail" formControlName="mail" placeholder="mail" >
+      </div>
+      <div class="form-group">
+        <label for="tel">Tél.</label>
+        <input type="text" class="form-control" id="tel" formControlName="tel" placeholder="tél.">
+      </div>
+      <div class="form-group">
+        <label for="message">message</label>
+        <input type="text" class="form-control" id="message" formControlName="message" placeholder="Message" >
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Annuler</button>
+    <button  type="submit" class="btn btn-primary" (click)="sendFormAdopt(modal)" [disabled]="!this.formAdopt.valid">Envoyer</button>
+  </div>
+</ng-template>

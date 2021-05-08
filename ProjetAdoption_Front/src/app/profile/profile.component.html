@@ -44,9 +44,9 @@
               {{errorMessage}}
             </div>
             <div class="form-group">
-              <label for="penName">Nom de plume <span class="text-red">*</span> </label>
+              <label for="penName">Pseudo <span class="text-red">*</span> </label>
               <div class="input-group mb-0">
-                <input type="text" class="form-control" id="penName" formControlName="penName" value="Nom de plume" #penName [readonly]="!btnEditPenName">
+                <input type="text" class="form-control" id="penName" formControlName="penName" value="Pseudo" #penName [readonly]="!btnEditPenName">
                 <div class="input-group-append">
                   <button *ngIf="!btnEditPenName" class="btn-form btn btn-outline-info" type="button" (click)="openEditPenName()"><i class="material-icons align-middle">create</i></button>
                   <button *ngIf="btnEditPenName" class="btn-form btn btn-outline-success" type="button" (click)="savePenName()"><i class="material-icons align-middle">check</i></button>
@@ -55,15 +55,15 @@
               </div>
               <div class="text-danger" *ngIf="penNameF.invalid && (penNameF.dirty || penNameF.touched)">
                 <small *ngIf="penNameF.errors.required">
-                  Le nom de plume est requis.
+                  Le pseudo est requis.
                 </small>
                 <small
                   *ngIf="penNameF.errors.minlength">
-                  Le nom de plume doit comporter au moins 4 caractères.
+                  Le pseudo doit comporter au moins 4 caractères.
                 </small>
                 <small
                   *ngIf="penNameF.errors.maxlength">
-                  Le nom de plume ne doit comporter plus de 30 caractères.
+                  Le pseudo ne doit comporter plus de 30 caractères.
                 </small>
               </div>
             </div>

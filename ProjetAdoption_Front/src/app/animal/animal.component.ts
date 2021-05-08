@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {DomSanitizer, Title} from '@angular/platform-browser';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, Validators} from '@angular/forms';
@@ -7,7 +7,7 @@ import {ValeurService} from '../shared/services/valeur.service';
 import {AnimalService} from '../shared/services/animal.service';
 import {ImageService} from '../shared/services/image.service';
 import {IAnimal} from '../shared/interfaces/animal.interface';
-import {forkJoin} from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 import {CommentService} from '../shared/services/comment.service';
 import {RespCommentService} from '../shared/services/resp-comment.service';
 import {DatePipe, formatDate} from '@angular/common';
@@ -16,13 +16,14 @@ import {IImage} from '../shared/interfaces/image.interface';
 import {IRace} from '../shared/interfaces/race.interface';
 import {RaceService} from '../shared/services/race.service';
 import {UserService} from '../shared/services/user.service';
+import {IUser} from '../shared/interfaces/user.interface';
 
 @Component({
   selector: 'app-animal',
   templateUrl: './animal.component.html',
   styleUrls: ['./animal.component.scss']
 })
-export class AnimalComponent implements OnInit {
+export class AnimalComponent implements OnInit, OnDestroy {
   animal: IAnimal;
   comment = false;
   comments = [false, false];
@@ -37,6 +38,8 @@ export class AnimalComponent implements OnInit {
   isAdmin: boolean;
   isUploadImage: boolean;
   races: IRace[];
+  user: IUser;
+  userSubscription: Subscription;
 
   constructor(private titleService: Title,
               private route: ActivatedRoute,
@@ -70,6 +73,13 @@ export class AnimalComponent implements OnInit {
     this.isLoading = true;
     this.animalId = +this.route.snapshot.paramMap.get('animalId');
     this.getAnimal();
+    this.verifUser();
+    this.userSubscription = this.userService.userLoad.subscribe(
+      user => {
+        this.user = user;
+        this.usernameAddComment = user.username;
+      }
+    );
   }
 
   sendComment(username: any, textarea: any) {
@@ -264,5 +274,22 @@ export class AnimalComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.userSubscription.unsubscribe();
+  }
+
+  verifUser() {
+    this.user = this.userService.user;
+    if (this.user) {
+      this.usernameAddComment = this.user.username;
+    }
+  }
+
+  changePseudo(idCommentaire: number) {
+    if (this.user) {
+      this.username[idCommentaire] = this.user.username;
+    }
   }
 }

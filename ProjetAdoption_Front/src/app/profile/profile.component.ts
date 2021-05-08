@@ -135,7 +135,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.log(data);
         this.userService.user.username = this.formUser.value.penName;
         this.userService.updateUser();
-        this.successMessage = 'Votre nom de plume a été changé.';
+        this.successMessage = 'Votre pseudo a été changé.';
         this.deleteSuccessMessage();
         this.isLoading = false;
         this.btnEditPenName = false;

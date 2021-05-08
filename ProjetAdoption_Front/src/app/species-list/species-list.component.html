@@ -10,16 +10,24 @@
   </div>
   <hr>
   <div class="container">
-    <div class="row">
-      <div class="col-3 d-flex justify-content-center" *ngFor="let specie of species" (click)="toAnimalList(specie.id_espece)">
+    <div *ngIf="!isLoading" class="row">
+      <div class="col-3 d-flex justify-content-center" *ngFor="let specie of species" (click)="toAnimalList(specie.id_espece, specie.nbrAnimalEspece)">
         <div class="card border-info mb-3">
           <div class="card-header">{{specie.nom_espece}}</div>
           <div class="card-body text-info">
             <h5 class="card-title"></h5>
+            <strong>
+              {{
+                specie.nbrAnimalEspece === 0
+                  ? "Désolé aucun " + specie.nom_espece + " à adopter pour le moment"
+                  : specie.nbrAnimalEspece + " " + addPlural(specie)
+              }}
+            </strong>
           </div>
         </div>
       </div>
     </div>
+    <app-loading-spinner *ngIf="isLoading" class="loading-spinner row justify-content-center mt-5"></app-loading-spinner>
   </div>
   <hr>
 </div>

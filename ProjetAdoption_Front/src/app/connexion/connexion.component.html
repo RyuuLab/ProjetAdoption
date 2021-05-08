@@ -20,18 +20,18 @@
                 {{successMessage}}
             </small>
           <div class="form-group">
-            <input type="text" class="form-control" id="penName" formControlName="penName" placeholder="Nom de plume">
+            <input type="text" class="form-control" id="penName" formControlName="penName" placeholder="Pseudo">
             <div class="text-danger" *ngIf="penName.invalid && (penName.dirty || penName.touched)">
               <small *ngIf="penName.errors.required">
-                Le nom de plume est requis.
+                Le pseudo est requis.
               </small>
               <small
                 *ngIf="penName.errors.minlength">
-                Le nom de plume doit comporter au moins 4 caractères.
+                Le pseudo doit comporter au moins 4 caractères.
               </small>
               <small
                 *ngIf="penName.errors.maxlength">
-                Le nom de plume ne doit comporter plus de 30 caractères.
+                Le pseudo ne doit comporter plus de 30 caractères.
               </small>
             </div>
           </div>

@@ -49,6 +49,18 @@ public class AnimalController {
 		animal.setNom_race(raceRepository.findById(animal.getIdRace()).get().getNom_race());
 		return animalRepository.findById(id_animal);
 	}
+
+	@GetMapping(path="/countAnimals")
+	public @ResponseBody int getCountAnimals(){
+		int count = 0;
+		List<Animal> animals = animalRepository.findAll();
+		for(Animal animal: animals ) {
+			if (animal.getAdopte().equals("non")) {
+				count++;
+			}
+		}
+		return count;
+	}
 	
 	@GetMapping(path="/{id_espece}/animauxByEspece")
 	public @ResponseBody Iterable<Animal> getAnimauxByEspece(@PathVariable Long id_espece){

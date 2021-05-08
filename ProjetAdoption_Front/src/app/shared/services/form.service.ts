@@ -5,6 +5,8 @@ import {IFormAdoption} from '../interfaces/formAdoption';
 
 const AUTH_API = 'http://localhost:8080/formulaire_adoption/';
 
+const AUTH_API2 = 'http://localhost:8080/formulaire/';
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -17,5 +19,9 @@ export class FormService {
 
   toCreate(form: IFormAdoption): Observable<any> {
     return this.http.post(AUTH_API + 'creerFormulaire_adoption', form, httpOptions);
+  }
+
+  toCreateForm(form: IFormAdoption): Observable<any> {
+    return this.http.post(AUTH_API2 + 'creerFormulaire', form, httpOptions);
   }
 }

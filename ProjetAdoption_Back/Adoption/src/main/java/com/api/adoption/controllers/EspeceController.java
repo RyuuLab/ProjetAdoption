@@ -1,7 +1,9 @@
 package com.api.adoption.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.api.adoption.repository.AnimalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +30,9 @@ public class EspeceController {
 
 	@Autowired
 	private EspeceRepository especeRepository;
+
+	@Autowired
+	private AnimalRepository animalRepository;
 	
 	@GetMapping(path="/{id_espece}")
 	public @ResponseBody Optional<Espece> getEspeceById(@PathVariable Long id_espece){
@@ -36,7 +41,11 @@ public class EspeceController {
 	
 	@GetMapping(path="/especes")
 	public @ResponseBody Iterable<Espece> getAllEspece(){
-		return especeRepository.findAll();
+		List<Espece> especes = especeRepository.findAll();
+		for(Espece espece: especes) {
+			espece.setNbrAnimalEspece(this.animalRepository.findAllByIdEspece(espece.getId_espece()).size());
+		}
+		return especes;
 	}
 	
 	@PostMapping(path="/creerEspece")

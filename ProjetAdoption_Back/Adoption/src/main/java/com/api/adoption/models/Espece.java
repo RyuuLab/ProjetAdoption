@@ -17,6 +17,8 @@ public class Espece {
 	
 	@NotBlank
 	private String nom_espece;
+
+	private transient int nbrAnimalEspece;
 	
 	public Espece() {
 		
@@ -41,6 +43,12 @@ public class Espece {
 	public void setNom_espece(String nom_espece) {
 		this.nom_espece = nom_espece;
 	}
-	
-	
+
+	public int getNbrAnimalEspece() {
+		return nbrAnimalEspece;
+	}
+
+	public void setNbrAnimalEspece(int nbrAnimalEspece) {
+		this.nbrAnimalEspece = nbrAnimalEspece;
+	}
 }
