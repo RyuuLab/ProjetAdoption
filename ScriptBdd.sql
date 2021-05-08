@@ -40,7 +40,7 @@ CREATE TABLE `espece` (
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 CREATE TABLE `formulaire` (
-  `id_formulaire` int(11) NOT NULL,
+  `id_formulaire` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(45) NOT NULL,
   `prenom` varchar(45) NOT NULL,
   `mail` varchar(45) NOT NULL,
@@ -129,3 +129,16 @@ CREATE TABLE `valeur` (
   CONSTRAINT `id_animal` FOREIGN KEY (`id_animal`) REFERENCES `animal` (`id_animal`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `id_caracteristique` FOREIGN KEY (`id_caracteristique`) REFERENCES `caracteristique` (`id_caracteristique`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+ALTER TABLE `animal` AUTO_INCREMENT = 1;
+ALTER TABLE `caracteristique` AUTO_INCREMENT = 1;
+ALTER TABLE `commentaire` AUTO_INCREMENT = 1;
+ALTER TABLE `espece` AUTO_INCREMENT = 1;
+ALTER TABLE `formulaire` AUTO_INCREMENT = 1;
+ALTER TABLE `formulaire_adoption` AUTO_INCREMENT = 1;
+ALTER TABLE `image` AUTO_INCREMENT = 1;
+ALTER TABLE `race` AUTO_INCREMENT = 1;
+ALTER TABLE `reponse_com` AUTO_INCREMENT = 1;
+ALTER TABLE `role` AUTO_INCREMENT = 1;
+ALTER TABLE `user` AUTO_INCREMENT = 1;
+ALTER TABLE `valeur` AUTO_INCREMENT = 1;
